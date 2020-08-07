@@ -1,9 +1,6 @@
-﻿using Cogworks.AzureSearch.Models;
-
-namespace Cogworks.AzureSearch.Core.Models.SearchModels
+﻿namespace Cogworks.AzureSearch.Core.Models.SearchModels
 {
-    public class EventDocument : IAzureModelIdentity
+    public class EventDocument : SearchModel
     {
-        public string Id { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace Cogworks.AzureSearch.Options
     {
         public string ServiceName { get; }
 
-        public string Credentials { get; set; }
+        public string Credentials { get; }
 
         public AzureSearchClientOption(string serviceName, string credentials)
         {

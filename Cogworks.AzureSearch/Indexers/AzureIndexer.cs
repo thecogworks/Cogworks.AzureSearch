@@ -1,12 +1,7 @@
-﻿using Cogworks.AzureSearch.Extensions;
-using Cogworks.AzureSearch.Models;
+﻿using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Models.Dtos;
-using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
-using Microsoft.Azure.Search;
-using Microsoft.Azure.Search.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Indexers
@@ -17,85 +12,28 @@ namespace Cogworks.AzureSearch.Indexers
 
         Task AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models);
 
-        Task<AzureBatchRemoveResultDto> TryRemoveDocumentAsync(TAzureModel model);
+        Task<AzureRemoveResultDto> TryRemoveDocumentAsync(TAzureModel model);
 
-        Task<IEnumerable<AzureBatchRemoveResultDto>> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
+        Task<IEnumerable<AzureRemoveResultDto>> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
     }
 
     public class AzureIndexer<TAzureModel> : IAzureIndexer<TAzureModel> where TAzureModel : class, IAzureModelIdentity, new()
     {
-        private readonly ISearchIndexClient _searchIndex;
-        private readonly AzureSearchRepository<TAzureModel> _azureSearchRepository;
+        private readonly IAzureSearchRepository<TAzureModel> _azureSearchRepository;
 
-        public AzureIndexer(AzureIndex<TAzureModel> azureIndex, AzureSearchClientOption azureSearchClientOption)
-        {
-            _searchIndex = azureSearchClientOption.GetSearchServiceClient().Indexes.GetClient(azureIndex.IndexName);
-
-            _azureSearchRepository = new AzureSearchRepository<TAzureModel>(azureIndex, azureSearchClientOption);
-        }
+        public AzureIndexer(IAzureSearchRepository<TAzureModel> azureSearchRepository)
+            => _azureSearchRepository = azureSearchRepository;
 
         public async Task AddOrUpdateDocumentAsync(TAzureModel model)
-            => await AddOrUpdateDocumentsAsync(new List<TAzureModel> { model });
+            => await _azureSearchRepository.AddOrUpdateDocumentAsync(model);
 
-        public async Task<AzureBatchRemoveResultDto> TryRemoveDocumentAsync(TAzureModel model)
-            => (await TryRemoveDocumentsAsync(new List<TAzureModel> { model })).FirstOrDefault();
+        public async Task<AzureRemoveResultDto> TryRemoveDocumentAsync(TAzureModel model)
+            => await _azureSearchRepository.TryRemoveDocumentAsync(model);
 
         public async Task AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models)
-        {
-            if (!models.HasAny())
-            {
-                return;
-            }
+            => await _azureSearchRepository.AddOrUpdateDocumentsAsync(models);
 
-            var batchActions = models
-                .Select(model => new IndexAction<TAzureModel>(model, IndexActionType.Upload))
-                .ToList();
-
-            var batch = IndexBatch.New(batchActions);
-
-            try
-            {
-                await _searchIndex.Documents.IndexAsync(batch);
-            }
-            catch (IndexBatchException ex)
-            {
-                //                _logger.Error<AzureIndexer>(ex,
-                //                    $"Failed to index some documents: {string.Join(", ", ex.IndexingResults.Where(x => !x.Succeeded).Select(r => r.Key))}");
-            }
-        }
-
-        public async Task<IEnumerable<AzureBatchRemoveResultDto>> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models)
-        {
-            if (!models.HasAny())
-            {
-                return Enumerable.Empty<AzureBatchRemoveResultDto>();
-            }
-
-            var batchActions = models
-                .Select(model => new IndexAction<TAzureModel>(model, IndexActionType.Delete))
-                .ToList();
-
-            var batch = IndexBatch.New(batchActions);
-            DocumentIndexResult result = null;
-
-            try
-            {
-                result = await _searchIndex.Documents.IndexAsync(batch);
-            }
-            catch (IndexBatchException ex)
-            {
-                //                _logger.Error<AzureIndexer>(ex,
-                //                    $"Failed to drop some documents: {string.Join(", ", ex.IndexingResults.Where(x => !x.Succeeded).Select(r => r.Key))}");
-            }
-
-            return result?.Results
-                       .Select(r => new AzureBatchRemoveResultDto
-                       {
-                           Succeeded = r.Succeeded,
-                           ModelId = r.Key
-                       })
-                       .ToList()
-                   ?? Enumerable.Empty<AzureBatchRemoveResultDto>();
-        }
+        public async Task<IEnumerable<AzureRemoveResultDto>> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models)
+            => await _azureSearchRepository.TryRemoveDocumentsAsync(models);
     }
 }

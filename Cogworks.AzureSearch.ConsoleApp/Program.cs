@@ -3,8 +3,7 @@ using Cogworks.AzureSearch.Core.Models.SearchModels;
 using Cogworks.AzureSearch.Indexers;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Options;
-using Cogworks.AzureSearch.Wrappers;
-using System;
+using Cogworks.AzureSearch.Repositories;
 
 namespace Cogworks.AzureSearch.ConsoleApp
 {
@@ -12,43 +11,57 @@ namespace Cogworks.AzureSearch.ConsoleApp
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var builder = new ContainerBuilder();
 
-            var builder = new Autofac.ContainerBuilder();
+            // Options Registration
+            RegisterOptions(builder);
 
-            // Options registration
+            // Index Registration
+            RegisterIndexes(builder);
+
+            // Repository registration
+            RegisterRepositories(builder);
+
+            // Indexer Registration
+            RegisterIndexers(builder);
+
+            // Searcher Registration
+
+            // Initializers Register
+
+            var container = builder.Build();
+
+            var eventRepository = container.Resolve<IAzureSearchRepository<EventDocument>>();
+            var newsRepository = container.Resolve<IAzureSearchRepository<NewsDocument>>();
+
+            var azureEventIndexer = container.Resolve<IAzureIndexer<EventDocument>>();
+            var azureNewsIndexer = container.Resolve<IAzureIndexer<NewsDocument>>();
+        }
+
+        private static void RegisterOptions(ContainerBuilder builder) =>
             builder
                 .Register(_ => new AzureSearchClientOption("test", "testPassword"))
                 .AsSelf()
                 .SingleInstance();
 
-            // Wrapper / Repository registration
-
-            builder.Register<IAzureSearchWrapper>(_ => new AzureSearchWrapper("test", "testPassword")).AsImplementedInterfaces();
-
-            // Azure Index registration
-
+        private static void RegisterIndexes(ContainerBuilder builder)
+        {
             builder.Register(_ => new AzureIndex<EventDocument>("event")).AsSelf().SingleInstance();
             builder.Register(_ => new AzureIndex<NewsDocument>("news")).AsSelf().SingleInstance();
+        }
 
-            // Registration dedicated Indexer
+        private static void RegisterIndexers(ContainerBuilder builder)
+        {
+            builder.RegisterGeneric(typeof(AzureIndexer<>))
+                .As(typeof(IAzureIndexer<>))
+                .InstancePerDependency();
+        }
 
-            builder
-                .RegisterType<AzureIndexer<EventDocument>>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-
-            builder
-                .RegisterType<AzureIndexer<NewsDocument>>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-
-            // Registration dedicated Searcher
-
-            var container = builder.Build();
-
-            var azureEventIndexer = container.Resolve<IAzureIndexer<EventDocument>>();
-            var azureNewsIndexer = container.Resolve<IAzureIndexer<NewsDocument>>();
+        private static void RegisterRepositories(ContainerBuilder builder)
+        {
+            builder.RegisterGeneric(typeof(AzureSearchRepository<>))
+                .As(typeof(IAzureSearchRepository<>))
+                .InstancePerDependency();
         }
     }
 }
