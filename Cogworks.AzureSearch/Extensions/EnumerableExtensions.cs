@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Cogworks.AzureSearch.Extensions
 {
-    public static class EnumerableExtensions
+    internal static class EnumerableExtensions
     {
         public static bool HasAny<T>(this IEnumerable<T> items)
             => items != null && items.Any();
