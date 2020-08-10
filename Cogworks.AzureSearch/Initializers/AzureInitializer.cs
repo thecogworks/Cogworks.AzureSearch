@@ -8,7 +8,7 @@ namespace Cogworks.AzureSearch.Initializers
 {
     public interface IAzureInitializer<in TAzureModel> where TAzureModel : IAzureModelIdentity
     {
-        Task<AzureIndexOperationResultDto> InitializeAsync();
+        Task<AzureIndexOperationResult> InitializeAsync();
     }
 
     public class AzureInitializer<TAzureModel> : IAzureInitializer<TAzureModel>
@@ -23,7 +23,7 @@ namespace Cogworks.AzureSearch.Initializers
             _azureIndexOperation = azureIndexOperation;
         }
 
-        public async Task<AzureIndexOperationResultDto> InitializeAsync()
+        public async Task<AzureIndexOperationResult> InitializeAsync()
         {
             if (_azureSearchIndexOption.Recreate)
             {

@@ -2,9 +2,9 @@
 
 namespace Cogworks.AzureSearch.Models.Dtos
 {
-    public class SearchResultDto<TModel> where TModel : IAzureModelIdentity
+    public class SearchResult<TModel> where TModel : IAzureModelIdentity
     {
-        public long? TotalCount { get; set; }
+        public long TotalCount { get; set; }
 
         public IEnumerable<TModel> Results { get; set; }
 

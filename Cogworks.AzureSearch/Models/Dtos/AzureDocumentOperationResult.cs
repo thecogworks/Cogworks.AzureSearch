@@ -1,6 +1,6 @@
 ﻿namespace Cogworks.AzureSearch.Models.Dtos
 {
-    public class AzureDocumentOperationResultDto
+    public class AzureDocumentOperationResult
     {
         public bool Succeeded { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace Cogworks.AzureSearch.Models.Dtos
 {
-    public class AzureIndexOperationResultDto
+    public class AzureIndexOperationResult
     {
         public bool Succeeded { get; set; }
 
