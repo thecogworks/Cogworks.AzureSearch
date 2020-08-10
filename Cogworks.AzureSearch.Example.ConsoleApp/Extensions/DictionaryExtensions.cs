@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cogworks.AzureSearch.ConsoleApp.Extensions
+namespace Cogworks.AzureSearch.Example.ConsoleApp.Extensions
 {
     public static class DictionaryExtensions
     {

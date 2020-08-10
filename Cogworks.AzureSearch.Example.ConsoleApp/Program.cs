@@ -1,11 +1,11 @@
 ﻿using Autofac;
 using Cogworks.AzureSearch.Autofac.Extensions;
-using Cogworks.AzureSearch.Core.Models.SearchModels;
+using Cogworks.AzureSearch.Example.Core.Models.SearchModels;
 using Cogworks.AzureSearch.Indexes;
 using Cogworks.AzureSearch.Initializers;
 using Cogworks.AzureSearch.Repositories;
 
-namespace Cogworks.AzureSearch.ConsoleApp
+namespace Cogworks.AzureSearch.Example.ConsoleApp
 {
     internal class Program
     {

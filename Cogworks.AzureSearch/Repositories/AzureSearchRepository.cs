@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Repositories
 {
-    public interface IAzureIndexOperation<TAzureModel> where TAzureModel : IAzureModelIdentity
+    public interface IAzureIndexOperation<in TAzureModel> where TAzureModel : IAzureModelIdentity
     {
         Task<bool> IndexExistsAsync();
 
@@ -25,7 +25,7 @@ namespace Cogworks.AzureSearch.Repositories
         Task IndexClearAsync();
     }
 
-    public interface IAzureDocumentOperation<TAzureModel> where TAzureModel : IAzureModelIdentity
+    public interface IAzureDocumentOperation<in TAzureModel> where TAzureModel : IAzureModelIdentity
     {
         Task AddOrUpdateDocumentAsync(TAzureModel model);
 
@@ -36,7 +36,7 @@ namespace Cogworks.AzureSearch.Repositories
         Task<IEnumerable<AzureRemoveResultDto>> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
     }
 
-    public interface IAzureSearchRepository<TAzureModel> : IAzureDocumentOperation<TAzureModel>, IAzureIndexOperation<TAzureModel>
+    public interface IAzureSearchRepository<in TAzureModel> : IAzureDocumentOperation<TAzureModel>, IAzureIndexOperation<TAzureModel>
         where TAzureModel : IAzureModelIdentity
     {
     }
