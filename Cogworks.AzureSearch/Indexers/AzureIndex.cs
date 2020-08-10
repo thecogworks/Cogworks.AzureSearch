@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Indexers
 {
-    public interface IAzureIndexer<in TAzureModel> where TAzureModel : IAzureModelIdentity
+    public interface IAzureIndex<in TAzureModel> where TAzureModel : IAzureModelIdentity
     {
         Task AddOrUpdateDocumentAsync(TAzureModel model);
 
@@ -17,11 +17,11 @@ namespace Cogworks.AzureSearch.Indexers
         Task<IEnumerable<AzureRemoveResultDto>> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
     }
 
-    public class AzureIndexer<TAzureModel> : IAzureIndexer<TAzureModel> where TAzureModel : class, IAzureModelIdentity, new()
+    public class AzureIndex<TAzureModel> : IAzureIndex<TAzureModel> where TAzureModel : class, IAzureModelIdentity, new()
     {
         private readonly IAzureSearchRepository<TAzureModel> _azureSearchRepository;
 
-        public AzureIndexer(IAzureSearchRepository<TAzureModel> azureSearchRepository)
+        public AzureIndex(IAzureSearchRepository<TAzureModel> azureSearchRepository)
             => _azureSearchRepository = azureSearchRepository;
 
         public async Task AddOrUpdateDocumentAsync(TAzureModel model)

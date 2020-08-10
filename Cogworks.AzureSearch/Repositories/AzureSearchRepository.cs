@@ -39,25 +39,25 @@ namespace Cogworks.AzureSearch.Repositories
 
     public class AzureSearchRepository<TAzureModel> : IAzureSearchRepository<TAzureModel> where TAzureModel : IAzureModelIdentity
     {
-        private readonly AzureIndex<TAzureModel> _azureIndex;
+        private readonly AzureIndexDefinition<TAzureModel> _azureIndexDefinition;
         private readonly ISearchIndexClient _searchIndex;
         private readonly ISearchServiceClient _searchServiceClient;
 
-        public AzureSearchRepository(AzureIndex<TAzureModel> azureIndex, AzureSearchClientOption azureSearchClientOption)
+        public AzureSearchRepository(AzureIndexDefinition<TAzureModel> azureIndexDefinition, AzureSearchClientOption azureSearchClientOption)
         {
-            _azureIndex = azureIndex;
+            _azureIndexDefinition = azureIndexDefinition;
             _searchServiceClient = azureSearchClientOption.GetSearchServiceClient();
-            _searchIndex = _searchServiceClient.Indexes.GetClient(azureIndex.IndexName);
+            _searchIndex = _searchServiceClient.Indexes.GetClient(azureIndexDefinition.IndexName);
         }
 
         public Task<bool> IndexExistsAsync()
-            => _searchServiceClient.Indexes.ExistsAsync(_azureIndex.IndexName);
+            => _searchServiceClient.Indexes.ExistsAsync(_azureIndexDefinition.IndexName);
 
         public async Task IndexDeleteAsync()
         {
             try
             {
-                await _searchServiceClient.Indexes.DeleteAsync(_azureIndex.IndexName);
+                await _searchServiceClient.Indexes.DeleteAsync(_azureIndexDefinition.IndexName);
             }
             catch (Exception e)
             {
@@ -69,7 +69,7 @@ namespace Cogworks.AzureSearch.Repositories
         {
             Index indexDefinition = new Index()
             {
-                Name = _azureIndex.IndexName,
+                Name = _azureIndexDefinition.IndexName,
                 Fields = FieldBuilder.BuildForType<TAzureModel>()
             };
 
@@ -132,7 +132,7 @@ namespace Cogworks.AzureSearch.Repositories
             }
             catch (IndexBatchException ex)
             {
-                //                _logger.Error<AzureIndexer>(ex,
+                //                _logger.Error<AzureIndex>(ex,
                 //                    $"Failed to index some documents: {string.Join(", ", ex.IndexingResults.Where(x => !x.Succeeded).Select(r => r.Key))}");
             }
         }
@@ -160,7 +160,7 @@ namespace Cogworks.AzureSearch.Repositories
             }
             catch (IndexBatchException ex)
             {
-                //                _logger.Error<AzureIndexer>(ex,
+                //                _logger.Error<AzureIndex>(ex,
                 //                    $"Failed to drop some documents: {string.Join(", ", ex.IndexingResults.Where(x => !x.Succeeded).Select(r => r.Key))}");
             }
 
