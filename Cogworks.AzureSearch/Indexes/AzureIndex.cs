@@ -4,7 +4,7 @@ using Cogworks.AzureSearch.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Cogworks.AzureSearch.Indexers
+namespace Cogworks.AzureSearch.Indexes
 {
     public interface IAzureIndex<in TAzureModel> where TAzureModel : IAzureModelIdentity
     {
@@ -19,9 +19,9 @@ namespace Cogworks.AzureSearch.Indexers
 
     public class AzureIndex<TAzureModel> : IAzureIndex<TAzureModel> where TAzureModel : class, IAzureModelIdentity, new()
     {
-        private readonly IAzureSearchRepository<TAzureModel> _azureSearchRepository;
+        private readonly IAzureDocumentOperation<TAzureModel> _azureSearchRepository;
 
-        public AzureIndex(IAzureSearchRepository<TAzureModel> azureSearchRepository)
+        public AzureIndex(IAzureDocumentOperation<TAzureModel> azureSearchRepository)
             => _azureSearchRepository = azureSearchRepository;
 
         public async Task AddOrUpdateDocumentAsync(TAzureModel model)

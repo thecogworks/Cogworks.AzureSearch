@@ -14,10 +14,8 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Repositories
 {
-    public interface IAzureSearchRepository<TAzureModel> where TAzureModel : IAzureModelIdentity
+    public interface IAzureIndexOperation<TAzureModel> where TAzureModel : IAzureModelIdentity
     {
-        // TODO: move it to Initializer
-
         Task<bool> IndexExistsAsync();
 
         Task IndexDeleteAsync();
@@ -25,7 +23,10 @@ namespace Cogworks.AzureSearch.Repositories
         Task IndexCreateOrUpdateAsync();
 
         Task IndexClearAsync();
+    }
 
+    public interface IAzureDocumentOperation<TAzureModel> where TAzureModel : IAzureModelIdentity
+    {
         Task AddOrUpdateDocumentAsync(TAzureModel model);
 
         Task AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models);
@@ -33,8 +34,11 @@ namespace Cogworks.AzureSearch.Repositories
         Task<AzureRemoveResultDto> TryRemoveDocumentAsync(TAzureModel model);
 
         Task<IEnumerable<AzureRemoveResultDto>> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
+    }
 
-        // TODO add search options
+    public interface IAzureSearchRepository<TAzureModel> : IAzureDocumentOperation<TAzureModel>, IAzureIndexOperation<TAzureModel>
+        where TAzureModel : IAzureModelIdentity
+    {
     }
 
     public class AzureSearchRepository<TAzureModel> : IAzureSearchRepository<TAzureModel> where TAzureModel : IAzureModelIdentity

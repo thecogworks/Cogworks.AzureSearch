@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cogworks.AzureSearch.Autofac\Cogworks.AzureSearch.Autofac.csproj" />
     <ProjectReference Include="..\Cogworks.AzureSearch.Core\Cogworks.AzureSearch.Core.csproj" />
   </ItemGroup>
 </Project>
