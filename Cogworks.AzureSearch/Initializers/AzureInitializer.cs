@@ -1,4 +1,5 @@
 ﻿using Cogworks.AzureSearch.Models;
+using Cogworks.AzureSearch.Models.Dtos;
 using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ namespace Cogworks.AzureSearch.Initializers
 {
     public interface IAzureInitializer<in TAzureModel> where TAzureModel : IAzureModelIdentity
     {
-        Task InitializeAsync();
+        Task<AzureIndexOperationResultDto> InitializeAsync();
     }
 
     public class AzureInitializer<TAzureModel> : IAzureInitializer<TAzureModel>
@@ -22,15 +23,14 @@ namespace Cogworks.AzureSearch.Initializers
             _azureIndexOperation = azureIndexOperation;
         }
 
-        public async Task InitializeAsync()
+        public async Task<AzureIndexOperationResultDto> InitializeAsync()
         {
             if (_azureSearchIndexOption.Recreate)
             {
                 await _azureIndexOperation.IndexDeleteAsync();
             }
 
-            // todo: catch exception or dto and validate with options
-            await _azureIndexOperation.IndexCreateOrUpdateAsync();
+            return await _azureIndexOperation.IndexCreateOrUpdateAsync();
         }
     }
 }

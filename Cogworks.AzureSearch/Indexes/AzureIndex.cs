@@ -8,13 +8,13 @@ namespace Cogworks.AzureSearch.Indexes
 {
     public interface IAzureIndex<in TAzureModel> where TAzureModel : IAzureModelIdentity
     {
-        Task AddOrUpdateDocumentAsync(TAzureModel model);
+        Task<AzureDocumentOperationResultDto> AddOrUpdateDocumentAsync(TAzureModel model);
 
-        Task AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models);
+        Task<AzureBatchDocumentsOperationResultDto> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models);
 
-        Task<AzureRemoveResultDto> TryRemoveDocumentAsync(TAzureModel model);
+        Task<AzureDocumentOperationResultDto> TryRemoveDocumentAsync(TAzureModel model);
 
-        Task<IEnumerable<AzureRemoveResultDto>> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
+        Task<AzureBatchDocumentsOperationResultDto> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
     }
 
     public class AzureIndex<TAzureModel> : IAzureIndex<TAzureModel> where TAzureModel : class, IAzureModelIdentity, new()
@@ -24,16 +24,16 @@ namespace Cogworks.AzureSearch.Indexes
         public AzureIndex(IAzureDocumentOperation<TAzureModel> azureSearchRepository)
             => _azureSearchRepository = azureSearchRepository;
 
-        public async Task AddOrUpdateDocumentAsync(TAzureModel model)
+        public async Task<AzureDocumentOperationResultDto> AddOrUpdateDocumentAsync(TAzureModel model)
             => await _azureSearchRepository.AddOrUpdateDocumentAsync(model);
 
-        public async Task<AzureRemoveResultDto> TryRemoveDocumentAsync(TAzureModel model)
+        public async Task<AzureDocumentOperationResultDto> TryRemoveDocumentAsync(TAzureModel model)
             => await _azureSearchRepository.TryRemoveDocumentAsync(model);
 
-        public async Task AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models)
+        public async Task<AzureBatchDocumentsOperationResultDto> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models)
             => await _azureSearchRepository.AddOrUpdateDocumentsAsync(models);
 
-        public async Task<IEnumerable<AzureRemoveResultDto>> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models)
+        public async Task<AzureBatchDocumentsOperationResultDto> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models)
             => await _azureSearchRepository.TryRemoveDocumentsAsync(models);
     }
 }

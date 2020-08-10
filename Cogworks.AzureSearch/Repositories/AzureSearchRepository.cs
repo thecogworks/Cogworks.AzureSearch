@@ -4,12 +4,9 @@ using Cogworks.AzureSearch.Models.Dtos;
 using Cogworks.AzureSearch.Options;
 using Microsoft.Azure.Search;
 using Microsoft.Azure.Search.Models;
-using Microsoft.Rest.Azure;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Repositories
@@ -18,22 +15,22 @@ namespace Cogworks.AzureSearch.Repositories
     {
         Task<bool> IndexExistsAsync();
 
-        Task IndexDeleteAsync();
+        Task<AzureIndexOperationResultDto> IndexDeleteAsync();
 
-        Task IndexCreateOrUpdateAsync();
+        Task<AzureIndexOperationResultDto> IndexCreateOrUpdateAsync();
 
-        Task IndexClearAsync();
+        Task<AzureIndexOperationResultDto> IndexClearAsync();
     }
 
     public interface IAzureDocumentOperation<in TAzureModel> where TAzureModel : IAzureModelIdentity
     {
-        Task AddOrUpdateDocumentAsync(TAzureModel model);
+        Task<AzureDocumentOperationResultDto> AddOrUpdateDocumentAsync(TAzureModel model);
 
-        Task AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models);
+        Task<AzureBatchDocumentsOperationResultDto> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models);
 
-        Task<AzureRemoveResultDto> TryRemoveDocumentAsync(TAzureModel model);
+        Task<AzureDocumentOperationResultDto> TryRemoveDocumentAsync(TAzureModel model);
 
-        Task<IEnumerable<AzureRemoveResultDto>> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
+        Task<AzureBatchDocumentsOperationResultDto> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
     }
 
     public interface IAzureSearchRepository<in TAzureModel> : IAzureDocumentOperation<TAzureModel>, IAzureIndexOperation<TAzureModel>
@@ -57,71 +54,78 @@ namespace Cogworks.AzureSearch.Repositories
         public Task<bool> IndexExistsAsync()
             => _searchServiceClient.Indexes.ExistsAsync(_azureIndexDefinition.IndexName);
 
-        public async Task IndexDeleteAsync()
+        public async Task<AzureIndexOperationResultDto> IndexDeleteAsync()
         {
+            var result = new AzureIndexOperationResultDto();
+
             try
             {
                 await _searchServiceClient.Indexes.DeleteAsync(_azureIndexDefinition.IndexName);
+
+                result.Succeeded = true;
+                result.Message = $"Index {_azureIndexDefinition.IndexName} successfully deleted.";
             }
             catch (Exception e)
             {
+                result.Message = $"An issue occured on deleting index: {_azureIndexDefinition.IndexName}. More information: {e.Message}";
             }
+
+            return result;
         }
 
-        // TODO: result DTO
-        public async Task IndexCreateOrUpdateAsync()
+        public async Task<AzureIndexOperationResultDto> IndexCreateOrUpdateAsync()
         {
-            Index indexDefinition = new Index()
+            var indexDefinition = new Index()
             {
                 Name = _azureIndexDefinition.IndexName,
                 Fields = FieldBuilder.BuildForType<TAzureModel>()
             };
 
+            var result = new AzureIndexOperationResultDto();
+
             try
             {
                 await _searchServiceClient.Indexes.CreateOrUpdateAsync(indexDefinition);
-            }
-            catch (CloudException cloudException)
-            {
-                //                _logger.Error(typeof(CloudException), cloudException, cloudException.Message);
-            }
-            catch (SerializationException serializationException)
-            {
-                //                _logger.Error(typeof(SerializationException), serializationException, serializationException.Message);
-            }
-            catch (ValidationException validationException)
-            {
-                //                _logger.Error(typeof(ValidationException), validationException, validationException.Message);
-            }
-            catch (ArgumentException argumentException)
-            {
-                //                _logger.Error(typeof(ArgumentException), argumentException, argumentException.Message);
+
+                result.Message = $"Index {_azureIndexDefinition.IndexName} successfully created or updated.";
+                result.Succeeded = true;
             }
             catch (Exception exception)
             {
-                //                _logger.Error(typeof(Exception), exception, exception.Message);
+                result.Message = $"An issue occured on creating or updating index: {_azureIndexDefinition.IndexName}. More information: {exception.Message}";
             }
+
+            return result;
         }
 
-        public async Task IndexClearAsync()
+        public async Task<AzureIndexOperationResultDto> IndexClearAsync()
         {
             if (await IndexExistsAsync())
             {
                 await IndexDeleteAsync();
             }
 
-            await IndexCreateOrUpdateAsync();
+            return await IndexCreateOrUpdateAsync();
         }
 
-        public async Task AddOrUpdateDocumentAsync(TAzureModel model)
-            => await AddOrUpdateDocumentsAsync(new[] { model });
+        public async Task<AzureDocumentOperationResultDto> AddOrUpdateDocumentAsync(TAzureModel model)
+        {
+            var azureBatchDocumentsOperationResult = await AddOrUpdateDocumentsAsync(new[] { model });
 
-        // TODO: DTO as result, in libraries we cannot have loggers !!!
-        public async Task AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models)
+            return azureBatchDocumentsOperationResult.Succeeded
+                ? azureBatchDocumentsOperationResult.SucceededDocuments.FirstOrDefault()
+                : azureBatchDocumentsOperationResult.FailedDocuments.FirstOrDefault();
+        }
+
+        public async Task<AzureBatchDocumentsOperationResultDto> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models)
         {
             if (!models.HasAny())
             {
-                return;
+                return new AzureBatchDocumentsOperationResultDto()
+                {
+                    Succeeded = true,
+                    Message = "No documents found to index."
+                };
             }
 
             var batchActions = models
@@ -130,25 +134,43 @@ namespace Cogworks.AzureSearch.Repositories
 
             var batch = IndexBatch.New(batchActions);
 
+            var indexResults = Enumerable.Empty<IndexingResult>();
+
             try
             {
-                await _searchIndex.Documents.IndexAsync(batch);
+                var result = await _searchIndex.Documents.IndexAsync(batch);
+                indexResults = result.Results;
             }
-            catch (IndexBatchException ex)
+            catch (IndexBatchException indexBatchException)
             {
-                //                _logger.Error<AzureIndex>(ex,
-                //                    $"Failed to index some documents: {string.Join(", ", ex.IndexingResults.Where(x => !x.Succeeded).Select(r => r.Key))}");
+                indexResults = indexBatchException.IndexingResults;
             }
+            catch (Exception exception)
+            {
+                // todo: handle it proper
+            }
+
+            return GetBatchOperationStatus(indexResults, "adding or updating");
         }
 
-        public async Task<AzureRemoveResultDto> TryRemoveDocumentAsync(TAzureModel model)
-            => (await TryRemoveDocumentsAsync(new[] { model })).FirstOrDefault();
+        public async Task<AzureDocumentOperationResultDto> TryRemoveDocumentAsync(TAzureModel model)
+        {
+            var azureBatchDocumentsOperationResult = await TryRemoveDocumentsAsync(new[] { model });
 
-        public async Task<IEnumerable<AzureRemoveResultDto>> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models)
+            return azureBatchDocumentsOperationResult.Succeeded
+                ? azureBatchDocumentsOperationResult.SucceededDocuments.FirstOrDefault()
+                : azureBatchDocumentsOperationResult.FailedDocuments.FirstOrDefault();
+        }
+
+        public async Task<AzureBatchDocumentsOperationResultDto> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models)
         {
             if (!models.HasAny())
             {
-                return Enumerable.Empty<AzureRemoveResultDto>();
+                return new AzureBatchDocumentsOperationResultDto()
+                {
+                    Succeeded = true,
+                    Message = "No documents found to delete."
+                };
             }
 
             var batchActions = models
@@ -156,26 +178,47 @@ namespace Cogworks.AzureSearch.Repositories
                 .ToList();
 
             var batch = IndexBatch.New(batchActions);
-            DocumentIndexResult result = null;
+            var indexResults = Enumerable.Empty<IndexingResult>();
 
             try
             {
-                result = await _searchIndex.Documents.IndexAsync(batch);
+                var result = await _searchIndex.Documents.IndexAsync(batch);
+                indexResults = result.Results;
             }
-            catch (IndexBatchException ex)
+            catch (IndexBatchException indexBatchException)
             {
-                //                _logger.Error<AzureIndex>(ex,
-                //                    $"Failed to drop some documents: {string.Join(", ", ex.IndexingResults.Where(x => !x.Succeeded).Select(r => r.Key))}");
+                indexResults = indexBatchException.IndexingResults;
+            }
+            catch (Exception exception)
+            {
+                // todo: handle it proper
             }
 
-            return result?.Results
-                       .Select(r => new AzureRemoveResultDto
-                       {
-                           Succeeded = r.Succeeded,
-                           ModelId = r.Key
-                       })
-                       .ToList()
-                   ?? Enumerable.Empty<AzureRemoveResultDto>();
+            return GetBatchOperationStatus(indexResults, "removing");
+        }
+
+        private AzureBatchDocumentsOperationResultDto GetBatchOperationStatus(IEnumerable<IndexingResult> indexingResults, string operationType)
+        {
+            var successfullyItems = indexingResults.Where(x => x.Succeeded).ToList();
+            var failedItems = indexingResults.Where(x => !x.Succeeded).ToList();
+
+            return new AzureBatchDocumentsOperationResultDto
+            {
+                Succeeded = !failedItems.Any(),
+                SucceededDocuments = successfullyItems.Select(successfullyItem => new AzureDocumentOperationResultDto
+                {
+                    Succeeded = true,
+                    Message = $"Successfully {operationType} document.",
+                    ModelId = successfullyItem.Key,
+                    StatusCode = successfullyItem.StatusCode
+                }).ToList(),
+                FailedDocuments = failedItems.Select(failedItem => new AzureDocumentOperationResultDto
+                {
+                    Message = $"Failed {operationType} document.",
+                    ModelId = failedItem.Key,
+                    StatusCode = failedItem.StatusCode
+                }).ToList(),
+            };
         }
     }
 }
