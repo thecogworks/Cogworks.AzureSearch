@@ -44,6 +44,8 @@ namespace Cogworks.AzureSearch.Repositories
         private readonly ISearchIndexClient _searchIndex;
         private readonly ISearchServiceClient _searchServiceClient;
 
+        private const int BatchOperationSize = 500;
+
         public AzureSearchRepository(AzureIndexDefinition<TAzureModel> azureIndexDefinition, AzureSearchClientOption azureSearchClientOption)
         {
             _azureIndexDefinition = azureIndexDefinition;
@@ -128,26 +130,30 @@ namespace Cogworks.AzureSearch.Repositories
                 };
             }
 
-            var batchActions = models
+            var chunkedBatchActions = models
                 .Select(model => new IndexAction<TAzureModel>(model, IndexActionType.Upload))
+                .ChunkBy(BatchOperationSize)
                 .ToList();
 
-            var batch = IndexBatch.New(batchActions);
+            var indexResults = new List<IndexingResult>();
 
-            var indexResults = Enumerable.Empty<IndexingResult>();
+            foreach (var batchActions in chunkedBatchActions)
+            {
+                var batch = IndexBatch.New(batchActions);
 
-            try
-            {
-                var result = await _searchIndex.Documents.IndexAsync(batch);
-                indexResults = result.Results;
-            }
-            catch (IndexBatchException indexBatchException)
-            {
-                indexResults = indexBatchException.IndexingResults;
-            }
-            catch (Exception exception)
-            {
-                // todo: handle it proper
+                try
+                {
+                    var result = await _searchIndex.Documents.IndexAsync(batch);
+                    indexResults.AddRange(result.Results);
+                }
+                catch (IndexBatchException indexBatchException)
+                {
+                    indexResults.AddRange(indexBatchException.IndexingResults);
+                }
+                catch (Exception exception)
+                {
+                    // todo: handle it proper
+                }
             }
 
             return GetBatchOperationStatus(indexResults, "adding or updating");
@@ -173,25 +179,30 @@ namespace Cogworks.AzureSearch.Repositories
                 };
             }
 
-            var batchActions = models
+            var chunkedBatchActions = models
                 .Select(model => new IndexAction<TAzureModel>(model, IndexActionType.Delete))
+                .ChunkBy(BatchOperationSize)
                 .ToList();
 
-            var batch = IndexBatch.New(batchActions);
-            var indexResults = Enumerable.Empty<IndexingResult>();
+            var indexResults = new List<IndexingResult>();
 
-            try
+            foreach (var batchActions in chunkedBatchActions)
             {
-                var result = await _searchIndex.Documents.IndexAsync(batch);
-                indexResults = result.Results;
-            }
-            catch (IndexBatchException indexBatchException)
-            {
-                indexResults = indexBatchException.IndexingResults;
-            }
-            catch (Exception exception)
-            {
-                // todo: handle it proper
+                var batch = IndexBatch.New(batchActions);
+
+                try
+                {
+                    var result = await _searchIndex.Documents.IndexAsync(batch);
+                    indexResults.AddRange(result.Results);
+                }
+                catch (IndexBatchException indexBatchException)
+                {
+                    indexResults.AddRange(indexBatchException.IndexingResults);
+                }
+                catch (Exception exception)
+                {
+                    // todo: handle it proper
+                }
             }
 
             return GetBatchOperationStatus(indexResults, "removing");
