@@ -21,13 +21,15 @@ namespace Cogworks.AzureSearch.Autofac.Extensions
                 .SingleInstance();
 
         public static void RegisterClientOptions(this ContainerBuilder builder, string serviceName, string credentials)
-            => builder
-                .Register(_ => new AzureSearchClientOption(serviceName, credentials))
+            => builder.Register(_ => new AzureSearchClientOption(serviceName, credentials))
                 .AsSelf()
                 .SingleInstance();
 
-        public static void RegisterIndexDefinitions<TDocument>(this ContainerBuilder builder, string indexName) where TDocument : IAzureModelIdentity
-            => builder.Register(_ => new AzureIndexDefinition<TDocument>(indexName)).AsSelf().SingleInstance();
+        public static void RegisterIndexDefinitions<TDocument>(this ContainerBuilder builder, string indexName)
+            where TDocument : class, IAzureModelIdentity, new()
+            => builder.Register(_ => new AzureIndexDefinition<TDocument>(indexName))
+                .AsSelf()
+                .SingleInstance();
 
         public static void RegisterIndexes(this ContainerBuilder builder)
             => builder.RegisterGeneric(typeof(AzureIndex<>))
@@ -46,5 +48,13 @@ namespace Cogworks.AzureSearch.Autofac.Extensions
             => builder.RegisterGeneric(typeof(AzureSearch<>))
                 .As(typeof(IAzureSearch<>))
                 .InstancePerDependency();
+
+        public static void RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(this ContainerBuilder builder)
+            where TDocument : class, IAzureModelIdentity, new()
+            where TSearcher : IAzureSearch<TDocument>
+            => builder.RegisterType<TSearcher>()
+                .As<TSearcherType>()
+                .AsSelf()
+                .SingleInstance();
     }
 }

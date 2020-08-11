@@ -8,8 +8,4 @@
     <ProjectReference Include="..\Cogworks.AzureSearch\Cogworks.AzureSearch.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\SearchServices\" />
-  </ItemGroup>
-
 </Project>
