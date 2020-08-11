@@ -4,7 +4,7 @@ namespace Cogworks.AzureSearch.Filters
 {
     public static class ArrayOperationsFilter
     {
-        internal static string SearchIn(this string query, string field, string searchedValue, string separator = Constants.StringConstants.Separators.Comma)
+        public static string SearchIn(this string query, string field, string searchedValue, string separator = Constants.StringConstants.Separators.Comma)
         {
             if (!field.HasValue())
             {
