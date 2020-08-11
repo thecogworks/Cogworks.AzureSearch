@@ -6,7 +6,7 @@ namespace Cogworks.AzureSearch.Models.Dtos
     {
         public long TotalCount { get; set; }
 
-        public IEnumerable<TModel> Results { get; set; }
+        public IEnumerable<SearchResultItem<TModel>> Results { get; set; }
 
         public bool HasMoreItems { get; set; }
     }

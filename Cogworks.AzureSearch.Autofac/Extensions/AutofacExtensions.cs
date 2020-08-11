@@ -4,6 +4,7 @@ using Cogworks.AzureSearch.Initializers;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
+using Cogworks.AzureSearch.Searchers;
 
 namespace Cogworks.AzureSearch.Autofac.Extensions
 {
@@ -38,6 +39,12 @@ namespace Cogworks.AzureSearch.Autofac.Extensions
                 .As(typeof(IAzureSearchRepository<>))
                 .As(typeof(IAzureIndexOperation<>))
                 .As(typeof(IAzureDocumentOperation<>))
+                .As(typeof(IAzureDocumentSearch<>))
+                .InstancePerDependency();
+
+        public static void RegisterSearchers(this ContainerBuilder builder)
+            => builder.RegisterGeneric(typeof(AzureSearch<>))
+                .As(typeof(IAzureSearch<>))
                 .InstancePerDependency();
     }
 }

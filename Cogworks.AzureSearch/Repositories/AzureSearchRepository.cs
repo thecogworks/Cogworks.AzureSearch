@@ -33,7 +33,17 @@ namespace Cogworks.AzureSearch.Repositories
         Task<AzureBatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
     }
 
-    public interface IAzureSearchRepository<in TAzureModel> : IAzureDocumentOperation<TAzureModel>, IAzureIndexOperation<TAzureModel>
+    public interface IAzureDocumentSearch<TAzureModel> where TAzureModel : IAzureModelIdentity
+    {
+        Models.Dtos.SearchResult<TAzureModel> Search(string keyword, AzureSearchParameters azureSearchParameters);
+
+        Task<Models.Dtos.SearchResult<TAzureModel>> SearchAsync(string keyword, AzureSearchParameters azureSearchParameters);
+    }
+
+    public interface IAzureSearchRepository<TAzureModel> :
+        IAzureDocumentOperation<TAzureModel>,
+        IAzureIndexOperation<TAzureModel>,
+        IAzureDocumentSearch<TAzureModel>
         where TAzureModel : IAzureModelIdentity
     {
     }
@@ -206,6 +216,74 @@ namespace Cogworks.AzureSearch.Repositories
             }
 
             return GetBatchOperationStatus(indexResults, "removing");
+        }
+
+        public Models.Dtos.SearchResult<TAzureModel> Search(string keyword, AzureSearchParameters azureSearchParameters)
+        {
+            var searchText = GetSearchText(keyword);
+            var parameters = GetSearchParameters(azureSearchParameters);
+            var results = _searchIndex.Documents.Search<TAzureModel>($"{searchText}", parameters);
+
+            return GetSearchResult(results, azureSearchParameters.Skip, azureSearchParameters.Take);
+        }
+
+        public async Task<Models.Dtos.SearchResult<TAzureModel>> SearchAsync(string keyword,
+            AzureSearchParameters azureSearchParameters)
+        {
+            var searchText = GetSearchText(keyword);
+            var parameters = GetSearchParameters(azureSearchParameters);
+            var results = await _searchIndex.Documents.SearchAsync<TAzureModel>($"{searchText}", parameters);
+
+            return GetSearchResult(results, azureSearchParameters.Skip, azureSearchParameters.Take);
+        }
+
+        private static string GetSearchText(string keyword)
+            => keyword.EscapeHyphen().HasValue()
+                ? keyword.EscapeHyphen()
+                : "*";
+
+        private static SearchParameters GetSearchParameters(AzureSearchParameters azureSearchParameters)
+            => new SearchParameters
+            {
+                Facets = azureSearchParameters.Facets,
+                Filter = azureSearchParameters.Filter,
+                HighlightFields = azureSearchParameters.HighlightFields,
+                HighlightPostTag = azureSearchParameters.HighlightPostTag,
+                HighlightPreTag = azureSearchParameters.HighlightPreTag,
+                IncludeTotalResultCount = azureSearchParameters.IncludeTotalResultCount,
+                MinimumCoverage = azureSearchParameters.MinimumCoverage,
+                OrderBy = azureSearchParameters.OrderBy,
+                QueryType = azureSearchParameters.QueryType == Enums.AzureQueryType.Full
+                    ? QueryType.Full
+                    : QueryType.Simple,
+                ScoringProfile = azureSearchParameters.ScoringProfile,
+                SearchFields = azureSearchParameters.SearchFields,
+                SearchMode = azureSearchParameters.SearchMode == Enums.AzureSearchModeType.Any
+                    ? SearchMode.Any
+                    : SearchMode.All,
+                Select = azureSearchParameters.Select,
+                Skip = azureSearchParameters.Skip,
+                Top = azureSearchParameters.Take
+            };
+
+        private Models.Dtos.SearchResult<TAzureModel> GetSearchResult(DocumentSearchResult<TAzureModel> results, int skip, int take)
+        {
+            var resultsCount = results.Count ?? 0;
+
+            var searchedDocuments = results.Results
+                .Select(resultDocument => new SearchResultItem<TAzureModel>(
+                    resultDocument.Document,
+                    resultDocument.Highlights,
+                    resultDocument.Score
+                ))
+                .ToArray();
+
+            return new Models.Dtos.SearchResult<TAzureModel>()
+            {
+                HasMoreItems = skip + take < resultsCount,
+                TotalCount = resultsCount,
+                Results = searchedDocuments
+            };
         }
 
         private AzureBatchDocumentsOperationResult GetBatchOperationStatus(IEnumerable<IndexingResult> indexingResults, string operationType)
