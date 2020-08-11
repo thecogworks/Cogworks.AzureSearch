@@ -29,7 +29,6 @@ namespace Cogworks.AzureSearch.Example.ConsoleApp
 
             builder.RegisterIndexDefinitions<EventDocument>("event");
             builder.RegisterIndexDefinitions<NewsDocument>("news");
-            builder.RegisterIndexDefinitions<GlobalModel>("global");
 
             builder.RegisterDomainSearcher<EventSearch, IEventSearch, EventDocument>();
 
