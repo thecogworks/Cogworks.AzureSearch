@@ -26,7 +26,7 @@ namespace Cogworks.AzureSearch.Autofac.Extensions
                 .SingleInstance();
 
         public static void RegisterIndexDefinitions<TDocument>(this ContainerBuilder builder, string indexName)
-            where TDocument : class, IAzureModelIdentity, new()
+            where TDocument : class, IAzureModel, new()
             => builder.Register(_ => new AzureIndexDefinition<TDocument>(indexName))
                 .AsSelf()
                 .SingleInstance();
@@ -50,7 +50,7 @@ namespace Cogworks.AzureSearch.Autofac.Extensions
                 .InstancePerDependency();
 
         public static void RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(this ContainerBuilder builder)
-            where TDocument : class, IAzureModelIdentity, new()
+            where TDocument : class, IAzureModel, new()
             where TSearcher : IAzureSearch<TDocument>
             => builder.RegisterType<TSearcher>()
                 .As<TSearcherType>()

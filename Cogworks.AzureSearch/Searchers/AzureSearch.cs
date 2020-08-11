@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Searchers
 {
-    public interface IAzureSearch<TAzureModel> where TAzureModel : class, IAzureModelIdentity, new()
+    public interface IAzureSearch<TAzureModel> where TAzureModel : class, IAzureModel, new()
     {
         SearchResult<TAzureModel> Search(string keyword, AzureSearchParameters azureSearchParameters);
 
@@ -13,7 +13,7 @@ namespace Cogworks.AzureSearch.Searchers
     }
 
     public class AzureSearch<TAzureModel> : IAzureSearch<TAzureModel>
-        where TAzureModel : class, IAzureModelIdentity, new()
+        where TAzureModel : class, IAzureModel, new()
     {
         private readonly IAzureDocumentSearch<TAzureModel> _azureSearchRepository;
 

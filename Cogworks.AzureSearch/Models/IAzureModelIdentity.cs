@@ -1,6 +1,6 @@
 ﻿namespace Cogworks.AzureSearch.Models
 {
-    public interface IAzureModelIdentity
+    public interface IAzureModelIdentity : IAzureModel
     {
         string Id { get; set; }
     }

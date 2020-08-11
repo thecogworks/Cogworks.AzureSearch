@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Initializers
 {
-    public interface IAzureInitializer<in TAzureModel> where TAzureModel : IAzureModelIdentity
+    public interface IAzureInitializer<in TAzureModel> where TAzureModel : class, IAzureModel, new()
     {
         Task<AzureIndexOperationResult> InitializeAsync();
     }
 
     public class AzureInitializer<TAzureModel> : IAzureInitializer<TAzureModel>
-        where TAzureModel : IAzureModelIdentity
+        where TAzureModel : class, IAzureModel, new()
     {
         private readonly AzureSearchIndexOption _azureSearchIndexOption;
         private readonly IAzureIndexOperation<TAzureModel> _azureIndexOperation;

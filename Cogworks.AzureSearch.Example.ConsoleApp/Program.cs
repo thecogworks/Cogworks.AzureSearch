@@ -38,7 +38,6 @@ namespace Cogworks.AzureSearch.Example.ConsoleApp
             var newsRepository = container.Resolve<IAzureSearchRepository<NewsDocument>>();
 
             var newsDocumentOperation = container.Resolve<IAzureDocumentOperation<NewsDocument>>();
-
             var newsIndexOperation = container.Resolve<IAzureIndexOperation<NewsDocument>>();
 
             var azureEventIndex = container.Resolve<IAzureIndex<EventDocument>>();

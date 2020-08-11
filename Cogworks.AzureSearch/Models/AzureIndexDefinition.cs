@@ -1,6 +1,6 @@
 ﻿namespace Cogworks.AzureSearch.Models
 {
-    public class AzureIndexDefinition<TAzureModel> where TAzureModel : IAzureModelIdentity
+    public class AzureIndexDefinition<TAzureModel> where TAzureModel : class, IAzureModel, new()
     {
         public string IndexName { get; }
 

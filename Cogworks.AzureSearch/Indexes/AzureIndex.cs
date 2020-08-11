@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Indexes
 {
-    public interface IAzureIndex<in TAzureModel> where TAzureModel : IAzureModelIdentity
+    public interface IAzureIndex<in TAzureModel> where TAzureModel : class, IAzureModel, new()
     {
         Task<AzureDocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model);
 
@@ -17,7 +17,7 @@ namespace Cogworks.AzureSearch.Indexes
         Task<AzureBatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
     }
 
-    public class AzureIndex<TAzureModel> : IAzureIndex<TAzureModel> where TAzureModel : class, IAzureModelIdentity, new()
+    public class AzureIndex<TAzureModel> : IAzureIndex<TAzureModel> where TAzureModel : class, IAzureModel, new()
     {
         private readonly IAzureDocumentOperation<TAzureModel> _azureSearchRepository;
 
