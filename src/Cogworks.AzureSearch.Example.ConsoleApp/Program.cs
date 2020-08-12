@@ -15,22 +15,12 @@ namespace Cogworks.AzureSearch.Example.ConsoleApp
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterIndexOptions(true, false);
-
-            builder.RegisterClientOptions("test", "testPassword");
-
-            builder.RegisterRepositories();
-
-            builder.RegisterIndexes();
-
-            builder.RegisterSearchers();
-
-            builder.RegisterInitializers();
-
-            builder.RegisterIndexDefinitions<EventDocument>("event");
-            builder.RegisterIndexDefinitions<NewsDocument>("news");
-
-            builder.RegisterDomainSearcher<EventSearch, IEventSearch, EventDocument>();
+            builder.RegisterAzureSearch()
+                .RegisterIndexOptions(true, false)
+                .RegisterClientOptions("test", "testPassword")
+                .RegisterIndexDefinitions<EventDocument>("event")
+                .RegisterIndexDefinitions<NewsDocument>("news")
+                .RegisterDomainSearcher<EventSearch, IEventSearch, EventDocument>();
 
             var container = builder.Build();
 
