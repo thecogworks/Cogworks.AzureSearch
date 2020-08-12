@@ -1,7 +1,7 @@
 ﻿using Cogworks.AzureSearch.Extensions;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Models.Dtos;
-using Cogworks.AzureSearch.Options;
+using Cogworks.AzureSearch.Wrappers;
 using Microsoft.Azure.Search;
 using Microsoft.Azure.Search.Models;
 using System;
@@ -52,20 +52,23 @@ namespace Cogworks.AzureSearch.Repositories
         where TAzureModel : class, IAzureModel, new()
     {
         private readonly AzureIndexDefinition<TAzureModel> _azureIndexDefinition;
-        private readonly ISearchIndexClient _searchIndex;
-        private readonly ISearchServiceClient _searchServiceClient;
+        private readonly IIndexOperationWrapper _indexOperationWrapper;
+        private readonly IDocumentOperationWrapper<TAzureModel> _documentOperationWrapper;
 
         private const int BatchOperationSize = 500;
 
-        public AzureSearchRepository(AzureIndexDefinition<TAzureModel> azureIndexDefinition, AzureSearchClientOption azureSearchClientOption)
+        public AzureSearchRepository(
+            AzureIndexDefinition<TAzureModel> azureIndexDefinition,
+            IIndexOperationWrapper indexOperationWrapper,
+            IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)
         {
             _azureIndexDefinition = azureIndexDefinition;
-            _searchServiceClient = azureSearchClientOption.GetSearchServiceClient();
-            _searchIndex = _searchServiceClient.Indexes.GetClient(azureIndexDefinition.IndexName);
+            _indexOperationWrapper = indexOperationWrapper;
+            _documentOperationWrapper = documentOperationWrapper;
         }
 
-        public Task<bool> IndexExistsAsync()
-            => _searchServiceClient.Indexes.ExistsAsync(_azureIndexDefinition.IndexName);
+        public async Task<bool> IndexExistsAsync()
+            => await _indexOperationWrapper.ExistsAsync(_azureIndexDefinition.IndexName);
 
         public async Task<AzureIndexOperationResult> IndexDeleteAsync()
         {
@@ -73,7 +76,7 @@ namespace Cogworks.AzureSearch.Repositories
 
             try
             {
-                await _searchServiceClient.Indexes.DeleteAsync(_azureIndexDefinition.IndexName);
+                await _indexOperationWrapper.DeleteAsync(_azureIndexDefinition.IndexName);
 
                 result.Succeeded = true;
                 result.Message = $"Index {_azureIndexDefinition.IndexName} successfully deleted.";
@@ -88,17 +91,11 @@ namespace Cogworks.AzureSearch.Repositories
 
         public async Task<AzureIndexOperationResult> IndexCreateOrUpdateAsync()
         {
-            var indexDefinition = new Index()
-            {
-                Name = _azureIndexDefinition.IndexName,
-                Fields = FieldBuilder.BuildForType<TAzureModel>()
-            };
-
             var result = new AzureIndexOperationResult();
 
             try
             {
-                await _searchServiceClient.Indexes.CreateOrUpdateAsync(indexDefinition);
+                _ = await _indexOperationWrapper.CreateOrUpdateAsync<TAzureModel>(_azureIndexDefinition.IndexName);
 
                 result.Message = $"Index {_azureIndexDefinition.IndexName} successfully created or updated.";
                 result.Succeeded = true;
@@ -115,7 +112,7 @@ namespace Cogworks.AzureSearch.Repositories
         {
             if (await IndexExistsAsync())
             {
-                await IndexDeleteAsync();
+                _ = await IndexDeleteAsync();
             }
 
             return await IndexCreateOrUpdateAsync();
@@ -154,7 +151,7 @@ namespace Cogworks.AzureSearch.Repositories
 
                 try
                 {
-                    var result = await _searchIndex.Documents.IndexAsync(batch);
+                    var result = await _documentOperationWrapper.IndexAsync(batch);
                     indexResults.AddRange(result.Results);
                 }
                 catch (IndexBatchException indexBatchException)
@@ -203,7 +200,7 @@ namespace Cogworks.AzureSearch.Repositories
 
                 try
                 {
-                    var result = await _searchIndex.Documents.IndexAsync(batch);
+                    var result = await _documentOperationWrapper.IndexAsync(batch);
                     indexResults.AddRange(result.Results);
                 }
                 catch (IndexBatchException indexBatchException)
@@ -223,7 +220,7 @@ namespace Cogworks.AzureSearch.Repositories
         {
             var searchText = GetSearchText(keyword);
             var parameters = GetSearchParameters(azureSearchParameters);
-            var results = _searchIndex.Documents.Search<TAzureModel>($"{searchText}", parameters);
+            var results = _documentOperationWrapper.Search($"{searchText}", parameters);
 
             return GetSearchResult(results, azureSearchParameters.Skip, azureSearchParameters.Take);
         }
@@ -233,7 +230,7 @@ namespace Cogworks.AzureSearch.Repositories
         {
             var searchText = GetSearchText(keyword);
             var parameters = GetSearchParameters(azureSearchParameters);
-            var results = await _searchIndex.Documents.SearchAsync<TAzureModel>($"{searchText}", parameters);
+            var results = await _documentOperationWrapper.SearchAsync($"{searchText}", parameters);
 
             return GetSearchResult(results, azureSearchParameters.Skip, azureSearchParameters.Take);
         }

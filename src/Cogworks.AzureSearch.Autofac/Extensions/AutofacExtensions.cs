@@ -5,6 +5,7 @@ using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
+using Cogworks.AzureSearch.Wrappers;
 
 namespace Cogworks.AzureSearch.Autofac.Extensions
 {
@@ -61,6 +62,19 @@ namespace Cogworks.AzureSearch.Autofac.Extensions
             return this;
         }
 
+        internal AzureSearchBuilder RegisterWrappers()
+        {
+            _builder.RegisterGeneric(typeof(DocumentOperationWrapper<>))
+                .As(typeof(IDocumentOperationWrapper<>))
+                .InstancePerDependency();
+
+            _builder.RegisterType<IndexOperationWrapper>()
+                .AsImplementedInterfaces()
+                .InstancePerDependency();
+
+            return this;
+        }
+
         internal AzureSearchBuilder RegisterRepositories()
         {
             _builder.RegisterGeneric(typeof(AzureSearchRepository<>))
@@ -102,6 +116,7 @@ namespace Cogworks.AzureSearch.Autofac.Extensions
                 .RegisterRepositories()
                 .RegisterIndexes()
                 .RegisterSearchers()
-                .RegisterInitializers();
+                .RegisterInitializers()
+                .RegisterWrappers();
     }
 }
