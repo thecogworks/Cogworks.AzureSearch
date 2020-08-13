@@ -4,6 +4,7 @@ using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.UnitTests.Models;
 using Cogworks.AzureSearch.Wrappers;
+using Microsoft.Azure.Search.Models;
 using Microsoft.Rest.Azure;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
@@ -148,5 +149,46 @@ namespace Cogworks.AzureSearch.UnitTests.Repositories
         }
 
         #endregion Delete Tests
+
+        #region Index Create or Update Tests
+
+        [Fact]
+        public async Task Should_CreateOrUpdateIndex()
+        {
+            // Arrange
+            var createdOrUpdatedIndex = new Index
+            {
+                Name = _testDocumentModelDefinition.IndexName
+            };
+
+            _indexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<string>())
+                .Returns(createdOrUpdatedIndex);
+
+            // Act
+            var operationResult = await _azureIndexOperation.IndexCreateOrUpdateAsync();
+
+            // Assert
+            Assert.NotNull(operationResult);
+            Assert.True(operationResult.Succeeded);
+            Assert.Equal($"Index {_testDocumentModelDefinition.IndexName} successfully created or updated.", operationResult.Message);
+        }
+
+        [Fact]
+        public async Task Should_Not_ThrowException_When_IssueOnCreatingOrUpdatingIndex()
+        {
+            // Arrange
+            _indexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<string>())
+                .Throws(_ => new CloudException(_azureWrapperException));
+
+            // Act
+            var operationResult = await _azureIndexOperation.IndexCreateOrUpdateAsync();
+
+            // Assert
+            Assert.NotNull(operationResult);
+            Assert.False(operationResult.Succeeded);
+            Assert.Equal($"An issue occured on creating or updating index: {_testDocumentModelDefinition.IndexName}. More information: {_azureWrapperException}", operationResult.Message);
+        }
+
+        #endregion Index Create or Update Tests
     }
 }
