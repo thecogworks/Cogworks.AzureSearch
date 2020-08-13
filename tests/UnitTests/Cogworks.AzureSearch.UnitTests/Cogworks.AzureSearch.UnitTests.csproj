@@ -31,4 +31,10 @@
     <ProjectReference Include="..\..\..\src\Cogworks.AzureSearch\Cogworks.AzureSearch.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Initializers\" />
+    <Folder Include="Filters\" />
+    <Folder Include="Options\" />
+  </ItemGroup>
+
 </Project>
