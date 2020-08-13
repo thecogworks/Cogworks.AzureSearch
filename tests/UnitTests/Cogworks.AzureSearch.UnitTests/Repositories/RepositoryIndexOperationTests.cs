@@ -190,5 +190,75 @@ namespace Cogworks.AzureSearch.UnitTests.Repositories
         }
 
         #endregion Index Create or Update Tests
+
+        #region Index Clear Tests
+
+        [Fact]
+        public async Task Should_ClearIndex_When_IndexExists()
+        {
+            // Arrange
+            _indexOperationWrapper.ExistsAsync(Arg.Any<string>())
+                .Returns(true);
+
+            // Act
+            var indexOperationResult = await _azureIndexOperation.IndexClearAsync();
+
+            // Assert
+            Assert.NotNull(indexOperationResult);
+            Assert.True(indexOperationResult.Succeeded);
+            Assert.Equal($"Index {_testDocumentModelDefinition.IndexName} successfully cleared.", indexOperationResult.Message);
+        }
+
+        [Fact]
+        public async Task Should_ClearIndex_When_IndexNotExists()
+        {
+            // Arrange
+            _indexOperationWrapper.ExistsAsync(Arg.Any<string>())
+                .Returns(false);
+
+            // Act
+            var indexOperationResult = await _azureIndexOperation.IndexClearAsync();
+
+            // Assert
+            Assert.NotNull(indexOperationResult);
+            Assert.True(indexOperationResult.Succeeded);
+            Assert.Equal($"Index {_testDocumentModelDefinition.IndexName} successfully cleared.", indexOperationResult.Message);
+        }
+
+        [Fact]
+        public async Task Should_Not_ThrowException_When_IssueWithConnectionOnClearingIndex()
+        {
+            // Arrange
+            _indexOperationWrapper.ExistsAsync(Arg.Any<string>())
+                .Returns(true);
+
+            _indexOperationWrapper.DeleteAsync(Arg.Any<string>())
+                .Throws(_ => new CloudException(_azureWrapperException));
+
+            // Act
+            var indexOperationResult = await _azureIndexOperation.IndexClearAsync();
+
+            // Assert
+            Assert.NotNull(indexOperationResult);
+            Assert.False(indexOperationResult.Succeeded);
+            Assert.Equal($"An issue occured on clearing index: {_testDocumentModelDefinition.IndexName}. Could not delete existing index.", indexOperationResult.Message);
+
+            // Arrange
+            _indexOperationWrapper.ExistsAsync(Arg.Any<string>())
+                .Throws(_ => new CloudException(_azureWrapperException));
+
+            _indexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<string>())
+                .Throws(_ => new CloudException(_azureWrapperException));
+
+            // Act
+            indexOperationResult = await _azureIndexOperation.IndexClearAsync();
+
+            // Assert
+            Assert.NotNull(indexOperationResult);
+            Assert.False(indexOperationResult.Succeeded);
+            Assert.Equal($"An issue occured on clearing index: {_testDocumentModelDefinition.IndexName}. Could not create index.", indexOperationResult.Message);
+        }
+
+        #endregion Index Clear Tests
     }
 }

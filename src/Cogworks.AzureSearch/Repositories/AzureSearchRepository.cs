@@ -89,6 +89,7 @@ namespace Cogworks.AzureSearch.Repositories
             return result;
         }
 
+        // TODO: add throwing domain exception on exception instead of returning dto
         public async Task<AzureIndexOperationResult> IndexCreateOrUpdateAsync()
         {
             var result = new AzureIndexOperationResult();
@@ -110,12 +111,36 @@ namespace Cogworks.AzureSearch.Repositories
 
         public async Task<AzureIndexOperationResult> IndexClearAsync()
         {
-            if (await IndexExistsAsync())
+            try
             {
-                _ = await IndexDeleteAsync();
+                if (await IndexExistsAsync())
+                {
+                    var deleteOperationResult = await IndexDeleteAsync();
+
+                    if (!deleteOperationResult.Succeeded)
+                    {
+                        return new AzureIndexOperationResult
+                        {
+                            Succeeded = false,
+                            Message = $"An issue occured on clearing index: {_azureIndexDefinition.IndexName}. Could not delete existing index."
+                        };
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // ignore
             }
 
-            return await IndexCreateOrUpdateAsync();
+            var indexCreateOrUpdateResult = await IndexCreateOrUpdateAsync();
+
+            return new AzureIndexOperationResult
+            {
+                Succeeded = indexCreateOrUpdateResult.Succeeded,
+                Message = indexCreateOrUpdateResult.Succeeded
+                    ? $"Index {_azureIndexDefinition.IndexName} successfully cleared."
+                    : $"An issue occured on clearing index: {_azureIndexDefinition.IndexName}. Could not create index."
+            };
         }
 
         public async Task<AzureDocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)
