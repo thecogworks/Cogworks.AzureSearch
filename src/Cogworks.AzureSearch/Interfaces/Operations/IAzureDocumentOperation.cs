@@ -3,7 +3,7 @@ using Cogworks.AzureSearch.Models.Dtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Cogworks.AzureSearch.Interfaces
+namespace Cogworks.AzureSearch.Interfaces.Operations
 {
     public interface IAzureDocumentOperation<in TAzureModel> where TAzureModel : class, IAzureModel, new()
     {

@@ -1,5 +1,5 @@
 ﻿using AutoFixture;
-using Cogworks.AzureSearch.Interfaces;
+using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.UnitTests.Models;
 using Microsoft.Azure.Search.Models;

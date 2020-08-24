@@ -1,5 +1,5 @@
-﻿using Cogworks.AzureSearch.Interfaces;
-using Cogworks.AzureSearch.Interfaces.Indexes;
+﻿using Cogworks.AzureSearch.Interfaces.Indexes;
+using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Models.Dtos;
 using System.Collections.Generic;

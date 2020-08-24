@@ -6,6 +6,7 @@ using Microsoft.Rest.Azure;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using System.Threading.Tasks;
+using Cogworks.AzureSearch.Interfaces.Operations;
 using Xunit;
 
 namespace Cogworks.AzureSearch.UnitTests.Repositories
