@@ -1,5 +1,4 @@
-﻿using Cogworks.AzureSearch.Interfaces;
-using Cogworks.AzureSearch.Interfaces.Searches;
+﻿using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Models.Dtos;
 using System.Threading.Tasks;
