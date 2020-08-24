@@ -1,4 +1,5 @@
-﻿using Cogworks.AzureSearch.Models;
+﻿using Cogworks.AzureSearch.Interfaces.Wrappers;
+using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Options;
 using Microsoft.Azure.Search;
 using Microsoft.Azure.Search.Models;
@@ -6,15 +7,6 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Wrappers
 {
-    public interface IDocumentOperationWrapper<TAzureModel> where TAzureModel : class, IAzureModel, new()
-    {
-        DocumentSearchResult<TAzureModel> Search(string searchText, SearchParameters parameters = null);
-
-        Task<DocumentSearchResult<TAzureModel>> SearchAsync(string searchText, SearchParameters parameters = null);
-
-        Task<DocumentIndexResult> IndexAsync(IndexBatch<TAzureModel> indexBatch);
-    }
-
     public class DocumentOperationWrapper<TAzureModel> : IDocumentOperationWrapper<TAzureModel>
         where TAzureModel : class, IAzureModel, new()
     {

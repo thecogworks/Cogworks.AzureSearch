@@ -1,8 +1,8 @@
 ﻿using Cogworks.AzureSearch.Extensions;
 using Cogworks.AzureSearch.Interfaces;
+using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Models.Dtos;
-using Cogworks.AzureSearch.Wrappers;
 using Microsoft.Azure.Search;
 using Microsoft.Azure.Search.Models;
 using System;

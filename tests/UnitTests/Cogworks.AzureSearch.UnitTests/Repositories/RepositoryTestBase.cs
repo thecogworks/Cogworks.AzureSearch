@@ -1,8 +1,8 @@
 ﻿using AutoFixture;
 using AutoFixture.AutoNSubstitute;
+using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.UnitTests.Models;
-using Cogworks.AzureSearch.Wrappers;
 using NSubstitute;
 
 namespace Cogworks.AzureSearch.UnitTests.Repositories
