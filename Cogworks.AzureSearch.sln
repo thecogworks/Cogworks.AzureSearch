@@ -15,11 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.UnitTests", "tests\UnitTests\Cogworks.AzureSearch.UnitTests\Cogworks.AzureSearch.UnitTests.csproj", "{37898883-18CD-47A7-BA59-E4FC1FD8B8E1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8247BAF1-A0B8-4A16-887E-53EC95EDA146}"
-	ProjectSection(SolutionItems) = preProject
-		Directory.Build.targets = Directory.Build.targets
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
