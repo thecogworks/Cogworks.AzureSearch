@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Wrappers
 {
-    public class DocumentOperationWrapper<TAzureModel> : IDocumentOperationWrapper<TAzureModel>
+    internal class DocumentOperationWrapper<TAzureModel> : IDocumentOperationWrapper<TAzureModel>
         where TAzureModel : class, IAzureModel, new()
     {
         private readonly IDocumentsOperations _documentOperation;
 
-        public DocumentOperationWrapper(AzureIndexDefinition<TAzureModel> azureIndexDefinition, AzureSearchClientOption azureSearchClientOption)
+        internal DocumentOperationWrapper(AzureIndexDefinition<TAzureModel> azureIndexDefinition, AzureSearchClientOption azureSearchClientOption)
             => _documentOperation = azureSearchClientOption.GetSearchServiceClient()
                 .Indexes
                 .GetClient(azureIndexDefinition.IndexName)

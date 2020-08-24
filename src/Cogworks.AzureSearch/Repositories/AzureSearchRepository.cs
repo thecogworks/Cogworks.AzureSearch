@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Repositories
 {
-    public class AzureSearchRepository<TAzureModel> : IAzureSearchRepository<TAzureModel>
+    internal class AzureSearchRepository<TAzureModel> : IAzureSearchRepository<TAzureModel>
         where TAzureModel : class, IAzureModel, new()
     {
         private readonly AzureIndexDefinition<TAzureModel> _azureIndexDefinition;
@@ -21,7 +21,7 @@ namespace Cogworks.AzureSearch.Repositories
 
         private const int BatchOperationSize = 500;
 
-        public AzureSearchRepository(
+        internal AzureSearchRepository(
             AzureIndexDefinition<TAzureModel> azureIndexDefinition,
             IIndexOperationWrapper indexOperationWrapper,
             IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)

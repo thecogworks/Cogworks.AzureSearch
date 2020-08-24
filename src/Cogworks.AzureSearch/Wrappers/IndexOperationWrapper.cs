@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Wrappers
 {
-    public class IndexOperationWrapper : IIndexOperationWrapper
+    internal class IndexOperationWrapper : IIndexOperationWrapper
     {
         private readonly IIndexesOperations _indexOperation;
 
-        public IndexOperationWrapper(AzureSearchClientOption azureSearchClientOption)
+        internal IndexOperationWrapper(AzureSearchClientOption azureSearchClientOption)
             => _indexOperation = azureSearchClientOption.GetSearchServiceClient().Indexes;
 
         public async Task<bool> ExistsAsync(string indexName)
