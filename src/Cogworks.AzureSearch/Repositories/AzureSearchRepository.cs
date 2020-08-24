@@ -1,4 +1,5 @@
 ﻿using Cogworks.AzureSearch.Extensions;
+using Cogworks.AzureSearch.Interfaces;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Models.Dtos;
 using Cogworks.AzureSearch.Wrappers;
@@ -11,43 +12,6 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Repositories
 {
-    public interface IAzureIndexOperation<in TAzureModel> where TAzureModel : class, IAzureModel, new()
-    {
-        Task<bool> IndexExistsAsync();
-
-        Task<AzureIndexOperationResult> IndexDeleteAsync();
-
-        Task<AzureIndexOperationResult> IndexCreateOrUpdateAsync();
-
-        Task<AzureIndexOperationResult> IndexClearAsync();
-    }
-
-    public interface IAzureDocumentOperation<in TAzureModel> where TAzureModel : class, IAzureModel, new()
-    {
-        Task<AzureDocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model);
-
-        Task<AzureBatchDocumentsOperationResult> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models);
-
-        Task<AzureDocumentOperationResult> TryRemoveDocumentAsync(TAzureModel model);
-
-        Task<AzureBatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
-    }
-
-    public interface IAzureDocumentSearch<TAzureModel> where TAzureModel : class, IAzureModel, new()
-    {
-        Models.Dtos.SearchResult<TAzureModel> Search(string keyword, AzureSearchParameters azureSearchParameters);
-
-        Task<Models.Dtos.SearchResult<TAzureModel>> SearchAsync(string keyword, AzureSearchParameters azureSearchParameters);
-    }
-
-    public interface IAzureSearchRepository<TAzureModel> :
-        IAzureDocumentOperation<TAzureModel>,
-        IAzureIndexOperation<TAzureModel>,
-        IAzureDocumentSearch<TAzureModel>
-        where TAzureModel : class, IAzureModel, new()
-    {
-    }
-
     public class AzureSearchRepository<TAzureModel> : IAzureSearchRepository<TAzureModel>
         where TAzureModel : class, IAzureModel, new()
     {

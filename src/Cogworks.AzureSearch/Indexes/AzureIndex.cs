@@ -1,6 +1,6 @@
-﻿using Cogworks.AzureSearch.Models;
+﻿using Cogworks.AzureSearch.Interfaces;
+using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Models.Dtos;
-using Cogworks.AzureSearch.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

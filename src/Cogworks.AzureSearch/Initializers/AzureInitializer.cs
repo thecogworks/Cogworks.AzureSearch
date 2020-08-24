@@ -1,7 +1,7 @@
-﻿using Cogworks.AzureSearch.Models;
+﻿using Cogworks.AzureSearch.Interfaces;
+using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Models.Dtos;
 using Cogworks.AzureSearch.Options;
-using Cogworks.AzureSearch.Repositories;
 using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Initializers
