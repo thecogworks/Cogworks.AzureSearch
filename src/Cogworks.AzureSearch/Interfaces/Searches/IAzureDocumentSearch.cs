@@ -1,7 +1,7 @@
 ﻿using Cogworks.AzureSearch.Models;
 using System.Threading.Tasks;
 
-namespace Cogworks.AzureSearch.Interfaces
+namespace Cogworks.AzureSearch.Interfaces.Searches
 {
     public interface IAzureDocumentSearch<TAzureModel> where TAzureModel : class, IAzureModel, new()
     {
