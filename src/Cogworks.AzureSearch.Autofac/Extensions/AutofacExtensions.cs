@@ -2,6 +2,7 @@
 using Cogworks.AzureSearch.Indexes;
 using Cogworks.AzureSearch.Initializers;
 using Cogworks.AzureSearch.Interfaces;
+using Cogworks.AzureSearch.Interfaces.Indexes;
 using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
