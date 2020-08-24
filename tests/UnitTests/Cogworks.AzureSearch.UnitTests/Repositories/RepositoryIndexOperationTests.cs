@@ -1,4 +1,4 @@
-﻿using Cogworks.AzureSearch.Interfaces;
+﻿using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.UnitTests.Models;
 using Microsoft.Azure.Search.Models;
@@ -6,7 +6,6 @@ using Microsoft.Rest.Azure;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using System.Threading.Tasks;
-using Cogworks.AzureSearch.Interfaces.Operations;
 using Xunit;
 
 namespace Cogworks.AzureSearch.UnitTests.Repositories
