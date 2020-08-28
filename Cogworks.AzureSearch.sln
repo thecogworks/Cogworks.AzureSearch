@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.UnitTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.Umbraco.IocExtension", "src\Cogworks.AzureSearch.Umbraco.IocExtension\Cogworks.AzureSearch.Umbraco.IocExtension.csproj", "{FC38DB43-401F-4E88-BAF5-A28325E4C461}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.UmbracoIoc.UnitTests", "tests\UnitTests\Cogworks.AzureSearch.UmbracoIoc.UnitTests\Cogworks.AzureSearch.UmbracoIoc.UnitTests.csproj", "{31032AAC-7779-4DEF-81D4-B6143A716C4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FC38DB43-401F-4E88-BAF5-A28325E4C461}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC38DB43-401F-4E88-BAF5-A28325E4C461}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC38DB43-401F-4E88-BAF5-A28325E4C461}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31032AAC-7779-4DEF-81D4-B6143A716C4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31032AAC-7779-4DEF-81D4-B6143A716C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31032AAC-7779-4DEF-81D4-B6143A716C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31032AAC-7779-4DEF-81D4-B6143A716C4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +55,7 @@ Global
 		{180E9BD6-30B9-4D88-B88C-9F289D316967} = {B5DAEDD1-13AF-4A74-BD24-42EBCB1A18D0}
 		{37898883-18CD-47A7-BA59-E4FC1FD8B8E1} = {180E9BD6-30B9-4D88-B88C-9F289D316967}
 		{FC38DB43-401F-4E88-BAF5-A28325E4C461} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
+		{31032AAC-7779-4DEF-81D4-B6143A716C4F} = {180E9BD6-30B9-4D88-B88C-9F289D316967}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC813CF7-BD65-4CD5-B0B7-7B1F828A9909}
