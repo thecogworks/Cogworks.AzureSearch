@@ -3,6 +3,7 @@ using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Models.Dtos;
 using Cogworks.AzureSearch.Options;
+using System;
 using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Initializers
@@ -24,6 +25,18 @@ namespace Cogworks.AzureSearch.Initializers
             if (_azureSearchIndexOption.Recreate)
             {
                 await _azureIndexOperation.IndexDeleteAsync();
+            }
+
+            try
+            {
+                return await _azureIndexOperation.IndexCreateOrUpdateAsync();
+            }
+            catch (Exception)
+            {
+                if (_azureSearchIndexOption.RecreateOnUpdateFailure)
+                {
+                    await _azureIndexOperation.IndexDeleteAsync();
+                }
             }
 
             return await _azureIndexOperation.IndexCreateOrUpdateAsync();
