@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="Cogworks.AzureSearch.Autofac" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.Umbraco.IocExtension" />
     <InternalsVisibleTo Include="Cogworks.AzureSearch.UnitTests" />
   </ItemGroup>
 </Project>
