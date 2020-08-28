@@ -13,10 +13,16 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
 
+  <!-- Project Visiblity -->
   <ItemGroup>
-    <InternalsVisibleTo Include="Cogworks.AzureSearch.Autofac" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.Autofac.IocExtensionc" />
     <InternalsVisibleTo Include="Cogworks.AzureSearch.Umbraco.IocExtension" />
     <InternalsVisibleTo Include="Cogworks.AzureSearch.LightInject.IocExtension" />
+  </ItemGroup>
+
+  <!-- Tests Visiblity -->
+  <ItemGroup>
     <InternalsVisibleTo Include="Cogworks.AzureSearch.UnitTests" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.UmbracoIoc.UnitTests" />
   </ItemGroup>
 </Project>
