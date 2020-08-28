@@ -116,10 +116,7 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
                 using (var scope = container.BeginScope())
                 {
                     // Act
-                    var instance = scope.GetInstance(desiredObjectType);
-
-                    // Assert
-                    Assert.Null(instance);
+                    _ = scope.GetInstance(desiredObjectType);
                 }
             });
 
@@ -151,6 +148,8 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
             using (var scope = container.BeginScope())
             {
                 var customTestSearch = scope.GetInstance<CustomTestSearch>();
+
+                // Assert
                 Assert.NotNull(customTestSearch);
             }
         }
@@ -173,9 +172,14 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
 
                 customTestSearch.SomeCustomSearchExample();
 
+                // Assert
                 Assert.NotNull(customTestSearch);
 
                 mockedCustomTestSearch.Received(1).SomeCustomSearchExample();
+
+                customTestSearch.SomeCustomSearchExample();
+
+                mockedCustomTestSearch.Received(2).SomeCustomSearchExample();
             }
         }
 
