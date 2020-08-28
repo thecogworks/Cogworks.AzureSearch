@@ -12,7 +12,7 @@ namespace Cogworks.AzureSearch.Wrappers
     {
         private readonly IDocumentsOperations _documentOperation;
 
-        internal DocumentOperationWrapper(AzureIndexDefinition<TAzureModel> azureIndexDefinition, AzureSearchClientOption azureSearchClientOption)
+        public DocumentOperationWrapper(AzureIndexDefinition<TAzureModel> azureIndexDefinition, AzureSearchClientOption azureSearchClientOption)
             => _documentOperation = azureSearchClientOption.GetSearchServiceClient()
                 .Indexes
                 .GetClient(azureIndexDefinition.IndexName)

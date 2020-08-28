@@ -13,7 +13,7 @@ namespace Cogworks.AzureSearch.Initializers
         private readonly AzureSearchIndexOption _azureSearchIndexOption;
         private readonly IAzureIndexOperation<TAzureModel> _azureIndexOperation;
 
-        internal AzureInitializer(AzureSearchIndexOption azureSearchIndexOption, IAzureIndexOperation<TAzureModel> azureIndexOperation)
+        public AzureInitializer(AzureSearchIndexOption azureSearchIndexOption, IAzureIndexOperation<TAzureModel> azureIndexOperation)
         {
             _azureSearchIndexOption = azureSearchIndexOption;
             _azureIndexOperation = azureIndexOperation;
