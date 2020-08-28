@@ -118,5 +118,15 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
 
             return this;
         }
+
+        public AzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(TSearcherType instance)
+            where TDocument : class, IAzureModel, new()
+            where TSearcher : IAzureSearch<TDocument>, TSearcherType
+            where TSearcherType : class
+        {
+            _composingRegister.Register<TSearcherType>(instance);
+
+            return this;
+        }
     }
 }
