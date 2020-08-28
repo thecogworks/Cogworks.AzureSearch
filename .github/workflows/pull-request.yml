@@ -38,7 +38,7 @@ jobs:
         run: dotnet restore
       
       - name: Build
-        run: dotnet build --configuration $config --no-restore
+        run: dotnet build --configuration $config --no-restore Cogworks.AzureSearch.sln
       
       - name: set pr build number
         id: PRNUMBER
