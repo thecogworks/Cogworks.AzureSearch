@@ -151,6 +151,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Cogworks.AzureSearch.LightInject.IocExtension\Cogworks.AzureSearch.LightInject.IocExtension.csproj">
+      <Project>{4c606328-9108-4584-8e4a-04450b9a1170}</Project>
+      <Name>Cogworks.AzureSearch.LightInject.IocExtension</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Cogworks.AzureSearch\Cogworks.AzureSearch.csproj">
       <Project>{64b55c63-5070-430f-a92d-747ff2cd57a6}</Project>
       <Name>Cogworks.AzureSearch</Name>
