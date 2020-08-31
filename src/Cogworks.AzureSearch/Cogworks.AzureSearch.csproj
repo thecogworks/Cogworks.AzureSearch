@@ -15,7 +15,7 @@
 
   <!-- Project Visiblity -->
   <ItemGroup>
-    <InternalsVisibleTo Include="Cogworks.AzureSearch.Autofac.IocExtensionc" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.Autofac.IocExtension" />
     <InternalsVisibleTo Include="Cogworks.AzureSearch.Umbraco.IocExtension" />
     <InternalsVisibleTo Include="Cogworks.AzureSearch.LightInject.IocExtension" />
   </ItemGroup>
