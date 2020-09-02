@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Cogworks.AzureSearch.Builder;
 using Cogworks.AzureSearch.Indexes;
 using Cogworks.AzureSearch.Initializers;
 using Cogworks.AzureSearch.Interfaces.Indexes;
@@ -15,7 +16,7 @@ using Cogworks.AzureSearch.Wrappers;
 
 namespace Cogworks.AzureSearch.Autofac.Builders
 {
-    public class AzureSearchBuilder
+    public class AzureSearchBuilder : IAzureSearchBuilder
     {
         private readonly ContainerBuilder _builder;
 
@@ -31,28 +32,28 @@ namespace Cogworks.AzureSearch.Autofac.Builders
             return this;
         }
 
-        public AzureSearchBuilder RegisterIndexOptions(bool recreate, bool recreateOnUpdateFailure = false)
+        public IAzureSearchBuilder RegisterIndexOptions(bool recreate, bool recreateOnUpdateFailure = false)
         {
-            _builder.Register(_ => new AzureSearchIndexOption(recreate, recreateOnUpdateFailure))
+            _ = _builder.Register(_ => new AzureSearchIndexOption(recreate, recreateOnUpdateFailure))
                 .AsSelf()
                 .SingleInstance();
 
             return this;
         }
 
-        public AzureSearchBuilder RegisterClientOptions(string serviceName, string credentials)
+        public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials)
         {
-            _builder.Register(_ => new AzureSearchClientOption(serviceName, credentials))
+            _ = _builder.Register(_ => new AzureSearchClientOption(serviceName, credentials))
                 .AsSelf()
                 .SingleInstance();
 
             return this;
         }
 
-        public AzureSearchBuilder RegisterIndexDefinitions<TDocument>(string indexName)
+        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(string indexName)
             where TDocument : class, IAzureModel, new()
         {
-            _builder.Register(_ => new AzureIndexDefinition<TDocument>(indexName))
+            _ = _builder.Register(_ => new AzureIndexDefinition<TDocument>(indexName))
                 .AsSelf()
                 .SingleInstance();
 
@@ -61,7 +62,7 @@ namespace Cogworks.AzureSearch.Autofac.Builders
 
         internal AzureSearchBuilder RegisterIndexes()
         {
-            _builder.RegisterGeneric(typeof(AzureIndex<>))
+            _ = _builder.RegisterGeneric(typeof(AzureIndex<>))
                 .As(typeof(IAzureIndex<>))
                 .InstancePerDependency();
 
@@ -70,11 +71,11 @@ namespace Cogworks.AzureSearch.Autofac.Builders
 
         internal AzureSearchBuilder RegisterWrappers()
         {
-            _builder.RegisterGeneric(typeof(DocumentOperationWrapper<>))
+            _ = _builder.RegisterGeneric(typeof(DocumentOperationWrapper<>))
                 .As(typeof(IDocumentOperationWrapper<>))
                 .InstancePerDependency();
 
-            _builder.RegisterType<IndexOperationWrapper>()
+            _ = _builder.RegisterType<IndexOperationWrapper>()
                 .AsImplementedInterfaces()
                 .InstancePerDependency();
 
@@ -83,7 +84,7 @@ namespace Cogworks.AzureSearch.Autofac.Builders
 
         internal AzureSearchBuilder RegisterRepositories()
         {
-            _builder.RegisterGeneric(typeof(AzureSearchRepository<>))
+            _ = _builder.RegisterGeneric(typeof(AzureSearchRepository<>))
                 .As(typeof(IAzureSearchRepository<>))
                 .As(typeof(IAzureIndexOperation<>))
                 .As(typeof(IAzureDocumentOperation<>))
@@ -95,21 +96,29 @@ namespace Cogworks.AzureSearch.Autofac.Builders
 
         internal AzureSearchBuilder RegisterSearchers()
         {
-            _builder.RegisterGeneric(typeof(AzureSearch<>))
+            _ = _builder.RegisterGeneric(typeof(AzureSearch<>))
                 .As(typeof(IAzureSearch<>))
                 .InstancePerDependency();
 
             return this;
         }
 
-        public AzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
+        public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
             where TDocument : class, IAzureModel, new()
             where TSearcher : IAzureSearch<TDocument>
         {
-            _builder.RegisterType<TSearcher>()
+            _ = _builder.RegisterType<TSearcher>()
                 .As<TSearcherType>()
                 .AsSelf()
                 .SingleInstance();
+
+            return this;
+        }
+
+        IAzureSearchBuilder IAzureSearchBuilder.RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(
+            TSearcherType instance)
+        {
+            _ = _builder.RegisterInstance(instance).As<TSearcherType>();
 
             return this;
         }

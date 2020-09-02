@@ -1,4 +1,5 @@
-﻿using Cogworks.AzureSearch.Interfaces.Indexes;
+using Cogworks.AzureSearch.Builder;
+using Cogworks.AzureSearch.Interfaces.Indexes;
 using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Interfaces.Repositories;
@@ -18,6 +19,7 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
 {
     public class UmbracoIocExtensionTests
     {
+        private readonly IAzureSearchBuilder _azureSearchBuilder;
         private readonly Composition _composing;
 
         private const string FirstDocumentIndexName = "first-test-document";
@@ -29,7 +31,7 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
 
             _composing = new Composition(lightInjectContainer, null, null, null, null);
 
-            _composing.RegisterAzureSearch()
+            _azureSearchBuilder = _composing.RegisterAzureSearch()
                 .RegisterClientOptions("test", "test")
                 .RegisterIndexOptions(false, false)
                 .RegisterIndexDefinitions<FirstTestDocumentModel>(FirstDocumentIndexName)
@@ -139,8 +141,7 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
         public void Should_ReturnCustomSearchService()
         {
             // Arrange
-            _composing.RegisterAzureSearch()
-                .RegisterDomainSearcher<CustomTestSearch, CustomTestSearch, FirstTestDocumentModel>();
+            _azureSearchBuilder.RegisterDomainSearcher<CustomTestSearch, CustomTestSearch, FirstTestDocumentModel>();
 
             var container = _composing.Concrete as ServiceContainer as IServiceContainer;
 
@@ -160,8 +161,7 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
             // Arrange
             var mockedCustomTestSearch = Substitute.For<ICustomTestSearch>();
 
-            _composing.RegisterAzureSearch()
-                .RegisterDomainSearcher<CustomTestSearch, ICustomTestSearch, FirstTestDocumentModel>(mockedCustomTestSearch);
+            _azureSearchBuilder.RegisterDomainSearcher<CustomTestSearch, ICustomTestSearch, FirstTestDocumentModel>(mockedCustomTestSearch);
 
             var container = _composing.Concrete as ServiceContainer as IServiceContainer;
 
