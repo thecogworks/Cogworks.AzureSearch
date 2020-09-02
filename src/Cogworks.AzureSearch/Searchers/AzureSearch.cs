@@ -1,17 +1,10 @@
-﻿using Cogworks.AzureSearch.Models;
+﻿using Cogworks.AzureSearch.Interfaces.Searches;
+using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Models.Dtos;
-using Cogworks.AzureSearch.Repositories;
 using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Searchers
 {
-    public interface IAzureSearch<TAzureModel> where TAzureModel : class, IAzureModel, new()
-    {
-        SearchResult<TAzureModel> Search(string keyword, AzureSearchParameters azureSearchParameters);
-
-        Task<SearchResult<TAzureModel>> SearchAsync(string keyword, AzureSearchParameters azureSearchParameters);
-    }
-
     public class AzureSearch<TAzureModel> : IAzureSearch<TAzureModel>
         where TAzureModel : class, IAzureModel, new()
     {

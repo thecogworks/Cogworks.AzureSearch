@@ -1,4 +1,5 @@
-﻿using Cogworks.AzureSearch.Repositories;
+﻿using Cogworks.AzureSearch.Interfaces.Operations;
+using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.UnitTests.Models;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Rest.Azure;
