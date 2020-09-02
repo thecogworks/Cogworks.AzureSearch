@@ -1,4 +1,4 @@
-using Cogworks.AzureSearch.Builder;
+﻿using Cogworks.AzureSearch.Builder;
 using Cogworks.AzureSearch.Interfaces.Indexes;
 using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Operations;
@@ -184,7 +184,7 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
         }
 
         [Fact]
-        public void Should_Not_ThrowException_When_DedicatedIndexWithProperName()
+        public void Should_Not_ThrowException_When_GettingDedicatedIndexWithProperName()
         {
             // Arrange
             // Act
