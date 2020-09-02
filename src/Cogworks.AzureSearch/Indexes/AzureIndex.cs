@@ -11,7 +11,7 @@ namespace Cogworks.AzureSearch.Indexes
     {
         private readonly IAzureDocumentOperation<TAzureModel> _azureSearchRepository;
 
-        internal AzureIndex(IAzureDocumentOperation<TAzureModel> azureSearchRepository)
+        public AzureIndex(IAzureDocumentOperation<TAzureModel> azureSearchRepository)
             => _azureSearchRepository = azureSearchRepository;
 
         public async Task<AzureDocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)

@@ -11,7 +11,7 @@ namespace Cogworks.AzureSearch.Wrappers
     {
         private readonly IIndexesOperations _indexOperation;
 
-        internal IndexOperationWrapper(AzureSearchClientOption azureSearchClientOption)
+        public IndexOperationWrapper(AzureSearchClientOption azureSearchClientOption)
             => _indexOperation = azureSearchClientOption.GetSearchServiceClient().Indexes;
 
         public async Task<bool> ExistsAsync(string indexName)

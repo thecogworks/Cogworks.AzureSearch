@@ -21,7 +21,7 @@ namespace Cogworks.AzureSearch.Repositories
 
         private const int BatchOperationSize = 500;
 
-        internal AzureSearchRepository(
+        public AzureSearchRepository(
             AzureIndexDefinition<TAzureModel> azureIndexDefinition,
             IIndexOperationWrapper indexOperationWrapper,
             IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)
