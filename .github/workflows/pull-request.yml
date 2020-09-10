@@ -1,0 +1,84 @@
+name: Validate PR
+on:
+  pull_request:
+
+env:
+  Config: 'Release'
+  Solution: 'Cogworks.AzureSearch.sln'
+  ReportOutput: '${{github.workspace}}'
+  TestReportFileName: 'TestReport.${{github.run_number}}.md'
+  DotNetVersion: 3.1.401
+  NugetVersion: 'latest'
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout commit
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DotNetVersion }} 
+
+      - uses: nuget/setup-nuget@v1
+        with:
+          nuget-version: ${{ env.NugetVersion }} 
+        
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: |
+            ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            nuget-${{ runner.os }}
+            nuget-
+            nuget
+
+      - name: NuGet Restore
+        run: nuget restore ${{ env.Solution }} -LockedMode
+
+      - name: Install dependencies
+        run: dotnet restore ${{env.Solution}}
+      
+      - name: Build
+        working-directory: ${{ github.workspace }}  
+        run: dotnet build --configuration ${{ env.Config }} ${{ env.Solution }}
+
+      - name: Set PR build number
+        id: PRNUMBER
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: kkak10/pr-number-action@v1.3
+
+      - name: Set Test Title
+        run: |
+          echo "::set-env name=title::Test Run for PR #${{ steps.PRNUMBER.outputs.pr }} (${{ github.run_number }})"
+              
+      - name: Run Tests  
+        run: dotnet test --no-restore --no-build --configuration ${{ env.Config }} --logger:"liquid.md;LogFileName=${{ env.ReportOutput}}\${{ env.TestReportFileName }};Title=${{ env.Title }};"
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: results
+          path: ${{ env.ReportOutput}}\${{ env.TestReportFileName }}
+
+  commenting:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout commit
+        uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: results
+
+      - name: Comment PR
+        uses: machine-learning-apps/pr-comment@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          path: results/${{ env.TestReportFileName }}
