@@ -1,11 +1,28 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Meziantou.MSBuild.InternalsVisibleTo" Version="1.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Azure.Search" Version="10.1.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+  </ItemGroup>
+
+  <!-- Project Visiblity -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.Autofac.IocExtension" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.Umbraco.IocExtension" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.LightInject.IocExtension" />
+  </ItemGroup>
+
+  <!-- Tests Visiblity -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.UnitTests" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.UmbracoIoc.UnitTests" />
   </ItemGroup>
 </Project>
