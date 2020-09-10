@@ -1,76 +1,84 @@
-name: Building PR
+name: Validate PR
 on:
   pull_request:
 
+env:
+  Config: 'Release'
+  Solution: 'Cogworks.AzureSearch.sln'
+  ReportOutput: '${{github.workspace}}'
+  TestReportFileName: 'TestReport.${{github.run_number}}.md'
+  DotNetVersion: 3.1.401
+  NugetVersion: 'latest'
+
 jobs:
-  build:
+  build-and-test:
     runs-on: windows-latest
     steps:
       - name: Checkout commit
         uses: actions/checkout@v2
-      
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.0.1
-      
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.0.2
-      
-      - name: Restore NuGet packages
-        run: nuget restore Cogworks.AzureSearch.sln
-      
-      - name: Build the Solution
-        run: msbuild Cogworks.AzureSearch.sln
-  tests:
-    needs: [build]
-    runs-on: windows-latest
-    env:
-      config: 'Release'
-    steps:
-      - name: Checkout commit
-        uses: actions/checkout@v2
-      
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.101   
-          
+          dotnet-version: ${{ env.DotNetVersion }} 
+
+      - uses: nuget/setup-nuget@v1
+        with:
+          nuget-version: ${{ env.NugetVersion }} 
+        
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: |
+            ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            nuget-${{ runner.os }}
+            nuget-
+            nuget
+
+      - name: NuGet Restore
+        run: nuget restore ${{ env.Solution }} -LockedMode
+
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore ${{env.Solution}}
       
       - name: Build
-        run: dotnet build --configuration $config --no-restore Cogworks.AzureSearch.sln
-      
-      - name: set pr build number
+        working-directory: ${{ github.workspace }}  
+        run: dotnet build --configuration ${{ env.Config }} ${{ env.Solution }}
+
+      - name: Set PR build number
         id: PRNUMBER
         if: ${{ github.event_name == 'pull_request' }}
         uses: kkak10/pr-number-action@v1.3
 
-      # set report file and title 
       - name: Set Test Title
-        run: | 
-              if ${{ github.event_name == 'pull_request' }}
-              then
-                echo "::set-env name=title::Test Run for PR #${{steps.PRNUMBER.outputs.pr}} (${{github.run_number}})"
-                echo "::set-env name=file_name::TestReport.${{steps.PRNUMBER.outputs.pr}}.${{github.run_number}}.md"
-              else
-                echo "::set-env name=title::Test Run ${{github.run_number}}"
-                echo "::set-env name=file_name::TestReport.${{github.run_number}}.md"
-              fi
+        run: |
+          echo "::set-env name=title::Test Run for PR #${{ steps.PRNUMBER.outputs.pr }} (${{ github.run_number }})"
               
-      - name: Test PR      
-        run: dotnet test --no-restore --no-build --configuration $config --logger:"liquid.md;LogFileName=${{github.workspace}}/${{env.file_name}};Title=${{env.title}};"
-      
-      - name: Upload a Build Artifact
+      - name: Run Tests  
+        run: dotnet test --no-restore --no-build --configuration ${{ env.Config }} --logger:"liquid.md;LogFileName=${{ env.ReportOutput}}\${{ env.TestReportFileName }};Title=${{ env.Title }};"
+
+      - name: Upload test results
         uses: actions/upload-artifact@v2
-        if: ${{always()}}
         with:
-          name: 'Test Run'
-          path: ${{github.workspace}}/${{env.file_name}}
-          
-      - name: comment PR
+          name: results
+          path: ${{ env.ReportOutput}}\${{ env.TestReportFileName }}
+
+  commenting:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout commit
+        uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: results
+
+      - name: Comment PR
         uses: machine-learning-apps/pr-comment@master
-        if: ${{ github.event_name == 'pull_request' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          path: ${{env.file_name}}
+          path: results/${{ env.TestReportFileName }}
