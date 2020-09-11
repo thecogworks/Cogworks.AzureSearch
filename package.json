@@ -1,6 +1,6 @@
 {
   "name": "cogworks-azure-search",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Abstraction and simplification way of implementation of Azure Search.",
   "scripts": {
     "release": "npm version from-git && sleep 5 && conventional-changelog -p angular -i CHANGELOG.md -s -r 0 -n ./changelog.config.js && git add CHANGELOG.md && git commit -m \"docs(changelog): regenerate CHANGELOG.md [skip ci]\" "
