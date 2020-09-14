@@ -202,6 +202,9 @@ jobs:
           do
             curl -vX PUT -u "$GITHUB_USER:$GITHUB_TOKEN" -F package=@$f $GITHUB_FEED
           done
+
+      - name: Push to NuGet Feed
+        run: dotnet nuget push .\${{ env.NUGET_OUTPUT }}\*.nupkg --source ${{ env.NUGET_FEED }} --skip-duplicate --api-key ${{ env.NUGET_KEY }}
       
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
