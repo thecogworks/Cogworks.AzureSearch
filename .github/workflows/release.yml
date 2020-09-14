@@ -1,4 +1,4 @@
-name: Changelog generator and GitFlow actions
+name: Changelog generator and NuGet Releasing
 
 on: 
   push:
