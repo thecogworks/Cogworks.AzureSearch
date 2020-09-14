@@ -107,7 +107,7 @@ jobs:
         name: pass_status_updating-branches
         path: status_updating-branches.txt
 
-  build:
+  nuget-release:
     needs: changelog-generator
     runs-on: windows-latest
     env:
@@ -132,12 +132,12 @@ jobs:
       AZURE_SEARCH_UMBRACO_PROJECT: Cogworks.AzureSearch.Umbraco.IocExtension
       AZURE_SEARCH_LIGHTINJECT_PROJECT: Cogworks.AzureSearch.LightInject.IocExtension
       AZURE_SEARCH_AUTOFAC_PROJECT: Cogworks.AzureSearch.Autofac.IocExtension
-      NUGET_OUTPUT: .\output\NuGet
+      NUGET_OUTPUT: output
 
       # GitHub Packages Feed settings
       GITHUB_USER: cogworks-infrastructure
-      GITHUB_REPO_OWNER: thecogworks
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_FEED: https://nuget.pkg.github.com/thecogworks
 
       # Official NuGet Feed settings
       NUGET_FEED: https://api.nuget.org/v3/index.json
@@ -146,6 +146,12 @@ jobs:
     steps:
       - name: Checkout commit
         uses: actions/checkout@v2
+        with:
+            ref: master
+
+      - name: Set Version based on tag
+        shell: bash
+        run: echo ::set-env name=VERSION::$(basename $GITHUB_REF)
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
@@ -178,24 +184,24 @@ jobs:
         run: dotnet build --configuration ${{ env.CONFIG }} ${{ env.SOLUTION }}
 
       - name: Pack ${{ env.AZURE_SEARCH_PROJECT }}
-        run: nuget pack .\src\${{ env.AZURE_SEARCH_PROJECT }}\${{ env.AZURE_SEARCH_PROJECT }}.nuspec -Version $GITHUB_REF -Properties Configuration=${{ env.CONFIG }} -OutputDirectory ${{ env.NUGET_OUTPUT }}
+        run: nuget pack .\src\${{ env.AZURE_SEARCH_PROJECT }}\${{ env.AZURE_SEARCH_PROJECT }}.nuspec -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
 
       - name: Pack ${{ env.AZURE_SEARCH_UMBRACO_PROJECT }}
-        run: nuget pack .\src\${{ env.AZURE_SEARCH_UMBRACO_PROJECT }}\${{ env.AZURE_SEARCH_UMBRACO_PROJECT }}.nuspec -Version $GITHUB_REF -Properties Configuration=${{ env.CONFIG }} -OutputDirectory ${{ env.NUGET_OUTPUT }}
+        run: nuget pack .\src\${{ env.AZURE_SEARCH_UMBRACO_PROJECT }}\${{ env.AZURE_SEARCH_UMBRACO_PROJECT }}.nuspec -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
 
       - name: Pack ${{ env.AZURE_SEARCH_LIGHTINJECT_PROJECT }}
-        run: nuget pack .\src\${{ env.AZURE_SEARCH_LIGHTINJECT_PROJECT }}\${{ env.AZURE_SEARCH_LIGHTINJECT_PROJECT }}.nuspec -Version $GITHUB_REF -Properties Configuration=${{ env.CONFIG }} -OutputDirectory ${{ env.NUGET_OUTPUT }}
+        run: nuget pack .\src\${{ env.AZURE_SEARCH_LIGHTINJECT_PROJECT }}\${{ env.AZURE_SEARCH_LIGHTINJECT_PROJECT }}.nuspec -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
 
       - name: Pack ${{ env.AZURE_SEARCH_AUTOFAC_PROJECT }}
-        run: nuget pack .\src\${{ env.AZURE_SEARCH_AUTOFAC_PROJECT }}\${{ env.AZURE_SEARCH_AUTOFAC_PROJECT }}.nuspec -Version $GITHUB_REF -Properties Configuration=${{ env.CONFIG }} -OutputDirectory ${{ env.NUGET_OUTPUT }}
+        run: nuget pack .\src\${{ env.AZURE_SEARCH_AUTOFAC_PROJECT }}\${{ env.AZURE_SEARCH_AUTOFAC_PROJECT }}.nuspec -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
 
-      - name: Push Nupkg to GitHub Packages
-        uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
-        with:
-          nupkg-path: '${{ env.NUGET_OUTPUT }}\*.nupkg'
-          repo-owner: '${{ env.GITHUB_REPO_OWNER }}'
-          gh-user: '${{ env.GITHUB_USER }}'
-          token: ${{ env.GITHUB_TOKEN }}
+      - name: Push to GitHub Feed
+        shell: bash
+        run: |
+          for f in ./${{ env.NUGET_OUTPUT }}/*.nupkg
+          do
+            curl -vX PUT -u "$GITHUB_USER:$GITHUB_TOKEN" -F package=@$f $GITHUB_FEED
+          done
       
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
