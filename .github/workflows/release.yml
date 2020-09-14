@@ -1,4 +1,4 @@
-name: Changelog generator and GitFlow actions
+name: Changelog generator and NuGet Releasing
 
 on: 
   push:
@@ -106,6 +106,111 @@ jobs:
       with:
         name: pass_status_updating-branches
         path: status_updating-branches.txt
+
+  nuget-release:
+    needs: changelog-generator
+    runs-on: windows-latest
+    env:
+      # Dotnet Setup
+      DOTNET_VERSION: 3.1.401
+
+      # Stop wasting time caching packages
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+      # Disable sending usage data to Microsoft
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+      # Nuget Setup
+      NUGET_VERSION: 'latest'
+
+      # Solution Setup
+      CONFIG: 'Release'
+      SOLUTION: 'Cogworks.AzureSearch.sln'
+
+      # Project names to pack and publish
+      AZURE_SEARCH_PROJECT: Cogworks.AzureSearch
+      AZURE_SEARCH_UMBRACO_PROJECT: Cogworks.AzureSearch.Umbraco.IocExtension
+      AZURE_SEARCH_LIGHTINJECT_PROJECT: Cogworks.AzureSearch.LightInject.IocExtension
+      AZURE_SEARCH_AUTOFAC_PROJECT: Cogworks.AzureSearch.Autofac.IocExtension
+      NUGET_OUTPUT: output
+
+      # GitHub Packages Feed settings
+      GITHUB_USER: thecogworks
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_FEED: https://nuget.pkg.github.com/thecogworks
+
+      # Official NuGet Feed settings
+      NUGET_FEED: https://api.nuget.org/v3/index.json
+      NUGET_KEY: ${{ secrets.NUGET_KEY }}
+
+    steps:
+      - name: Checkout commit
+        uses: actions/checkout@v2
+        with:
+            ref: master
+
+      - name: Set Version based on tag
+        shell: bash
+        run: echo ::set-env name=VERSION::$(basename $GITHUB_REF)
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }} 
+
+      - uses: nuget/setup-nuget@v1
+        with:
+          nuget-version: ${{ env.NUGET_VERSION }} 
+        
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: |
+            ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            nuget-${{ runner.os }}
+            nuget-
+            nuget
+
+      - name: NuGet Restore
+        run: nuget restore ${{ env.SOLUTION }} -LockedMode
+
+      - name: Install dependencies
+        run: dotnet restore ${{env.SOLUTION}}
+      
+      - name: Build
+        working-directory: ${{ github.workspace }}  
+        run: dotnet build --configuration ${{ env.CONFIG }} ${{ env.SOLUTION }}
+
+      - name: Pack ${{ env.AZURE_SEARCH_PROJECT }}
+        run: nuget pack .\src\${{ env.AZURE_SEARCH_PROJECT }}\${{ env.AZURE_SEARCH_PROJECT }}.nuspec -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
+
+      - name: Pack ${{ env.AZURE_SEARCH_UMBRACO_PROJECT }}
+        run: nuget pack .\src\${{ env.AZURE_SEARCH_UMBRACO_PROJECT }}\${{ env.AZURE_SEARCH_UMBRACO_PROJECT }}.nuspec -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
+
+      - name: Pack ${{ env.AZURE_SEARCH_LIGHTINJECT_PROJECT }}
+        run: nuget pack .\src\${{ env.AZURE_SEARCH_LIGHTINJECT_PROJECT }}\${{ env.AZURE_SEARCH_LIGHTINJECT_PROJECT }}.nuspec -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
+
+      - name: Pack ${{ env.AZURE_SEARCH_AUTOFAC_PROJECT }}
+        run: nuget pack .\src\${{ env.AZURE_SEARCH_AUTOFAC_PROJECT }}\${{ env.AZURE_SEARCH_AUTOFAC_PROJECT }}.nuspec -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
+
+      - name: Push to GitHub Feed
+        shell: bash
+        run: |
+          for f in ./${{ env.NUGET_OUTPUT }}/*.nupkg
+          do
+            curl -vX PUT -u "$GITHUB_USER:$GITHUB_TOKEN" -F package=@$f $GITHUB_FEED
+          done
+
+      - name: Push to NuGet Feed
+        run: dotnet nuget push .\${{ env.NUGET_OUTPUT }}\*.nupkg --source ${{ env.NUGET_FEED }} --skip-duplicate --api-key ${{ env.NUGET_KEY }}
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: packages
+          path: ${{ env.NUGET_OUTPUT }}\*.nupkg
 
   finalization-and-notification:
     needs: [changelog-generator, updating-branches]
