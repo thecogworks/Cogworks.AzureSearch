@@ -135,7 +135,7 @@ jobs:
       NUGET_OUTPUT: output
 
       # GitHub Packages Feed settings
-      GITHUB_USER: cogworks-infrastructure
+      GITHUB_USER: thecogworks
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_FEED: https://nuget.pkg.github.com/thecogworks
 
