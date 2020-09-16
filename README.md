@@ -11,8 +11,8 @@ A wrapper to Azure Search allowing to easily setup Azure Search indexes, searche
 _composing.RegisterAzureSearch()
     .RegisterClientOptions("[AzureSearchServiceName]", "[AzureSearchCredentials]")
     .RegisterIndexOptions(false, false) // for now required
-    .RegisterIndexDefinitions<FirstDocumentModel>(FirstDocumentIndexName)
-    .RegisterIndexDefinitions<SecondDocumentModel>(SecondDocumentIndexName)
+    .RegisterIndexDefinitions<FirstDocumentModel>("first-document-index-name")
+    .RegisterIndexDefinitions<SecondDocumentModel>("second-document-index-name")
     .RegisterDomainSearcher<SomeDomainSearch, ISomeDomainSearch, FirstDocumentModel>();
 ```
 
