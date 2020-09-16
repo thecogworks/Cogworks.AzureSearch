@@ -2,7 +2,7 @@
 
 A wrapper to Azure Search allowing to easily setup Azure Search indexes, searchers and using it with DI/IoC approach (currently with support for Umbraco, LightInject and Autofac).
 
-## Example Usage
+## Usage
 
 #### Registration
 
