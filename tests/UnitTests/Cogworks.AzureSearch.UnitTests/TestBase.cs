@@ -5,9 +5,9 @@ using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.UnitTests.Models;
 using NSubstitute;
 
-namespace Cogworks.AzureSearch.UnitTests.Repositories
+namespace Cogworks.AzureSearch.UnitTests
 {
-    public abstract class RepositoryTestBase
+    public abstract class TestBase
     {
         protected const string AzureWrapperException = "some internal exception";
 
@@ -18,7 +18,7 @@ namespace Cogworks.AzureSearch.UnitTests.Repositories
         protected readonly IDocumentOperationWrapper<TestDocumentModel> DocumentOperationWrapper;
         protected readonly AzureIndexDefinition<TestDocumentModel> TestDocumentModelDefinition;
 
-        protected RepositoryTestBase()
+        protected TestBase()
         {
             TestDocumentModelDefinition = Fixture.Create<AzureIndexDefinition<TestDocumentModel>>();
 

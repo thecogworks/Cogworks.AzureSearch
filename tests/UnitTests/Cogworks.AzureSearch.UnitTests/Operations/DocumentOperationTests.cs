@@ -8,13 +8,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Cogworks.AzureSearch.UnitTests.Repositories
+namespace Cogworks.AzureSearch.UnitTests.Operations
 {
-    public class RepositoryDocumentOperationTests : RepositoryTestBase
+    public class DocumentOperationTests : TestBase
     {
         private readonly IAzureDocumentOperation<TestDocumentModel> _azureDocumentOperation;
 
-        public RepositoryDocumentOperationTests()
+        public DocumentOperationTests()
             => _azureDocumentOperation = new AzureSearchRepository<TestDocumentModel>(
                 TestDocumentModelDefinition,
                 IndexOperationWrapper,
