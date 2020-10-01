@@ -122,17 +122,11 @@ jobs:
 
       # Nuget Setup
       NUGET_VERSION: 'latest'
+      NUGET_OUTPUT: output
 
       # Solution Setup
       CONFIG: 'Release'
       SOLUTION: 'Cogworks.AzureSearch.sln'
-
-      # Project names to pack and publish
-      AZURE_SEARCH_PROJECT: Cogworks.AzureSearch
-      AZURE_SEARCH_UMBRACO_PROJECT: Cogworks.AzureSearch.Umbraco.IocExtension
-      AZURE_SEARCH_LIGHTINJECT_PROJECT: Cogworks.AzureSearch.LightInject.IocExtension
-      AZURE_SEARCH_AUTOFAC_PROJECT: Cogworks.AzureSearch.Autofac.IocExtension
-      NUGET_OUTPUT: output
 
       # GitHub Packages Feed settings
       GITHUB_USER: thecogworks
@@ -183,17 +177,13 @@ jobs:
         working-directory: ${{ github.workspace }}  
         run: dotnet build --configuration ${{ env.CONFIG }} ${{ env.SOLUTION }}
 
-      - name: Pack ${{ env.AZURE_SEARCH_PROJECT }}
-        run: nuget pack .\src\${{ env.AZURE_SEARCH_PROJECT }}\${{ env.AZURE_SEARCH_PROJECT }}.nuspec -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
-
-      - name: Pack ${{ env.AZURE_SEARCH_UMBRACO_PROJECT }}
-        run: nuget pack .\src\${{ env.AZURE_SEARCH_UMBRACO_PROJECT }}\${{ env.AZURE_SEARCH_UMBRACO_PROJECT }}.nuspec -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
-
-      - name: Pack ${{ env.AZURE_SEARCH_LIGHTINJECT_PROJECT }}
-        run: nuget pack .\src\${{ env.AZURE_SEARCH_LIGHTINJECT_PROJECT }}\${{ env.AZURE_SEARCH_LIGHTINJECT_PROJECT }}.nuspec -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
-
-      - name: Pack ${{ env.AZURE_SEARCH_AUTOFAC_PROJECT }}
-        run: nuget pack .\src\${{ env.AZURE_SEARCH_AUTOFAC_PROJECT }}\${{ env.AZURE_SEARCH_AUTOFAC_PROJECT }}.nuspec -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
+      - name: Pack all nuspec files
+        shell: bash
+        run: |
+          for nuspecFile in ./src/*.nuspec
+          do
+            nuget pack @$nuspecFile -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
+          done
 
       - name: Push to GitHub Feed
         shell: bash
