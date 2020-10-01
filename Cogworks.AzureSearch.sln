@@ -19,7 +19,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.Umbrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.UmbracoIoc.UnitTests", "tests\UnitTests\Cogworks.AzureSearch.UmbracoIoc.UnitTests\Cogworks.AzureSearch.UmbracoIoc.UnitTests.csproj", "{31032AAC-7779-4DEF-81D4-B6143A716C4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.LightInject.IocExtension", "src\Cogworks.AzureSearch.LightInject.IocExtension\Cogworks.AzureSearch.LightInject.IocExtension.csproj", "{4C606328-9108-4584-8E4A-04450B9A1170}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.LightInject.IocExtension", "src\Cogworks.AzureSearch.LightInject.IocExtension\Cogworks.AzureSearch.LightInject.IocExtension.csproj", "{4C606328-9108-4584-8E4A-04450B9A1170}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.LightInject.UnitTests", "tests\UnitTests\Cogworks.AzureSearch.LightInject.UnitTests\Cogworks.AzureSearch.LightInject.UnitTests.csproj", "{90E65F2C-9592-473C-83BB-FC109A11C47D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{4C606328-9108-4584-8E4A-04450B9A1170}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C606328-9108-4584-8E4A-04450B9A1170}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C606328-9108-4584-8E4A-04450B9A1170}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90E65F2C-9592-473C-83BB-FC109A11C47D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90E65F2C-9592-473C-83BB-FC109A11C47D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90E65F2C-9592-473C-83BB-FC109A11C47D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90E65F2C-9592-473C-83BB-FC109A11C47D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +69,7 @@ Global
 		{FC38DB43-401F-4E88-BAF5-A28325E4C461} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
 		{31032AAC-7779-4DEF-81D4-B6143A716C4F} = {180E9BD6-30B9-4D88-B88C-9F289D316967}
 		{4C606328-9108-4584-8E4A-04450B9A1170} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
+		{90E65F2C-9592-473C-83BB-FC109A11C47D} = {180E9BD6-30B9-4D88-B88C-9F289D316967}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC813CF7-BD65-4CD5-B0B7-7B1F828A9909}
