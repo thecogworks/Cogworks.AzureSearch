@@ -18,6 +18,7 @@
     <InternalsVisibleTo Include="Cogworks.AzureSearch.Autofac.IocExtension" />
     <InternalsVisibleTo Include="Cogworks.AzureSearch.Umbraco.IocExtension" />
     <InternalsVisibleTo Include="Cogworks.AzureSearch.LightInject.IocExtension" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.Microsoft.IocExtension" />
   </ItemGroup>
 
   <!-- Tests Visiblity -->
