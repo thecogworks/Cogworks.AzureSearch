@@ -6,11 +6,11 @@ using Cogworks.AzureSearch.Interfaces.Repositories;
 using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Microsoft.IocExtension.Extensions;
 using Cogworks.AzureSearch.Models;
-using Cogworks.AzureSearch.UmbracoIoc.UnitTests.Models;
-using Cogworks.AzureSearch.UmbracoIoc.UnitTests.Searchers;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using System;
+using Cogworks.AzureSearch.MicrosoftIoc.UnitTests.Models;
+using Cogworks.AzureSearch.MicrosoftIoc.UnitTests.Searchers;
 using Xunit;
 
 namespace Cogworks.AzureSearch.MicrosoftIoc.UnitTests
