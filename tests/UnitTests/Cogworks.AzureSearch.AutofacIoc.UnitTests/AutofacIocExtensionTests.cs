@@ -7,10 +7,10 @@ using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Interfaces.Repositories;
 using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Models;
-using Cogworks.AzureSearch.UmbracoIoc.UnitTests.Models;
-using Cogworks.AzureSearch.UmbracoIoc.UnitTests.Searchers;
 using NSubstitute;
 using System;
+using Cogworks.AzureSearch.AutofacIoc.UnitTests.Models;
+using Cogworks.AzureSearch.AutofacIoc.UnitTests.Searchers;
 using Xunit;
 
 namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
