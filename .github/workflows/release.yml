@@ -180,7 +180,7 @@ jobs:
       - name: Pack all nuspec files
         shell: bash
         run: |
-          for nuspecFile in ./src/*.nuspec
+          for nuspecFile in ./src/**/*.nuspec
           do
             nuget pack @$nuspecFile -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
           done
