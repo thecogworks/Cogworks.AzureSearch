@@ -113,7 +113,8 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
 
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
             where TDocument : class, IAzureModel, new()
-            where TSearcher : IAzureSearch<TDocument>
+            where TSearcher : class, IAzureSearch<TDocument>, TSearcherType
+            where TSearcherType : class
         {
             _composingRegister.Register<TSearcherType, TSearcher>(Lifetime.Singleton);
 

@@ -105,7 +105,8 @@ namespace Cogworks.AzureSearch.Autofac.Builders
 
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
             where TDocument : class, IAzureModel, new()
-            where TSearcher : IAzureSearch<TDocument>
+            where TSearcher : class, IAzureSearch<TDocument>, TSearcherType
+            where TSearcherType : class
         {
             _ = _builder.RegisterType<TSearcher>()
                 .As<TSearcherType>()
