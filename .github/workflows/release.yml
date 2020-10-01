@@ -182,7 +182,7 @@ jobs:
         run: |
           for nuspecFile in ./src/**/*.nuspec
           do
-            nuget pack @$nuspecFile -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
+            nuget pack $nuspecFile -Version ${{ env.VERSION }} -Properties Configuration=${{ env.CONFIG }} -OutputDirectory .\${{ env.NUGET_OUTPUT }}
           done
 
       - name: Push to GitHub Feed
