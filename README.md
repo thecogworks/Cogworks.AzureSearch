@@ -194,6 +194,10 @@ public class SomeStartupService
 This project has adopted the code of conduct defined by the [Contributor Covenant](https://contributor-covenant.org/) to clarify expected behavior in our community.
 For more information, see the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/code-of-conduct).
 
+## Blogs
+
+* [How to Simplify Azure Search Implementations](https://www.wearecogworks.com/blog/how-to-simplify-azure-search-implementations/)
+
 ## How can you help?
 
 Please... Spread the word, contribute, submit improvements and issues, unit tests, no input is too little. Thank you in advance <3
