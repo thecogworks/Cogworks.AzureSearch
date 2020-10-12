@@ -18,12 +18,14 @@
     <InternalsVisibleTo Include="Cogworks.AzureSearch.Autofac.IocExtension" />
     <InternalsVisibleTo Include="Cogworks.AzureSearch.Umbraco.IocExtension" />
     <InternalsVisibleTo Include="Cogworks.AzureSearch.LightInject.IocExtension" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.Microsoft.IocExtension" />
   </ItemGroup>
 
   <!-- Tests Visiblity -->
   <ItemGroup>
     <InternalsVisibleTo Include="Cogworks.AzureSearch.UnitTests" />
     <InternalsVisibleTo Include="Cogworks.AzureSearch.UmbracoIoc.UnitTests" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.MicrosoftIoc.UnitTests" />
     <InternalsVisibleTo Include="Cogworks.AzureSearch.AutofacIoc.UnitTests" />
   </ItemGroup>
 </Project>
