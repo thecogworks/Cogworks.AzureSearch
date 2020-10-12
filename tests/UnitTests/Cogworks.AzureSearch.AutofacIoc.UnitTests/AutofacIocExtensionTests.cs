@@ -1,4 +1,5 @@
-﻿// ReSharper disable PossibleNullReferenceException
+﻿using Autofac;
+using Cogworks.AzureSearch.Autofac.Extensions;
 using Cogworks.AzureSearch.Builder;
 using Cogworks.AzureSearch.Interfaces.Indexes;
 using Cogworks.AzureSearch.Interfaces.Initializers;
@@ -6,33 +7,27 @@ using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Interfaces.Repositories;
 using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Models;
-using Cogworks.AzureSearch.Umbraco.IocExtension.Extensions;
-using Cogworks.AzureSearch.UmbracoIoc.UnitTests.Models;
-using Cogworks.AzureSearch.UmbracoIoc.UnitTests.Searchers;
-using LightInject;
 using NSubstitute;
 using System;
-using Umbraco.Core.Composing;
-using Umbraco.Core.Composing.LightInject;
+using Cogworks.AzureSearch.AutofacIoc.UnitTests.Models;
+using Cogworks.AzureSearch.AutofacIoc.UnitTests.Searchers;
 using Xunit;
 
-namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
+namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
 {
-    public class UmbracoIocExtensionTests
+    public class AutofacIocExtensionTests
     {
         private readonly IAzureSearchBuilder _azureSearchBuilder;
-        private readonly Composition _composing;
+        private readonly ContainerBuilder _containerBuilder;
 
         private const string FirstDocumentIndexName = "first-test-document";
         private const string SecondDocumentIndexName = "second-test-document";
 
-        public UmbracoIocExtensionTests()
+        public AutofacIocExtensionTests()
         {
-            var lightInjectContainer = LightInjectContainer.Create();
+            _containerBuilder = new ContainerBuilder();
 
-            _composing = new Composition(lightInjectContainer, null, null, null, null);
-
-            _azureSearchBuilder = _composing.RegisterAzureSearch()
+            _azureSearchBuilder = _containerBuilder.RegisterAzureSearch()
                 .RegisterClientOptions("test", "test")
                 .RegisterIndexOptions(false, false)
                 .RegisterIndexDefinitions<FirstTestDocumentModel>(FirstDocumentIndexName)
@@ -57,12 +52,12 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
         public void Should_ReturnDedicatedRepositoryInstance(Type desiredObjectType)
         {
             // Arrange
-            var container = _composing.Concrete as ServiceContainer as IServiceContainer;
 
-            using (var scope = container.BeginScope())
+            // ReSharper disable once PossibleNullReferenceException
+            using (var scope = _containerBuilder.Build().BeginLifetimeScope().BeginLifetimeScope())
             {
                 // Act
-                var instance = scope.GetInstance(desiredObjectType);
+                var instance = scope.Resolve(desiredObjectType);
 
                 // Assert
                 Assert.NotNull(instance);
@@ -107,16 +102,17 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
         [InlineData(typeof(IAzureSearch<NotRegisteredTestDocumentModel>))]
         public void Should_ThrowException_When_IndexNotRegistered(Type desiredObjectType)
         {
+            //            NotRegisteredTestDocumentModel
             // Arrange
-            var container = _composing.Concrete as ServiceContainer as IServiceContainer;
 
             // Act
             var exceptionRecord = Record.Exception(() =>
             {
-                using (var scope = container.BeginScope())
+                // ReSharper disable once PossibleNullReferenceException
+                using (var scope = _containerBuilder.Build().BeginLifetimeScope())
                 {
                     // Act
-                    _ = scope.GetInstance(desiredObjectType);
+                    _ = scope.Resolve(desiredObjectType);
                 }
             });
 
@@ -141,11 +137,10 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
             // Arrange
             _azureSearchBuilder.RegisterDomainSearcher<CustomTestSearch, CustomTestSearch, FirstTestDocumentModel>();
 
-            var container = _composing.Concrete as ServiceContainer as IServiceContainer;
-
-            using (var scope = container.BeginScope())
+            // ReSharper disable once PossibleNullReferenceException
+            using (var scope = _containerBuilder.Build().BeginLifetimeScope())
             {
-                var customTestSearch = scope.GetInstance<CustomTestSearch>();
+                var customTestSearch = scope.Resolve<CustomTestSearch>();
 
                 // Assert
                 Assert.NotNull(customTestSearch);
@@ -160,13 +155,11 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
 
             _azureSearchBuilder.RegisterDomainSearcher<CustomTestSearch, ICustomTestSearch, FirstTestDocumentModel>(mockedCustomTestSearch);
 
-            var container = _composing.Concrete as ServiceContainer as IServiceContainer;
-
-            using (var scope = container.BeginScope())
+            // ReSharper disable once PossibleNullReferenceException
+            using (var scope = _containerBuilder.Build().BeginLifetimeScope())
             {
-                var customTestSearch = scope.GetInstance<ICustomTestSearch>();
+                var customTestSearch = scope.Resolve<ICustomTestSearch>();
 
-                // Act
                 customTestSearch.SomeCustomSearchExample();
 
                 // Assert
@@ -196,12 +189,12 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
         {
             // Arrange
             // Act
-            var container = _composing.Concrete as ServiceContainer as IServiceContainer;
 
-            using (var scope = container.BeginScope())
+            // ReSharper disable once PossibleNullReferenceException
+            using (var scope = _containerBuilder.Build().BeginLifetimeScope())
             {
-                var firstTestDocumentIndexDefinition = scope.GetInstance<AzureIndexDefinition<FirstTestDocumentModel>>();
-                var secondTestDocumentIndexDefinition = scope.GetInstance<AzureIndexDefinition<SecondTestDocumentModel>>();
+                var firstTestDocumentIndexDefinition = scope.Resolve<AzureIndexDefinition<FirstTestDocumentModel>>();
+                var secondTestDocumentIndexDefinition = scope.Resolve<AzureIndexDefinition<SecondTestDocumentModel>>();
 
                 // Assert
                 Assert.NotNull(firstTestDocumentIndexDefinition);

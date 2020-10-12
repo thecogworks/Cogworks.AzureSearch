@@ -8,13 +8,13 @@ using NSubstitute.ExceptionExtensions;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Cogworks.AzureSearch.UnitTests.Repositories
+namespace Cogworks.AzureSearch.UnitTests.Operations
 {
-    public class RepositoryIndexOperationTests : RepositoryTestBase
+    public class IndexOperationTests : TestBase
     {
         private readonly IAzureIndexOperation<TestDocumentModel> _azureIndexOperation;
 
-        public RepositoryIndexOperationTests()
+        public IndexOperationTests()
             => _azureIndexOperation = new AzureSearchRepository<TestDocumentModel>(
                 TestDocumentModelDefinition,
                 IndexOperationWrapper,
