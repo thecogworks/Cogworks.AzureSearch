@@ -1,4 +1,5 @@
-﻿using Cogworks.AzureSearch.Builder;
+﻿// ReSharper disable PossibleNullReferenceException
+using Cogworks.AzureSearch.Builder;
 using Cogworks.AzureSearch.Interfaces.Indexes;
 using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Operations;
@@ -58,7 +59,6 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
             // Arrange
             var container = _composing.Concrete as ServiceContainer as IServiceContainer;
 
-            // ReSharper disable once PossibleNullReferenceException
             using (var scope = container.BeginScope())
             {
                 // Act
@@ -107,14 +107,12 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
         [InlineData(typeof(IAzureSearch<NotRegisteredTestDocumentModel>))]
         public void Should_ThrowException_When_IndexNotRegistered(Type desiredObjectType)
         {
-            //            NotRegisteredTestDocumentModel
             // Arrange
             var container = _composing.Concrete as ServiceContainer as IServiceContainer;
 
             // Act
             var exceptionRecord = Record.Exception(() =>
             {
-                // ReSharper disable once PossibleNullReferenceException
                 using (var scope = container.BeginScope())
                 {
                     // Act
@@ -145,7 +143,6 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
 
             var container = _composing.Concrete as ServiceContainer as IServiceContainer;
 
-            // ReSharper disable once PossibleNullReferenceException
             using (var scope = container.BeginScope())
             {
                 var customTestSearch = scope.GetInstance<CustomTestSearch>();
@@ -165,11 +162,11 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
 
             var container = _composing.Concrete as ServiceContainer as IServiceContainer;
 
-            // ReSharper disable once PossibleNullReferenceException
             using (var scope = container.BeginScope())
             {
                 var customTestSearch = scope.GetInstance<ICustomTestSearch>();
 
+                // Act
                 customTestSearch.SomeCustomSearchExample();
 
                 // Assert
@@ -201,7 +198,6 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
             // Act
             var container = _composing.Concrete as ServiceContainer as IServiceContainer;
 
-            // ReSharper disable once PossibleNullReferenceException
             using (var scope = container.BeginScope())
             {
                 var firstTestDocumentIndexDefinition = scope.GetInstance<AzureIndexDefinition<FirstTestDocumentModel>>();
