@@ -27,5 +27,6 @@
     <InternalsVisibleTo Include="Cogworks.AzureSearch.UmbracoIoc.UnitTests" />
     <InternalsVisibleTo Include="Cogworks.AzureSearch.MicrosoftIoc.UnitTests" />
     <InternalsVisibleTo Include="Cogworks.AzureSearch.AutofacIoc.UnitTests" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.LightInject.UnitTests" />
   </ItemGroup>
 </Project>
