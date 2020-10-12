@@ -14,7 +14,8 @@ namespace Cogworks.AzureSearch.Builder
 
         IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
             where TDocument : class, IAzureModel, new()
-            where TSearcher : IAzureSearch<TDocument>;
+            where TSearcher : class, IAzureSearch<TDocument>, TSearcherType
+            where TSearcherType : class;
 
         IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(TSearcherType instance)
             where TDocument : class, IAzureModel, new()
