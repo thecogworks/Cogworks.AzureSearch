@@ -1,3 +1,20 @@
+# [0.2.0](https://github.com/thecogworks/Cogworks.AzureSearch/compare/0.1.0...0.2.0) (2020-10-12)
+
+
+### Bug Fixes
+
+* added searcher type constraint ([79d32c2](https://github.com/thecogworks/Cogworks.AzureSearch/commit/79d32c2505fc231ced3cbc7e2a83df7709f7c3ce))
+* removed unwanted character ([36f999d](https://github.com/thecogworks/Cogworks.AzureSearch/commit/36f999d9c8d23cdcf299f83f3526e0f065e97890))
+
+
+### Features
+
+* added Microsoft container extension for Azure Search Builder ([528e69b](https://github.com/thecogworks/Cogworks.AzureSearch/commit/528e69b528052dffe6f842814be3839072579b85))
+* added Microsoft IoC extension project ([eb69735](https://github.com/thecogworks/Cogworks.AzureSearch/commit/eb697356244849d64a46891183fd6a5d35e2287d))
+* added usage documentation ([b53c72c](https://github.com/thecogworks/Cogworks.AzureSearch/commit/b53c72cffe646033255e3e3fda5558d65a0cdbff))
+
+
+
 # [0.1.0](https://github.com/thecogworks/Cogworks.AzureSearch/compare/0.0.1...0.1.0) (2020-09-14)
 
 
