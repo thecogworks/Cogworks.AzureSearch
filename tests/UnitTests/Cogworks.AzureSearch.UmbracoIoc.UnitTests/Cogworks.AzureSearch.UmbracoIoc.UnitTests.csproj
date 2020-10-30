@@ -233,6 +233,7 @@
     <Compile Include="Models\FirstTestDocumentModel.cs" />
     <Compile Include="Models\NotRegistredTestDocumentModel.cs" />
     <Compile Include="Models\SecondTestDocumentModel.cs" />
+    <Compile Include="Models\ThirdTestDocumentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Searchers\CustomTestSearch.cs" />
     <Compile Include="UmbracoIocExtensionTests.cs" />

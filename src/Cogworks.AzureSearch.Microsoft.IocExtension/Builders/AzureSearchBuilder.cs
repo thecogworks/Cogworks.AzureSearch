@@ -12,6 +12,7 @@ using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
 using Cogworks.AzureSearch.Wrappers;
+using Microsoft.Azure.Search.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -49,6 +50,14 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
             where TDocument : class, IAzureModel, new()
         {
             _serviceCollection.TryAddSingleton(_ => new AzureIndexDefinition<TDocument>(indexName));
+
+            return this;
+        }
+
+        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(Index customIndex)
+            where TDocument : class, IAzureModel, new()
+        {
+            _serviceCollection.TryAddSingleton(_ => new AzureIndexDefinition<TDocument>(customIndex));
 
             return this;
         }

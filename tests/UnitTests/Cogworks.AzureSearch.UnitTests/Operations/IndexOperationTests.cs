@@ -155,10 +155,47 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
         }
 
         [Fact]
+        public async Task Should_CreateOrUpdateCustomIndex()
+        {
+            // Arrange
+            var createdOrUpdatedIndex = new Index
+            {
+                Name = TestDocumentModelDefinition.IndexName
+            };
+
+            _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<Index>(), Arg.Any<bool>())
+                .Returns(createdOrUpdatedIndex);
+
+            // Act
+            var operationResult = await _azureIndexOperation.IndexCreateOrUpdateAsync();
+
+            // Assert
+            Assert.NotNull(operationResult);
+            Assert.True(operationResult.Succeeded);
+            Assert.Equal($"Index {TestDocumentModelDefinition.IndexName} successfully created or updated.", operationResult.Message);
+        }
+
+        [Fact]
         public async Task Should_Not_ThrowException_When_IssueOnCreatingOrUpdatingIndex()
         {
             // Arrange
             _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<string>())
+                .Throws(_ => new CloudException(AzureWrapperException));
+
+            // Act
+            var operationResult = await _azureIndexOperation.IndexCreateOrUpdateAsync();
+
+            // Assert
+            Assert.NotNull(operationResult);
+            Assert.False(operationResult.Succeeded);
+            Assert.Equal($"An issue occured on creating or updating index: {TestDocumentModelDefinition.IndexName}. More information: {AzureWrapperException}", operationResult.Message);
+        }
+
+        [Fact]
+        public async Task Should_Not_ThrowException_When_IssueOnCreatingOrUpdatingCustomIndex()
+        {
+            // Arrange
+            _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<Index>(), Arg.Any<bool>())
                 .Throws(_ => new CloudException(AzureWrapperException));
 
             // Act

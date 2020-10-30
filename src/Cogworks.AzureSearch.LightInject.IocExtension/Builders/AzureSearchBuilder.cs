@@ -13,6 +13,7 @@ using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
 using Cogworks.AzureSearch.Wrappers;
 using LightInject;
+using Microsoft.Azure.Search.Models;
 
 namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
 {
@@ -55,6 +56,16 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
         {
             _ = _container.Register(
                 _ => new AzureIndexDefinition<TDocument>(indexName),
+                new PerContainerLifetime());
+
+            return this;
+        }
+
+        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(Index customIndex)
+            where TDocument : class, IAzureModel, new()
+        {
+            _ = _container.Register(
+                _ => new AzureIndexDefinition<TDocument>(customIndex),
                 new PerContainerLifetime());
 
             return this;

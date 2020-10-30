@@ -60,6 +60,28 @@ namespace Cogworks.AzureSearch.Repositories
 
             try
             {
+
+                var createdIndex = _azureIndexDefinition.CustomIndexDefinition != null ? 
+                    await _indexOperationWrapper.CreateOrUpdateAsync<TAzureModel>(_azureIndexDefinition.CustomIndexDefinition, true) 
+                    : await _indexOperationWrapper.CreateOrUpdateAsync<TAzureModel>(_azureIndexDefinition.IndexName) ;
+
+                result.Message = $"Index {createdIndex.Name} successfully created or updated.";
+                result.Succeeded = true;
+            }
+            catch (Exception exception)
+            {
+                result.Message = $"An issue occured on creating or updating index: {_azureIndexDefinition.IndexName}. More information: {exception.Message}";
+            }
+
+            return result;
+        }
+
+        public async Task<AzureIndexOperationResult> IndexCreateOrUpdateAsync(Index customIndex, bool overrideWithModelFields = true)
+        {
+            var result = new AzureIndexOperationResult();
+
+            try
+            {
                 _ = await _indexOperationWrapper.CreateOrUpdateAsync<TAzureModel>(_azureIndexDefinition.IndexName);
 
                 result.Message = $"Index {_azureIndexDefinition.IndexName} successfully created or updated.";

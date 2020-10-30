@@ -12,6 +12,7 @@ using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
 using Cogworks.AzureSearch.Wrappers;
+using Microsoft.Azure.Search.Models;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 
@@ -56,6 +57,16 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
         {
             _composingRegister.Register(
                 _ => new AzureIndexDefinition<TDocument>(indexName),
+                Lifetime.Singleton);
+
+            return this;
+        }
+
+        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(Index customIndex)
+            where TDocument : class, IAzureModel, new()
+        {
+            _composingRegister.Register(
+                _ => new AzureIndexDefinition<TDocument>(customIndex),
                 Lifetime.Singleton);
 
             return this;

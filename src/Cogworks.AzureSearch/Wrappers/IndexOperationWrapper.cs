@@ -1,4 +1,7 @@
-﻿using Cogworks.AzureSearch.Interfaces.Wrappers;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Options;
 using Microsoft.Azure.Search;
@@ -21,10 +24,25 @@ namespace Cogworks.AzureSearch.Wrappers
             => await _indexOperation.DeleteAsync(indexName);
 
         public async Task<Index> CreateOrUpdateAsync<TAzureModel>(string indexName) where TAzureModel : class, IAzureModel, new()
-            => await _indexOperation.CreateOrUpdateAsync(new Index
+        {
+            var indexDefinition = new Index
             {
                 Name = indexName,
-                Fields = FieldBuilder.BuildForType<TAzureModel>()
-            });
+                Fields = FieldBuilder.BuildForType<TAzureModel>(),
+                
+            };
+
+            return await _indexOperation.CreateOrUpdateAsync(indexDefinition);
+        }
+
+        public async Task<Index> CreateOrUpdateAsync<TAzureModel>(Index customIndexDefinition, bool overrideFields = true) where TAzureModel : class, IAzureModel, new()
+        {
+            if (overrideFields)
+            {
+                customIndexDefinition.Fields = FieldBuilder.BuildForType<TAzureModel>();
+            }
+
+            return await _indexOperation.CreateOrUpdateAsync(customIndexDefinition);
+        } 
     }
 }

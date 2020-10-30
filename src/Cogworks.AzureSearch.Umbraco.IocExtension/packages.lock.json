@@ -32,6 +32,18 @@
         "resolved": "5.2.7",
         "contentHash": "/76fAHknzvFqbznS6Uj2sOyE9rJB3PltY+f53TH8dX9RiGhk02EhuFCWljSj5nnqKaTsmma8DFR50OGyQ4yJ1g=="
       },
+      "Microsoft.Azure.Search.Common": {
+        "type": "Direct",
+        "requested": "[10.1.0, 10.1.0]",
+        "resolved": "10.1.0",
+        "contentHash": "FvLrtkXe5VCRWVXa9ohlldxbVro8MBWi+k/zfUaw+0bOfzHyd3Qz8EouF6yBmosnFF1pbo4+N4CGTiabEGHk0g=="
+      },
+      "Microsoft.Azure.Search.Service": {
+        "type": "Direct",
+        "requested": "[10.1.0, 10.1.0]",
+        "resolved": "10.1.0",
+        "contentHash": "mHAKJHjo1hrjsjsi5iNiBfaMZFDznwYyXrs0VloNRuaDnWZIaasYoXkj0uEEQUIu4NTqytukppQroaGqDxD8IQ=="
+      },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "Direct",
         "requested": "[2.0.0, 2.0.0]",
@@ -43,6 +55,24 @@
         "requested": "[4.0.1, 4.0.1]",
         "resolved": "4.0.1",
         "contentHash": "J3v8nn9ABr5rm22EOyvndAP/gjP2AnhhfZuI2A7lTPO4+j27SpVv6P/Zs29+/AzSpC8qkE6GIe43vodPMF5DpA=="
+      },
+      "Microsoft.Rest.ClientRuntime": {
+        "type": "Direct",
+        "requested": "[2.3.20, 2.3.20]",
+        "resolved": "2.3.20",
+        "contentHash": "bw/H1nO4JdnhTagPHWIFQwtlQ6rb2jqw5RTrqPsPqzrjhJxc7P6MyNGdf4pgHQdzdpBSNOfZTEQifoUkxmzYXQ=="
+      },
+      "Microsoft.Rest.ClientRuntime.Azure": {
+        "type": "Direct",
+        "requested": "[3.3.18, 3.3.18]",
+        "resolved": "3.3.18",
+        "contentHash": "pCtem10PRQYvzRiwJVInsccsqB0NrTjW83NF3zWk1LpN3IS0AneZKq89RyogDT7mRMT1Li/mLY8N8kU6RAiK0g=="
+      },
+      "Microsoft.Spatial": {
+        "type": "Direct",
+        "requested": "[7.5.3, 7.5.3]",
+        "resolved": "7.5.3",
+        "contentHash": "x70zvxa2DD9JpMmBBIpRFUXUnKzWUF0PR5JfPk0k2b3WiUBdBet0XuXd7Vhs66ZksG8IJur07vJN8syjU2So6g=="
       },
       "MiniProfiler": {
         "type": "Direct",

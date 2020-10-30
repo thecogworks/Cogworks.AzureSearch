@@ -12,6 +12,7 @@ using LightInject;
 using NSubstitute;
 using System;
 using Xunit;
+using Index = Microsoft.Azure.Search.Models.Index;
 
 namespace Cogworks.AzureSearch.LightInject.UnitTests
 {
@@ -22,6 +23,7 @@ namespace Cogworks.AzureSearch.LightInject.UnitTests
 
         private const string FirstDocumentIndexName = "first-test-document";
         private const string SecondDocumentIndexName = "second-test-document";
+        private const string ThirdDocumentIndexName = "third-test-document";
 
         public LightInjectIocExtensionTests()
         {
@@ -31,7 +33,8 @@ namespace Cogworks.AzureSearch.LightInject.UnitTests
                 .RegisterClientOptions("test", "test")
                 .RegisterIndexOptions(false, false)
                 .RegisterIndexDefinitions<FirstTestDocumentModel>(FirstDocumentIndexName)
-                .RegisterIndexDefinitions<SecondTestDocumentModel>(SecondDocumentIndexName);
+                .RegisterIndexDefinitions<SecondTestDocumentModel>(SecondDocumentIndexName)
+                .RegisterIndexDefinitions<ThirdTestDocumentModel>(customIndex: new Index{Name = ThirdDocumentIndexName});;
         }
 
         [Theory]
@@ -49,6 +52,13 @@ namespace Cogworks.AzureSearch.LightInject.UnitTests
         [InlineData(typeof(IAzureIndex<SecondTestDocumentModel>))]
         [InlineData(typeof(IAzureInitializer<SecondTestDocumentModel>))]
         [InlineData(typeof(IAzureSearch<SecondTestDocumentModel>))]
+        [InlineData(typeof(IAzureSearchRepository<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureIndexOperation<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureDocumentOperation<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureDocumentSearch<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureIndex<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureInitializer<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureSearch<ThirdTestDocumentModel>))]
         public void Should_ReturnDedicatedRepositoryInstance(Type desiredObjectType)
         {
             // Arrange
@@ -82,6 +92,13 @@ namespace Cogworks.AzureSearch.LightInject.UnitTests
         [InlineData(typeof(IAzureIndex<SecondTestDocumentModel>))]
         [InlineData(typeof(IAzureInitializer<SecondTestDocumentModel>))]
         [InlineData(typeof(IAzureSearch<SecondTestDocumentModel>))]
+        [InlineData(typeof(IAzureSearchRepository<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureIndexOperation<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureDocumentOperation<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureDocumentSearch<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureIndex<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureInitializer<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureSearch<ThirdTestDocumentModel>))]
         public void Should_Not_ThrowException_When_IndexRegistered(Type desiredObjectType)
         {
             // Arrange
@@ -193,12 +210,15 @@ namespace Cogworks.AzureSearch.LightInject.UnitTests
             {
                 var firstTestDocumentIndexDefinition = scope.GetInstance<AzureIndexDefinition<FirstTestDocumentModel>>();
                 var secondTestDocumentIndexDefinition = scope.GetInstance<AzureIndexDefinition<SecondTestDocumentModel>>();
+                var thirdTestDocumentIndexDefinition = scope.GetInstance<AzureIndexDefinition<ThirdTestDocumentModel>>();
 
                 // Assert
                 Assert.NotNull(firstTestDocumentIndexDefinition);
                 Assert.NotNull(secondTestDocumentIndexDefinition);
+                Assert.NotNull(thirdTestDocumentIndexDefinition);
                 Assert.Equal(FirstDocumentIndexName, firstTestDocumentIndexDefinition.IndexName);
                 Assert.Equal(SecondDocumentIndexName, secondTestDocumentIndexDefinition.IndexName);
+                Assert.Equal(ThirdDocumentIndexName, thirdTestDocumentIndexDefinition.IndexName);
             }
         }
     }
