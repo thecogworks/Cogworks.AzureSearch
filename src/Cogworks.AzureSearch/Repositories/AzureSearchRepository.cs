@@ -65,7 +65,7 @@ namespace Cogworks.AzureSearch.Repositories
                     await _indexOperationWrapper.CreateOrUpdateAsync<TAzureModel>(_azureIndexDefinition.CustomIndexDefinition, true) 
                     : await _indexOperationWrapper.CreateOrUpdateAsync<TAzureModel>(_azureIndexDefinition.IndexName) ;
 
-                result.Message = $"Index {createdIndex.Name} successfully created or updated.";
+                result.Message = $"Index {_azureIndexDefinition.IndexName} successfully created or updated.";
                 result.Succeeded = true;
             }
             catch (Exception exception)
