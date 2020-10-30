@@ -191,22 +191,6 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
             Assert.Equal($"An issue occured on creating or updating index: {TestDocumentModelDefinition.IndexName}. More information: {AzureWrapperException}", operationResult.Message);
         }
 
-        [Fact]
-        public async Task Should_Not_ThrowException_When_IssueOnCreatingOrUpdatingCustomIndex()
-        {
-            // Arrange
-            _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<Index>(), Arg.Any<bool>())
-                .Throws(_ => new CloudException(AzureWrapperException));
-
-            // Act
-            var operationResult = await _azureIndexOperation.IndexCreateOrUpdateAsync();
-
-            // Assert
-            Assert.NotNull(operationResult);
-            Assert.False(operationResult.Succeeded);
-            Assert.Equal($"An issue occured on creating or updating index: {TestDocumentModelDefinition.IndexName}. More information: {AzureWrapperException}", operationResult.Message);
-        }
-
         #endregion Index Create or Update Tests
 
         #region Index Clear Tests
