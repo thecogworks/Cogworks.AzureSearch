@@ -2,6 +2,14 @@
 
 A wrapper to Azure Search allowing to easily setup Azure Search indexes, searchers and using it with DI/IoC approach (currently with support for Umbraco, LightInject and Autofac).
 
+## Extension libraries
+
+| Package Name                   | Release (NuGet) |
+|--------------------------------|-----------------|
+| `Cogworks.AzureSearch.Autofac.IocExtension` | [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch.Autofac.IocExtension)](https://www.nuget.org/packages/Cogworks.AzureSearch.Autofac.IocExtension/) |
+| `Cogworks.AzureSearch.LightInject.IocExtension` | [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch.LightInject.IocExtension)](https://www.nuget.org/packages/Cogworks.AzureSearch.LightInject.IocExtension/) |
+| `Cogworks.AzureSearch.Umbraco.IocExtension` | [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch.Umbraco.IocExtension)](https://www.nuget.org/packages/Cogworks.AzureSearch.Umbraco.IocExtension/) |
+
 ## Usage
 
 #### Registration
