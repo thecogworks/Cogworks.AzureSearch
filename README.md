@@ -1,4 +1,4 @@
-# Cogworks.AzureSearch [![GitHub license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE.md)
+# Cogworks.AzureSearch &middot; [![GitHub license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE.md) [![Github Build](https://img.shields.io/github/workflow/status/thecogworks/cogworks.azuresearch/Changelog%20generator%20and%20NuGet%20Releasing)](https://github.com/thecogworks/Cogworks.AzureSearch/actions?query=workflow%3A%22Changelog+generator+and+NuGet+Releasing%22) [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch)](https://www.nuget.org/packages/Cogworks.AzureSearch/) [![codecov](https://codecov.io/gh/thecogworks/UmbracoAzureSearch/branch/master/graph/badge.svg?token=UMLJ5S8UJX)](undefined)
 
 A wrapper to Azure Search allowing to easily setup Azure Search indexes, searchers and using it with DI/IoC approach (currently with support for Umbraco, LightInject and Autofac).
 
