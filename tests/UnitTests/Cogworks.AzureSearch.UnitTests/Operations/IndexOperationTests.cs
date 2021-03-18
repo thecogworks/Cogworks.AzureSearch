@@ -106,7 +106,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
             // Assert
             Assert.NotNull(deleteResult);
             Assert.False(deleteResult.Succeeded);
-            Assert.Equal($"An issue occured on deleting index: {TestDocumentModelDefinition.IndexName}. More information: {AzureWrapperException}", deleteResult.Message);
+            Assert.Equal($"An issue occurred on deleting index: {TestDocumentModelDefinition.IndexName}. More information: {AzureWrapperException}", deleteResult.Message);
         }
 
         [Fact]
@@ -188,7 +188,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
             // Assert
             Assert.NotNull(operationResult);
             Assert.False(operationResult.Succeeded);
-            Assert.Equal($"An issue occured on creating or updating index: {TestDocumentModelDefinition.IndexName}. More information: {AzureWrapperException}", operationResult.Message);
+            Assert.Equal($"An issue occurred on creating or updating index: {TestDocumentModelDefinition.IndexName}. More information: {AzureWrapperException}", operationResult.Message);
         }
 
         #endregion Index Create or Update Tests
@@ -243,7 +243,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
             // Assert
             Assert.NotNull(indexOperationResult);
             Assert.False(indexOperationResult.Succeeded);
-            Assert.Equal($"An issue occured on clearing index: {TestDocumentModelDefinition.IndexName}. Could not delete existing index.", indexOperationResult.Message);
+            Assert.Equal($"An issue occurred on clearing index: {TestDocumentModelDefinition.IndexName}. Could not delete existing index.", indexOperationResult.Message);
 
             // Arrange
             _ = IndexOperationWrapper.ExistsAsync(Arg.Any<string>())
@@ -258,7 +258,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
             // Assert
             Assert.NotNull(indexOperationResult);
             Assert.False(indexOperationResult.Succeeded);
-            Assert.Equal($"An issue occured on clearing index: {TestDocumentModelDefinition.IndexName}. Could not create index.", indexOperationResult.Message);
+            Assert.Equal($"An issue occurred on clearing index: {TestDocumentModelDefinition.IndexName}. Could not create index.", indexOperationResult.Message);
         }
 
         #endregion Index Clear Tests

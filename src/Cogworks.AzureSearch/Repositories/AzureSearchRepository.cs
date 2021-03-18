@@ -47,7 +47,7 @@ namespace Cogworks.AzureSearch.Repositories
             }
             catch (Exception e)
             {
-                result.Message = $"An issue occured on deleting index: {_azureIndexDefinition.IndexName}. More information: {e.Message}";
+                result.Message = $"An issue occurred on deleting index: {_azureIndexDefinition.IndexName}. More information: {e.Message}";
             }
 
             return result;
@@ -70,7 +70,7 @@ namespace Cogworks.AzureSearch.Repositories
             }
             catch (Exception exception)
             {
-                result.Message = $"An issue occured on creating or updating index: {_azureIndexDefinition.IndexName}. More information: {exception.Message}";
+                result.Message = $"An issue occurred on creating or updating index: {_azureIndexDefinition.IndexName}. More information: {exception.Message}";
             }
 
             return result;
@@ -89,7 +89,7 @@ namespace Cogworks.AzureSearch.Repositories
             }
             catch (Exception exception)
             {
-                result.Message = $"An issue occured on creating or updating index: {_azureIndexDefinition.IndexName}. More information: {exception.Message}";
+                result.Message = $"An issue occurred on creating or updating index: {_azureIndexDefinition.IndexName}. More information: {exception.Message}";
             }
 
             return result;
@@ -108,7 +108,7 @@ namespace Cogworks.AzureSearch.Repositories
                         return new AzureIndexOperationResult
                         {
                             Succeeded = false,
-                            Message = $"An issue occured on clearing index: {_azureIndexDefinition.IndexName}. Could not delete existing index."
+                            Message = $"An issue occurred on clearing index: {_azureIndexDefinition.IndexName}. Could not delete existing index."
                         };
                     }
                 }
@@ -125,7 +125,7 @@ namespace Cogworks.AzureSearch.Repositories
                 Succeeded = indexCreateOrUpdateResult.Succeeded,
                 Message = indexCreateOrUpdateResult.Succeeded
                     ? $"Index {_azureIndexDefinition.IndexName} successfully cleared."
-                    : $"An issue occured on clearing index: {_azureIndexDefinition.IndexName}. Could not create index."
+                    : $"An issue occurred on clearing index: {_azureIndexDefinition.IndexName}. Could not create index."
             };
         }
 
