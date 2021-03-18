@@ -165,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Cogworks.AzureSearch.Umbraco.IocExtension.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
