@@ -35,7 +35,7 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
                 .RegisterIndexOptions(false, false)
                 .RegisterIndexDefinitions<FirstTestDocumentModel>(FirstDocumentIndexName)
                 .RegisterIndexDefinitions<SecondTestDocumentModel>(SecondDocumentIndexName)
-                .RegisterIndexDefinitions<ThirdTestDocumentModel>(customIndex: new Index{Name = ThirdDocumentIndexName});
+                .RegisterIndexDefinitions<ThirdTestDocumentModel>(customIndex: new Index { Name = ThirdDocumentIndexName });
         }
 
         [Theory]
