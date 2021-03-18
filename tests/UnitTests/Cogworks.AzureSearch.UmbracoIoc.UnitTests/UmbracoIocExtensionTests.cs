@@ -12,6 +12,7 @@ using Cogworks.AzureSearch.UmbracoIoc.UnitTests.Searchers;
 using LightInject;
 using NSubstitute;
 using System;
+using Microsoft.Azure.Search.Models;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Composing.LightInject;
 using Xunit;
@@ -25,6 +26,7 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
 
         private const string FirstDocumentIndexName = "first-test-document";
         private const string SecondDocumentIndexName = "second-test-document";
+        private const string ThirdDocumentIndexName = "third-test-document";
 
         public UmbracoIocExtensionTests()
         {
@@ -36,7 +38,10 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
                 .RegisterClientOptions("test", "test")
                 .RegisterIndexOptions(false, false)
                 .RegisterIndexDefinitions<FirstTestDocumentModel>(FirstDocumentIndexName)
-                .RegisterIndexDefinitions<SecondTestDocumentModel>(SecondDocumentIndexName);
+                .RegisterIndexDefinitions<SecondTestDocumentModel>(SecondDocumentIndexName)
+                .RegisterIndexDefinitions<ThirdTestDocumentModel>(customIndex: new Index { Name = ThirdDocumentIndexName });
+
+
         }
 
         [Theory]
@@ -54,6 +59,13 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
         [InlineData(typeof(IAzureIndex<SecondTestDocumentModel>))]
         [InlineData(typeof(IAzureInitializer<SecondTestDocumentModel>))]
         [InlineData(typeof(IAzureSearch<SecondTestDocumentModel>))]
+        [InlineData(typeof(IAzureSearchRepository<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureIndexOperation<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureDocumentOperation<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureDocumentSearch<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureIndex<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureInitializer<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureSearch<ThirdTestDocumentModel>))]
         public void Should_ReturnDedicatedRepositoryInstance(Type desiredObjectType)
         {
             // Arrange
@@ -87,6 +99,13 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
         [InlineData(typeof(IAzureIndex<SecondTestDocumentModel>))]
         [InlineData(typeof(IAzureInitializer<SecondTestDocumentModel>))]
         [InlineData(typeof(IAzureSearch<SecondTestDocumentModel>))]
+        [InlineData(typeof(IAzureSearchRepository<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureIndexOperation<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureDocumentOperation<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureDocumentSearch<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureIndex<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureInitializer<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IAzureSearch<ThirdTestDocumentModel>))]
         public void Should_Not_ThrowException_When_IndexRegistered(Type desiredObjectType)
         {
             // Arrange
@@ -202,12 +221,15 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests
             {
                 var firstTestDocumentIndexDefinition = scope.GetInstance<AzureIndexDefinition<FirstTestDocumentModel>>();
                 var secondTestDocumentIndexDefinition = scope.GetInstance<AzureIndexDefinition<SecondTestDocumentModel>>();
+                var thirdTestDocumentIndexDefinition = scope.GetInstance<AzureIndexDefinition<ThirdTestDocumentModel>>();
 
                 // Assert
                 Assert.NotNull(firstTestDocumentIndexDefinition);
                 Assert.NotNull(secondTestDocumentIndexDefinition);
+                Assert.NotNull(thirdTestDocumentIndexDefinition);
                 Assert.Equal(FirstDocumentIndexName, firstTestDocumentIndexDefinition.IndexName);
                 Assert.Equal(SecondDocumentIndexName, secondTestDocumentIndexDefinition.IndexName);
+                Assert.Equal(ThirdDocumentIndexName, thirdTestDocumentIndexDefinition.IndexName);
             }
         }
     }

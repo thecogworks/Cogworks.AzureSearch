@@ -13,6 +13,7 @@ using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
 using Cogworks.AzureSearch.Wrappers;
+using Microsoft.Azure.Search.Models;
 
 namespace Cogworks.AzureSearch.Autofac.Builders
 {
@@ -54,6 +55,16 @@ namespace Cogworks.AzureSearch.Autofac.Builders
             where TDocument : class, IAzureModel, new()
         {
             _ = _builder.Register(_ => new AzureIndexDefinition<TDocument>(indexName))
+                .AsSelf()
+                .SingleInstance();
+
+            return this;
+        }
+
+        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(Index customIndex)
+            where TDocument : class, IAzureModel, new()
+        {
+            _ = _builder.Register(_ => new AzureIndexDefinition<TDocument>(customIndex))
                 .AsSelf()
                 .SingleInstance();
 

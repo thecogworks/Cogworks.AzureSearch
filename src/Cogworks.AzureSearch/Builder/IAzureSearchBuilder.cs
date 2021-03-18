@@ -1,5 +1,6 @@
 ﻿using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Models;
+using Microsoft.Azure.Search.Models;
 
 namespace Cogworks.AzureSearch.Builder
 {
@@ -10,6 +11,9 @@ namespace Cogworks.AzureSearch.Builder
         IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials);
 
         IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(string indexName)
+            where TDocument : class, IAzureModel, new();
+
+        IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(Index customIndex)
             where TDocument : class, IAzureModel, new();
 
         IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()

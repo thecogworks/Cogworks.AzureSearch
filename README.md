@@ -21,6 +21,19 @@ _composing.RegisterAzureSearch()
     .RegisterIndexOptions(false, false) // for now required
     .RegisterIndexDefinitions<FirstDocumentModel>("first-document-index-name")
     .RegisterIndexDefinitions<SecondDocumentModel>("second-document-index-name")
+    .RegisterIndexDefinitions<ThirdDocumentModel>(new Index{
+        Name = "third-document-index-name",
+        ScoringProfiles = new List<ScoringProfile>()
+                {
+                    new ScoringProfile("global-sp", new TextWeights(new Dictionary<string, double>()
+                    {
+                        {"Name", 10}, {"Content", 0.1}, {"Tags/Name", 0.1}
+                    }),new List<ScoringFunction>()
+                    {
+                        new FreshnessScoringFunction("PublishDate", 20, TimeSpan.FromDays(180), ScoringFunctionInterpolation.Quadratic)
+                    })
+                } //and more custom properties to add
+    })
     .RegisterDomainSearcher<SomeDomainSearch, ISomeDomainSearch, FirstDocumentModel>();
 ```
 
