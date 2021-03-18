@@ -6,6 +6,8 @@ using Microsoft.Rest.Azure;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using System.Threading.Tasks;
+using AutoFixture;
+using Cogworks.AzureSearch.Models;
 using Xunit;
 
 namespace Cogworks.AzureSearch.UnitTests.Operations
@@ -189,6 +191,34 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
             Assert.NotNull(operationResult);
             Assert.False(operationResult.Succeeded);
             Assert.Equal($"An issue occurred on creating or updating index: {TestDocumentModelDefinition.IndexName}. More information: {AzureWrapperException}", operationResult.Message);
+        }
+
+        [Fact]
+        public async Task Should_Not_ThrowException_When_IssueOnCreatingOrUpdatingCustomIndex()
+        {
+            // Arrange
+            var index = new Index
+            {
+                Name = Fixture.Create<string>()
+            };
+
+            var customModelDefinition = new AzureIndexDefinition<TestDocumentModel>(index);
+
+            var azureIndexOperation = new AzureSearchRepository<TestDocumentModel>(
+                customModelDefinition,
+                IndexOperationWrapper,
+                DocumentOperationWrapper);
+
+            _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<Index>(), Arg.Any<bool>())
+                .Throws(_ => new CloudException(AzureWrapperException));
+
+            // Act
+            var operationResult = await azureIndexOperation.IndexCreateOrUpdateAsync();
+
+            // Assert
+            Assert.NotNull(operationResult);
+            Assert.False(operationResult.Succeeded);
+            Assert.Equal($"An issue occurred on creating or updating index: {customModelDefinition.IndexName}. More information: {AzureWrapperException}", operationResult.Message);
         }
 
         #endregion Index Create or Update Tests
