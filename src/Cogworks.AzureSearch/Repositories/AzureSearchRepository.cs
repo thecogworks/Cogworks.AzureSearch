@@ -61,8 +61,8 @@ namespace Cogworks.AzureSearch.Repositories
             try
             {
 
-                var createdIndex = _azureIndexDefinition.CustomIndexDefinition != null ? 
-                    await _indexOperationWrapper.CreateOrUpdateAsync<TAzureModel>(_azureIndexDefinition.CustomIndexDefinition, true) 
+                var createdIndex = _azureIndexDefinition.CustomIndexDefinition != null
+                    ? await _indexOperationWrapper.CreateOrUpdateAsync<TAzureModel>(_azureIndexDefinition.CustomIndexDefinition, true)
                     : await _indexOperationWrapper.CreateOrUpdateAsync<TAzureModel>(_azureIndexDefinition.IndexName) ;
 
                 result.Message = $"Index {_azureIndexDefinition.IndexName} successfully created or updated.";
