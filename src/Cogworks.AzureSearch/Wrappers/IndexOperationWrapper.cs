@@ -29,7 +29,7 @@ namespace Cogworks.AzureSearch.Wrappers
             {
                 Name = indexName,
                 Fields = FieldBuilder.BuildForType<TAzureModel>(),
-                
+
             };
 
             return await _indexOperation.CreateOrUpdateAsync(indexDefinition);
@@ -43,6 +43,6 @@ namespace Cogworks.AzureSearch.Wrappers
             }
 
             return await _indexOperation.CreateOrUpdateAsync(customIndexDefinition);
-        } 
+        }
     }
 }
