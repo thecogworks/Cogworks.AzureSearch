@@ -9,6 +9,7 @@ env:
   TestReportFileName: 'TestReport.${{github.run_number}}.md'
   DotNetVersion: 3.1.401
   NugetVersion: 'latest'
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 jobs:
   build-and-test:

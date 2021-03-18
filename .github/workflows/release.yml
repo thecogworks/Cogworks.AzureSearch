@@ -11,6 +11,7 @@ jobs:
     env:
       TagOnMaster: false
       Branch: master
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
     - uses: actions/checkout@v1
     - name: Set local user
@@ -75,6 +76,9 @@ jobs:
   updating-branches:
     needs: changelog-generator
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
     steps:
     - uses: actions/checkout@v1
     - name: Set local user
@@ -111,6 +115,8 @@ jobs:
     needs: changelog-generator
     runs-on: windows-latest
     env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
       # Dotnet Setup
       DOTNET_VERSION: 3.1.401
 
