@@ -1,10 +1,10 @@
 name: Changelog generator and NuGet Releasing
 
-on: 
+on:
   push:
     tags:
       - '*'
-      
+
 jobs:
   changelog-generator:
     runs-on: ubuntu-latest
@@ -96,7 +96,7 @@ jobs:
     - name: Pushing develop to origin if pulling successfully
       if: success()
       run: git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" develop:develop
-    
+
     - name: Create file status_updating-branches.txt and write the job status into it
       if: always()
       run: echo ${{ job.status }} > status_updating-branches.txt
@@ -150,31 +150,20 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }} 
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - uses: nuget/setup-nuget@v1
         with:
-          nuget-version: ${{ env.NUGET_VERSION }} 
-        
-      - uses: actions/cache@v2
-        id: cache
-        with:
-          path: |
-            ~/.nuget/packages
-          key: nuget-${{ runner.os }}-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            nuget-${{ runner.os }}
-            nuget-
-            nuget
+          nuget-version: ${{ env.NUGET_VERSION }}
 
       - name: NuGet Restore
         run: nuget restore ${{ env.SOLUTION }} -LockedMode
 
       - name: Install dependencies
         run: dotnet restore ${{env.SOLUTION}}
-      
+
       - name: Build
-        working-directory: ${{ github.workspace }}  
+        working-directory: ${{ github.workspace }}
         run: dotnet build --configuration ${{ env.CONFIG }} ${{ env.SOLUTION }}
 
       - name: Pack all nuspec files
@@ -195,7 +184,7 @@ jobs:
 
       - name: Push to NuGet Feed
         run: dotnet nuget push .\${{ env.NUGET_OUTPUT }}\*.nupkg --source ${{ env.NUGET_FEED }} --skip-duplicate --api-key ${{ env.NUGET_KEY }}
-      
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
@@ -235,7 +224,7 @@ jobs:
            echo "::set-output name=status_updating-branches::$(<pass_status_updating-branches/status_updating-branches.txt)"
           else
             echo "::set-output name=status_updating-branches::$(echo $Failure)"
-          fi      
+          fi
 
       - name: (changelog-generator) Slack notification (successfully tag updated and pushed to master branch)
         if: steps.set_outputs.outputs.status_changelog-generator == env.Success
@@ -249,7 +238,7 @@ jobs:
 
       - name: (changelog-generator) Slack notification (release could not be created)
         if: steps.set_outputs.outputs.status_changelog-generator == env.Failure
-        uses: rtCamp/action-slack-notify@master      
+        uses: rtCamp/action-slack-notify@master
         env:
           SLACK_TITLE: 'Release could not be created:'
           SLACK_MESSAGE: "Please log in to Github and check why release couldn't be created."
@@ -269,13 +258,13 @@ jobs:
 
       - name: (updating-branches) Slack notification (Failed on pulling master into develop)
         if: steps.set_outputs.outputs.status_updating-branches == env.Failure
-        uses: rtCamp/action-slack-notify@master      
+        uses: rtCamp/action-slack-notify@master
         env:
           SLACK_TITLE: 'Pull failed'
           SLACK_MESSAGE: "Failed on pulling master into develop"
           SLACK_USERNAME: 'Release manager'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        continue-on-error: true 
+        continue-on-error: true
 
       - name: Jobs status finalization
         if: always()

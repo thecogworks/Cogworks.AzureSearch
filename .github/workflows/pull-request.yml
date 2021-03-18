@@ -20,31 +20,20 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: ${{ env.DotNetVersion }} 
+          dotnet-version: ${{ env.DotNetVersion }}
 
       - uses: nuget/setup-nuget@v1
         with:
-          nuget-version: ${{ env.NugetVersion }} 
-        
-      - uses: actions/cache@v2
-        id: cache
-        with:
-          path: |
-            ~/.nuget/packages
-          key: nuget-${{ runner.os }}-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            nuget-${{ runner.os }}
-            nuget-
-            nuget
+          nuget-version: ${{ env.NugetVersion }}
 
       - name: NuGet Restore
         run: nuget restore ${{ env.Solution }} -LockedMode
 
       - name: Install dependencies
         run: dotnet restore ${{env.Solution}}
-      
+
       - name: Build
-        working-directory: ${{ github.workspace }}  
+        working-directory: ${{ github.workspace }}
         run: dotnet build --configuration ${{ env.Config }} ${{ env.Solution }}
 
       - name: Set PR build number
@@ -55,8 +44,8 @@ jobs:
       - name: Set Test Title
         run: |
           echo "::set-env name=title::Test Run for PR #${{ steps.PRNUMBER.outputs.pr }} (${{ github.run_number }})"
-              
-      - name: Run Tests  
+
+      - name: Run Tests
         run: dotnet test --no-restore --no-build --configuration ${{ env.Config }} --logger:"liquid.md;LogFileName=${{ env.ReportOutput}}\${{ env.TestReportFileName }};Title=${{ env.Title }};"
 
       - name: Upload test results
