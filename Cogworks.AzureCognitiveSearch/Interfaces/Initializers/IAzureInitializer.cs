@@ -6,6 +6,6 @@ namespace Cogworks.AzureCognitiveSearch.Interfaces.Initializers
 {
     public interface IAzureInitializer<in TAzureModel> where TAzureModel : class, IAzureModel, new()
     {
-        Task<AzureIndexOperationResult> InitializeAsync();
+        Task InitializeAsync();
     }
 }
