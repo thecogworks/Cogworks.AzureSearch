@@ -5,11 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Meziantou.MSBuild.InternalsVisibleTo" Version="1.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Azure.Search.Documents" Version="11.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Mappers\" />
+  </ItemGroup>
+
+  <!-- Tests Visibility -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="Cogworks.AzureCognitiveSearch.UnitTests" />
   </ItemGroup>
 
 </Project>

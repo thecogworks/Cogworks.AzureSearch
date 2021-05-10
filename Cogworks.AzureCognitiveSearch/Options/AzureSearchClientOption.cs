@@ -25,7 +25,7 @@ namespace Cogworks.AzureCognitiveSearch.Options
         }
 
 
-        private SearchClientOptions GetOptions()
+        private static SearchClientOptions GetOptions()
         {
             var clientOptions = new SearchClientOptions();
 
