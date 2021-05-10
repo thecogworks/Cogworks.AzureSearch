@@ -10,7 +10,7 @@ namespace Cogworks.AzureCognitiveSearch.Interfaces.Wrappers
     {
         SearchResults<TAzureModel> Search(string searchText, SearchOptions parameters = null);
 
-        Task<Response<SearchResults<TAzureModel>>> SearchAsync(string searchText, SearchOptions parameters = null);
+        Task<SearchResults<TAzureModel>> SearchAsync(string searchText, SearchOptions parameters = null);
 
         Task<Response<IndexDocumentsResult>> IndexAsync(IndexDocumentsBatch<TAzureModel> indexBatch);
     }

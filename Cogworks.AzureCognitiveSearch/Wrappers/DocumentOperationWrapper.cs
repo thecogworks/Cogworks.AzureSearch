@@ -34,7 +34,7 @@ namespace Cogworks.AzureCognitiveSearch.Wrappers
         public SearchResults<TAzureModel> Search(string searchText, SearchOptions parameters = null)
             => _searchClient.Search<TAzureModel>(searchText, parameters);
 
-        public async Task<Response<SearchResults<TAzureModel>>> SearchAsync(string searchText, SearchOptions parameters = null)
+        public async Task<SearchResults<TAzureModel>> SearchAsync(string searchText, SearchOptions parameters = null)
             => await _searchClient.SearchAsync<TAzureModel>(searchText, parameters);
 
         public async Task<Response<IndexDocumentsResult>> IndexAsync(IndexDocumentsBatch<TAzureModel> indexBatch)

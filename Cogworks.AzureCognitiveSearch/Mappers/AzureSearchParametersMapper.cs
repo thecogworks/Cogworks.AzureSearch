@@ -9,7 +9,7 @@ namespace Cogworks.AzureCognitiveSearch.Mappers
 {
     public static class AzureSearchParametersMapper
     {
-        internal static SearchOptions GetSearchParameters(AzureSearchParameters azureSearchParameters)
+        internal static SearchOptions Map(AzureSearchParameters azureSearchParameters)
         {
             var searchParameters = new SearchOptions
             {
