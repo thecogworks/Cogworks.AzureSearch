@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Cogworks.AzureCognitiveSearch.Interfaces.Operations;
 using Cogworks.AzureCognitiveSearch.Interfaces.Repositories;
+using Cogworks.AzureCognitiveSearch.Interfaces.Searches;
 using Cogworks.AzureCognitiveSearch.Models;
 using Cogworks.AzureCognitiveSearch.Models.Dtos;
 
@@ -12,13 +13,16 @@ namespace Cogworks.AzureCognitiveSearch.Repositories
     {
         private readonly IAzureIndexOperation<TAzureModel> _indexOperation;
         private readonly IAzureDocumentOperation<TAzureModel> _documentOperation;
+        private readonly IAzureSearch<TAzureModel> _search;
 
         public AzureSearchRepository(
             IAzureIndexOperation<TAzureModel> indexOperation,
-            IAzureDocumentOperation<TAzureModel> documentOperation)
+            IAzureDocumentOperation<TAzureModel> documentOperation,
+            IAzureSearch<TAzureModel> search)
         {
             _indexOperation = indexOperation;
             _documentOperation = documentOperation;
+            _search = search;
         }
 
         public async Task<AzureDocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)
@@ -44,5 +48,12 @@ namespace Cogworks.AzureCognitiveSearch.Repositories
 
         public async Task IndexClearAsync()
             => await _indexOperation.IndexClearAsync();
+
+        public SearchResult<TAzureModel> Search(string keyword, AzureSearchParameters azureSearchParameters)
+            => _search.Search(keyword, azureSearchParameters);
+
+        public async Task<SearchResult<TAzureModel>> SearchAsync(string keyword,
+            AzureSearchParameters azureSearchParameters)
+            => await _search.SearchAsync(keyword, azureSearchParameters);
     }
 }
