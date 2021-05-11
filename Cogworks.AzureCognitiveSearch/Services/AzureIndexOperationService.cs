@@ -24,7 +24,16 @@ namespace Cogworks.AzureCognitiveSearch.Services
         }
 
         public async Task<bool> IndexExistsAsync()
-            => await _indexOperationWrapper.ExistsAsync(_azureIndexDefinition.IndexName);
+        {
+            try
+            {
+                return await _indexOperationWrapper.ExistsAsync(_azureIndexDefinition.IndexName);
+            }
+            catch (Exception exception)
+            {
+                throw new IndexExistsException(exception.Message, exception.InnerException);
+            }
+        }
 
         public async Task IndexDeleteAsync()
         {
