@@ -179,9 +179,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\ContainerBuilder.cs" />
-    <Compile Include="Extensions\RegisterExtensions.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="**\*.cs" Exclude="bin\**\*.cs;obj\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cogworks.AzureSearch.LightInject.IocExtension\Cogworks.AzureSearch.LightInject.IocExtension.csproj">
