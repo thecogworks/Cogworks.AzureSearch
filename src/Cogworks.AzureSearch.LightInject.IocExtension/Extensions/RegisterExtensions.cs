@@ -11,6 +11,7 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Extensions
                 .RegisterIndexes()
                 .RegisterSearchers()
                 .RegisterInitializers()
-                .RegisterWrappers();
+                .RegisterWrappers()
+                .RegisterOperations();
     }
 }

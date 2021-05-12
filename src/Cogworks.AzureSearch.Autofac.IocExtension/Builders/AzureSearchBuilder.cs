@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Azure.Search.Documents.Indexes.Models;
 using Cogworks.AzureSearch.Builder;
 using Cogworks.AzureSearch.Indexes;
 using Cogworks.AzureSearch.Initializers;
@@ -12,8 +13,8 @@ using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
+using Cogworks.AzureSearch.Services;
 using Cogworks.AzureSearch.Wrappers;
-using Microsoft.Azure.Search.Models;
 
 namespace Cogworks.AzureSearch.Autofac.Builders
 {
@@ -42,9 +43,12 @@ namespace Cogworks.AzureSearch.Autofac.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials)
+        public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl)
         {
-            _ = _builder.Register(_ => new AzureSearchClientOption(serviceName, credentials))
+            _ = _builder.Register(_ => new AzureSearchClientOption(
+                    serviceName,
+                    credentials,
+                    serviceEndpointUrl))
                 .AsSelf()
                 .SingleInstance();
 
@@ -61,7 +65,7 @@ namespace Cogworks.AzureSearch.Autofac.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(Index customIndex)
+        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(SearchIndex customIndex)
             where TDocument : class, IAzureModel, new()
         {
             _ = _builder.Register(_ => new AzureIndexDefinition<TDocument>(customIndex))
@@ -97,9 +101,6 @@ namespace Cogworks.AzureSearch.Autofac.Builders
         {
             _ = _builder.RegisterGeneric(typeof(AzureSearchRepository<>))
                 .As(typeof(IAzureSearchRepository<>))
-                .As(typeof(IAzureIndexOperation<>))
-                .As(typeof(IAzureDocumentOperation<>))
-                .As(typeof(IAzureDocumentSearch<>))
                 .InstancePerDependency();
 
             return this;
@@ -114,9 +115,22 @@ namespace Cogworks.AzureSearch.Autofac.Builders
             return this;
         }
 
+        internal AzureSearchBuilder RegisterOperations()
+        {
+            _ = _builder.RegisterGeneric(typeof(AzureDocumentOperationService<>))
+                .As(typeof(IAzureDocumentOperation<>))
+                .InstancePerDependency();
+
+            _ = _builder.RegisterGeneric(typeof(AzureIndexOperationService<>))
+                .As(typeof(IAzureIndexOperation<>))
+                .InstancePerDependency();
+
+            return this;
+        }
+
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
             where TDocument : class, IAzureModel, new()
-            where TSearcher : class, IAzureSearch<TDocument>, TSearcherType
+            where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {
             _ = _builder.RegisterType<TSearcher>()
@@ -127,8 +141,10 @@ namespace Cogworks.AzureSearch.Autofac.Builders
             return this;
         }
 
-        IAzureSearchBuilder IAzureSearchBuilder.RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(
-            TSearcherType instance)
+        public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(TSearcherType instance)
+            where TDocument : class, IAzureModel, new()
+            where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
+            where TSearcherType : class
         {
             _ = _builder.RegisterInstance(instance).As<TSearcherType>();
 

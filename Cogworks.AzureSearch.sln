@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch", "src\Cogworks.AzureSearch\Cogworks.AzureSearch.csproj", "{64B55C63-5070-430F-A92D-747FF2CD57A6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.Autofac.IocExtension", "src\Cogworks.AzureSearch.Autofac.IocExtension\Cogworks.AzureSearch.Autofac.IocExtension.csproj", "{060A2DE8-2E15-4EA5-ACCB-5061B50B350F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B85EEFD6-B048-478E-A032-3CCE3F0B3093}"
@@ -14,8 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{180E9BD6-30B9-4D88-B88C-9F289D316967}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.UnitTests", "tests\UnitTests\Cogworks.AzureSearch.UnitTests\Cogworks.AzureSearch.UnitTests.csproj", "{37898883-18CD-47A7-BA59-E4FC1FD8B8E1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.Umbraco.IocExtension", "src\Cogworks.AzureSearch.Umbraco.IocExtension\Cogworks.AzureSearch.Umbraco.IocExtension.csproj", "{FC38DB43-401F-4E88-BAF5-A28325E4C461}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.UmbracoIoc.UnitTests", "tests\UnitTests\Cogworks.AzureSearch.UmbracoIoc.UnitTests\Cogworks.AzureSearch.UmbracoIoc.UnitTests.csproj", "{31032AAC-7779-4DEF-81D4-B6143A716C4F}"
 EndProject
@@ -29,9 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.Autofa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.LightInject.UnitTests", "tests\UnitTests\Cogworks.AzureSearch.LightInject.UnitTests\Cogworks.AzureSearch.LightInject.UnitTests.csproj", "{90E65F2C-9592-473C-83BB-FC109A11C47D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureCognitiveSearch", "Cogworks.AzureCognitiveSearch\Cogworks.AzureCognitiveSearch.csproj", "{A6B7CF93-F21C-46A2-8F87-E9FE7C3D2215}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch", "src\Cogworks.AzureSearch\Cogworks.AzureSearch.csproj", "{94F77E26-4E02-4ED5-BD54-45E3AAA70090}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureCognitiveSearch.UnitTests", "tests\UnitTests\Cogworks.AzureCognitiveSearch.UnitTests\Cogworks.AzureCognitiveSearch.UnitTests.csproj", "{733886AB-26AF-4169-BA23-87B25D11EE56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.Umbraco.IocExtension", "src\Cogworks.AzureSearch.Umbraco.IocExtension\Cogworks.AzureSearch.Umbraco.IocExtension.csproj", "{E1317854-28A7-491E-97B1-FBEEEF7B5982}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +35,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{64B55C63-5070-430F-A92D-747FF2CD57A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{64B55C63-5070-430F-A92D-747FF2CD57A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{64B55C63-5070-430F-A92D-747FF2CD57A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{64B55C63-5070-430F-A92D-747FF2CD57A6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{060A2DE8-2E15-4EA5-ACCB-5061B50B350F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{060A2DE8-2E15-4EA5-ACCB-5061B50B350F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{060A2DE8-2E15-4EA5-ACCB-5061B50B350F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,10 +43,6 @@ Global
 		{37898883-18CD-47A7-BA59-E4FC1FD8B8E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37898883-18CD-47A7-BA59-E4FC1FD8B8E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37898883-18CD-47A7-BA59-E4FC1FD8B8E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FC38DB43-401F-4E88-BAF5-A28325E4C461}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC38DB43-401F-4E88-BAF5-A28325E4C461}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FC38DB43-401F-4E88-BAF5-A28325E4C461}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FC38DB43-401F-4E88-BAF5-A28325E4C461}.Release|Any CPU.Build.0 = Release|Any CPU
 		{31032AAC-7779-4DEF-81D4-B6143A716C4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{31032AAC-7779-4DEF-81D4-B6143A716C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31032AAC-7779-4DEF-81D4-B6143A716C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -79,32 +67,30 @@ Global
 		{90E65F2C-9592-473C-83BB-FC109A11C47D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90E65F2C-9592-473C-83BB-FC109A11C47D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90E65F2C-9592-473C-83BB-FC109A11C47D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A6B7CF93-F21C-46A2-8F87-E9FE7C3D2215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6B7CF93-F21C-46A2-8F87-E9FE7C3D2215}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6B7CF93-F21C-46A2-8F87-E9FE7C3D2215}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6B7CF93-F21C-46A2-8F87-E9FE7C3D2215}.Release|Any CPU.Build.0 = Release|Any CPU
-		{733886AB-26AF-4169-BA23-87B25D11EE56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{733886AB-26AF-4169-BA23-87B25D11EE56}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{733886AB-26AF-4169-BA23-87B25D11EE56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{733886AB-26AF-4169-BA23-87B25D11EE56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94F77E26-4E02-4ED5-BD54-45E3AAA70090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94F77E26-4E02-4ED5-BD54-45E3AAA70090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94F77E26-4E02-4ED5-BD54-45E3AAA70090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94F77E26-4E02-4ED5-BD54-45E3AAA70090}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1317854-28A7-491E-97B1-FBEEEF7B5982}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1317854-28A7-491E-97B1-FBEEEF7B5982}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1317854-28A7-491E-97B1-FBEEEF7B5982}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1317854-28A7-491E-97B1-FBEEEF7B5982}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{64B55C63-5070-430F-A92D-747FF2CD57A6} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
 		{060A2DE8-2E15-4EA5-ACCB-5061B50B350F} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
 		{180E9BD6-30B9-4D88-B88C-9F289D316967} = {B5DAEDD1-13AF-4A74-BD24-42EBCB1A18D0}
 		{37898883-18CD-47A7-BA59-E4FC1FD8B8E1} = {180E9BD6-30B9-4D88-B88C-9F289D316967}
-		{FC38DB43-401F-4E88-BAF5-A28325E4C461} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
 		{31032AAC-7779-4DEF-81D4-B6143A716C4F} = {180E9BD6-30B9-4D88-B88C-9F289D316967}
 		{4C606328-9108-4584-8E4A-04450B9A1170} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
 		{E60BD2A0-C5ED-4EFE-8F8A-15FB26AD69B4} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
 		{1F9F4E09-E496-49F2-A1EB-D4EB3AC3E721} = {180E9BD6-30B9-4D88-B88C-9F289D316967}
 		{0648AF35-71D5-4BA4-A1BF-0476AAC71BEE} = {180E9BD6-30B9-4D88-B88C-9F289D316967}
 		{90E65F2C-9592-473C-83BB-FC109A11C47D} = {180E9BD6-30B9-4D88-B88C-9F289D316967}
-		{A6B7CF93-F21C-46A2-8F87-E9FE7C3D2215} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
-		{733886AB-26AF-4169-BA23-87B25D11EE56} = {180E9BD6-30B9-4D88-B88C-9F289D316967}
+		{94F77E26-4E02-4ED5-BD54-45E3AAA70090} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
+		{E1317854-28A7-491E-97B1-FBEEEF7B5982} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC813CF7-BD65-4CD5-B0B7-7B1F828A9909}

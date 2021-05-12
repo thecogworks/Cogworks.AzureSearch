@@ -1,7 +1,10 @@
 ﻿using AutoFixture;
 using AutoFixture.AutoNSubstitute;
+using Cogworks.AzureSearch.Interfaces.Operations;
+using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
+using Cogworks.AzureSearch.Services;
 using Cogworks.AzureSearch.UnitTests.Models;
 using NSubstitute;
 
@@ -17,6 +20,10 @@ namespace Cogworks.AzureSearch.UnitTests
         protected readonly IIndexOperationWrapper IndexOperationWrapper;
         protected readonly IDocumentOperationWrapper<TestDocumentModel> DocumentOperationWrapper;
         protected readonly AzureIndexDefinition<TestDocumentModel> TestDocumentModelDefinition;
+        protected readonly IAzureSearch<TestDocumentModel> Search;
+
+        protected readonly IAzureDocumentOperation<TestDocumentModel> AzureDocumentOperationService;
+        protected readonly IAzureIndexOperation<TestDocumentModel> AzureIndexOperationService;
 
         protected TestBase()
         {
@@ -24,6 +31,15 @@ namespace Cogworks.AzureSearch.UnitTests
 
             IndexOperationWrapper = Substitute.For<IIndexOperationWrapper>();
             DocumentOperationWrapper = Substitute.For<IDocumentOperationWrapper<TestDocumentModel>>();
+
+            Search = Substitute.For<IAzureSearch<TestDocumentModel>>();
+
+            AzureDocumentOperationService = new AzureDocumentOperationService<TestDocumentModel>(
+                DocumentOperationWrapper);
+
+            AzureIndexOperationService = new AzureIndexOperationService<TestDocumentModel>(
+                TestDocumentModelDefinition,
+                IndexOperationWrapper);
         }
     }
 }

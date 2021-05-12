@@ -1,5 +1,6 @@
 ﻿using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.MicrosoftIoc.UnitTests.Models;
+using Cogworks.AzureSearch.Searchers;
 
 namespace Cogworks.AzureSearch.MicrosoftIoc.UnitTests.Searchers
 {
@@ -8,9 +9,9 @@ namespace Cogworks.AzureSearch.MicrosoftIoc.UnitTests.Searchers
         void SomeCustomSearchExample();
     }
 
-    public class CustomTestSearch : AzureSearch.Searchers.AzureSearch<FirstTestDocumentModel>, ICustomTestSearch
+    public class CustomTestSearch : BaseDomainSearch<FirstTestDocumentModel>, ICustomTestSearch
     {
-        public CustomTestSearch(IAzureDocumentSearch<FirstTestDocumentModel> azureSearchRepository) : base(azureSearchRepository)
+        public CustomTestSearch(IAzureSearch<FirstTestDocumentModel> search) : base(search)
         {
         }
 

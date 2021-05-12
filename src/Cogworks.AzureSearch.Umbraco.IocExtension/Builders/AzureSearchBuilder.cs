@@ -1,4 +1,5 @@
-﻿using Cogworks.AzureSearch.Builder;
+﻿using Azure.Search.Documents.Indexes.Models;
+using Cogworks.AzureSearch.Builder;
 using Cogworks.AzureSearch.Indexes;
 using Cogworks.AzureSearch.Initializers;
 using Cogworks.AzureSearch.Interfaces.Indexes;
@@ -11,8 +12,8 @@ using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
+using Cogworks.AzureSearch.Services;
 using Cogworks.AzureSearch.Wrappers;
-using Microsoft.Azure.Search.Models;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 
@@ -43,10 +44,13 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials)
+        public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl)
         {
             _composingRegister.Register(
-                _ => new AzureSearchClientOption(serviceName, credentials),
+                _ => new AzureSearchClientOption(
+                    serviceName,
+                    credentials,
+                    serviceEndpointUrl),
                 Lifetime.Singleton);
 
             return this;
@@ -62,7 +66,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(Index customIndex)
+        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(SearchIndex customIndex)
             where TDocument : class, IAzureModel, new()
         {
             _composingRegister.Register(
@@ -98,18 +102,6 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
                 typeof(IAzureSearchRepository<>),
                 typeof(AzureSearchRepository<>));
 
-            _composingRegister.Register(
-                typeof(IAzureIndexOperation<>),
-                typeof(AzureSearchRepository<>));
-
-            _composingRegister.Register(
-                typeof(IAzureDocumentOperation<>),
-                typeof(AzureSearchRepository<>));
-
-            _composingRegister.Register(
-                typeof(IAzureDocumentSearch<>),
-                typeof(AzureSearchRepository<>));
-
             return this;
         }
 
@@ -122,9 +114,23 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
+
+        internal AzureSearchBuilder RegisterOperations()
+        {
+            _composingRegister.Register(
+                typeof(IAzureDocumentOperation<>),
+                typeof(AzureDocumentOperationService<>));
+
+            _composingRegister.Register(
+                typeof(IAzureIndexOperation<>),
+                typeof(AzureIndexOperationService<>));
+
+            return this;
+        }
+
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
             where TDocument : class, IAzureModel, new()
-            where TSearcher : class, IAzureSearch<TDocument>, TSearcherType
+            where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {
             _composingRegister.Register<TSearcherType, TSearcher>(Lifetime.Singleton);
@@ -134,7 +140,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
 
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(TSearcherType instance)
             where TDocument : class, IAzureModel, new()
-            where TSearcher : class, IAzureSearch<TDocument>, TSearcherType
+            where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {
             _composingRegister.Register<TSearcherType>(instance);

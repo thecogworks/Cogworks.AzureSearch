@@ -11,6 +11,7 @@ namespace Cogworks.AzureSearch.Autofac.Extensions
                 .RegisterIndexes()
                 .RegisterSearchers()
                 .RegisterInitializers()
-                .RegisterWrappers();
+                .RegisterWrappers()
+                .RegisterOperations();
     }
 }

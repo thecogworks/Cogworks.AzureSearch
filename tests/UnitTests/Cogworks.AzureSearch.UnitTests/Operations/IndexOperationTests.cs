@@ -1,13 +1,15 @@
-﻿using Cogworks.AzureSearch.Interfaces.Operations;
-using Cogworks.AzureSearch.Repositories;
-using Cogworks.AzureSearch.UnitTests.Models;
-using Microsoft.Azure.Search.Models;
-using Microsoft.Rest.Azure;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions;
+﻿using System;
 using System.Threading.Tasks;
 using AutoFixture;
+using Azure.Search.Documents.Indexes.Models;
+using Cogworks.AzureSearch.Exceptions.IndexExceptions;
+using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Models;
+using Cogworks.AzureSearch.Repositories;
+using Cogworks.AzureSearch.Services;
+using Cogworks.AzureSearch.UnitTests.Models;
+using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using Xunit;
 
 namespace Cogworks.AzureSearch.UnitTests.Operations
@@ -18,9 +20,9 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
 
         public IndexOperationTests()
             => _azureIndexOperation = new AzureSearchRepository<TestDocumentModel>(
-                TestDocumentModelDefinition,
-                IndexOperationWrapper,
-                DocumentOperationWrapper);
+                AzureIndexOperationService,
+                AzureDocumentOperationService,
+                Search);
 
         #region Exists Tests
 
@@ -57,10 +59,16 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
         {
             // Arrange
             _ = IndexOperationWrapper.ExistsAsync(Arg.Any<string>())
-                .Throws(_ => new CloudException(AzureWrapperException));
+                .Throws(_ => new IndexExistsException(
+                    "Test Error",
+                    Fixture.Create<Exception>()));
 
             // Assert
-            _ = await Assert.ThrowsAsync<CloudException>(async () => await _azureIndexOperation.IndexExistsAsync());
+            var domainException = await Assert.ThrowsAsync<IndexExistsException>(async () => await _azureIndexOperation.IndexExistsAsync());
+
+            Assert.NotNull(domainException);
+            Assert.Equal("Test Error", domainException.Message);
+            Assert.NotNull(domainException.InnerException);
         }
 
         [Fact]
@@ -87,28 +95,11 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
         public async Task Should_DeleteIndex_When_IndexExists()
         {
             // Act
-            var deleteResult = await _azureIndexOperation.IndexDeleteAsync();
+
+            var deleteResult = await Record.ExceptionAsync(async () => await _azureIndexOperation.IndexDeleteAsync());
 
             // Assert
-            Assert.NotNull(deleteResult);
-            Assert.True(deleteResult.Succeeded);
-            Assert.Equal($"Index {TestDocumentModelDefinition.IndexName} successfully deleted.", deleteResult.Message);
-        }
-
-        [Fact]
-        public async Task Should_Not_DeleteIndex_When_IndexNotExists()
-        {
-            // Arrange
-            _ = IndexOperationWrapper.DeleteAsync(Arg.Any<string>())
-                .Throws(_ => new CloudException(AzureWrapperException));
-
-            // Act
-            var deleteResult = await _azureIndexOperation.IndexDeleteAsync();
-
-            // Assert
-            Assert.NotNull(deleteResult);
-            Assert.False(deleteResult.Succeeded);
-            Assert.Equal($"An issue occurred on deleting index: {TestDocumentModelDefinition.IndexName}. More information: {AzureWrapperException}", deleteResult.Message);
+            Assert.Null(deleteResult);
         }
 
         [Fact]
@@ -122,13 +113,21 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
         }
 
         [Fact]
-        public async Task Should_Not_ThrowException_When_DeletingNotExistingIndex()
+        public async Task Should_ThrowException_When_IssuesWithConnection_On_DeletingIndex()
         {
+            // Arrange
+            _ = IndexOperationWrapper.DeleteAsync(Arg.Any<string>())
+                .Throws(_ => new IndexDeleteException(
+                    "Test Error",
+                    Fixture.Create<Exception>()));
+
             // Act
-            var indexDeletingResult = await Record.ExceptionAsync(Should_Not_DeleteIndex_When_IndexNotExists);
+            var domainException = await Assert.ThrowsAsync<IndexDeleteException>(async () => await _azureIndexOperation.IndexDeleteAsync());
 
             // Assert
-            Assert.Null(indexDeletingResult);
+            Assert.NotNull(domainException);
+            Assert.Equal("Test Error", domainException.Message);
+            Assert.NotNull(domainException.InnerException);
         }
 
         #endregion Delete Tests
@@ -139,86 +138,90 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
         public async Task Should_CreateOrUpdateIndex()
         {
             // Arrange
-            var createdOrUpdatedIndex = new Index
-            {
-                Name = TestDocumentModelDefinition.IndexName
-            };
+            var createdOrUpdatedIndex = new SearchIndex(TestDocumentModelDefinition.IndexName);
 
             _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<string>())
                 .Returns(createdOrUpdatedIndex);
 
             // Act
-            var operationResult = await _azureIndexOperation.IndexCreateOrUpdateAsync();
+            var indexResult = await Record.ExceptionAsync(async () => await _azureIndexOperation.IndexCreateOrUpdateAsync());
 
             // Assert
-            Assert.NotNull(operationResult);
-            Assert.True(operationResult.Succeeded);
-            Assert.Equal($"Index {TestDocumentModelDefinition.IndexName} successfully created or updated.", operationResult.Message);
+            Assert.Null(indexResult);
+
         }
 
         [Fact]
         public async Task Should_CreateOrUpdateCustomIndex()
         {
             // Arrange
-            var createdOrUpdatedIndex = new Index
-            {
-                Name = TestDocumentModelDefinition.IndexName
-            };
-
-            _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<Index>(), Arg.Any<bool>())
-                .Returns(createdOrUpdatedIndex);
-
-            // Act
-            var operationResult = await _azureIndexOperation.IndexCreateOrUpdateAsync();
-
-            // Assert
-            Assert.NotNull(operationResult);
-            Assert.True(operationResult.Succeeded);
-            Assert.Equal($"Index {TestDocumentModelDefinition.IndexName} successfully created or updated.", operationResult.Message);
-        }
-
-        [Fact]
-        public async Task Should_Not_ThrowException_When_IssueOnCreatingOrUpdatingIndex()
-        {
-            // Arrange
-            _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<string>())
-                .Throws(_ => new CloudException(AzureWrapperException));
-
-            // Act
-            var operationResult = await _azureIndexOperation.IndexCreateOrUpdateAsync();
-
-            // Assert
-            Assert.NotNull(operationResult);
-            Assert.False(operationResult.Succeeded);
-            Assert.Equal($"An issue occurred on creating or updating index: {TestDocumentModelDefinition.IndexName}. More information: {AzureWrapperException}", operationResult.Message);
-        }
-
-        [Fact]
-        public async Task Should_Not_ThrowException_When_IssueOnCreatingOrUpdatingCustomIndex()
-        {
-            // Arrange
-            var index = new Index
-            {
-                Name = Fixture.Create<string>()
-            };
+            var index = new SearchIndex(Fixture.Create<string>());
 
             var customModelDefinition = new AzureIndexDefinition<TestDocumentModel>(index);
 
-            var azureIndexOperation = new AzureSearchRepository<TestDocumentModel>(
+            var customIndexOperationService = new AzureIndexOperationService<TestDocumentModel>(
                 customModelDefinition,
-                IndexOperationWrapper,
-                DocumentOperationWrapper);
+                IndexOperationWrapper);
 
-            _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<Index>(), Arg.Any<bool>())
-                .Throws(_ => new CloudException(AzureWrapperException));
+            var azureIndexOperation = new AzureSearchRepository<TestDocumentModel>(
+                customIndexOperationService,
+                AzureDocumentOperationService,
+                Search);
 
             // Act
-            var operationResult = await azureIndexOperation.IndexCreateOrUpdateAsync();
+            var indexResult = await Record.ExceptionAsync(async () => await azureIndexOperation.IndexCreateOrUpdateAsync());
 
             // Assert
-            Assert.NotNull(operationResult);
-            Assert.False(operationResult.Succeeded);
-            Assert.Equal($"An issue occurred on creating or updating index: {customModelDefinition.IndexName}. More information: {AzureWrapperException}", operationResult.Message);
+            Assert.Null(indexResult);
+        }
+
+        [Fact]
+        public async Task Should_ThrowException_When_IssueOnCreatingOrUpdatingIndex()
+        {
+            // Arrange
+            _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<string>())
+                .Throws(_ => new IndexCreateOrUpdateException(
+                    "Test Error",
+                    Fixture.Create<Exception>()));
+
+            // Act
+            var domainException = await Assert.ThrowsAsync<IndexCreateOrUpdateException>(async () => await _azureIndexOperation.IndexCreateOrUpdateAsync());
+
+            // Assert
+            Assert.NotNull(domainException);
+            Assert.Equal("Test Error", domainException.Message);
+            Assert.NotNull(domainException.InnerException);
+        }
+
+        [Fact]
+        public async Task Should_ThrowException_When_IssueOnCreatingOrUpdatingCustomIndex()
+        {
+            // Arrange
+            var index = new SearchIndex(Fixture.Create<string>());
+
+            var customModelDefinition = new AzureIndexDefinition<TestDocumentModel>(index);
+
+            var customIndexOperationService = new AzureIndexOperationService<TestDocumentModel>(
+                customModelDefinition,
+                IndexOperationWrapper);
+
+            var azureIndexOperation = new AzureSearchRepository<TestDocumentModel>(
+                customIndexOperationService,
+                AzureDocumentOperationService,
+                Search);
+
+            _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<SearchIndex>(), Arg.Any<bool>())
+                .Throws(_ => new IndexCreateOrUpdateException(
+                    "Test Error",
+                    Fixture.Create<Exception>()));
+
+            // Act
+            var domainException = await Assert.ThrowsAsync<IndexCreateOrUpdateException>(async () => await azureIndexOperation.IndexCreateOrUpdateAsync());
+
+            // Assert
+            Assert.NotNull(domainException);
+            Assert.Equal("Test Error", domainException.Message);
+            Assert.NotNull(domainException.InnerException);
         }
 
         #endregion Index Create or Update Tests
@@ -232,13 +235,11 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
             _ = IndexOperationWrapper.ExistsAsync(Arg.Any<string>())
                 .Returns(true);
 
-            // Act
-            var indexOperationResult = await _azureIndexOperation.IndexClearAsync();
+             // Act
+            var indexResult = await Record.ExceptionAsync(async () => await _azureIndexOperation.IndexClearAsync());
 
             // Assert
-            Assert.NotNull(indexOperationResult);
-            Assert.True(indexOperationResult.Succeeded);
-            Assert.Equal($"Index {TestDocumentModelDefinition.IndexName} successfully cleared.", indexOperationResult.Message);
+            Assert.Null(indexResult);
         }
 
         [Fact]
@@ -249,46 +250,51 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 .Returns(false);
 
             // Act
-            var indexOperationResult = await _azureIndexOperation.IndexClearAsync();
+            var indexResult = await Record.ExceptionAsync(async () => await _azureIndexOperation.IndexClearAsync());
 
             // Assert
-            Assert.NotNull(indexOperationResult);
-            Assert.True(indexOperationResult.Succeeded);
-            Assert.Equal($"Index {TestDocumentModelDefinition.IndexName} successfully cleared.", indexOperationResult.Message);
+            Assert.Null(indexResult);
         }
 
         [Fact]
-        public async Task Should_Not_ThrowException_When_IssueWithConnectionOnClearingIndex()
+        public async Task Should_ThrowException_When_IssueWithConnectionOnClearingIndex()
         {
             // Arrange
             _ = IndexOperationWrapper.ExistsAsync(Arg.Any<string>())
                 .Returns(true);
 
             _ = IndexOperationWrapper.DeleteAsync(Arg.Any<string>())
-                .Throws(_ => new CloudException(AzureWrapperException));
+                .Throws(_ => new IndexClearException(
+                    "Test Error",
+                    Fixture.Create<Exception>()));
 
             // Act
-            var indexOperationResult = await _azureIndexOperation.IndexClearAsync();
+            var domainException = await Record.ExceptionAsync(async () => await _azureIndexOperation.IndexClearAsync());
 
             // Assert
-            Assert.NotNull(indexOperationResult);
-            Assert.False(indexOperationResult.Succeeded);
-            Assert.Equal($"An issue occurred on clearing index: {TestDocumentModelDefinition.IndexName}. Could not delete existing index.", indexOperationResult.Message);
+            Assert.NotNull(domainException);
+            Assert.Equal("Test Error", domainException.Message);
+            Assert.NotNull(domainException.InnerException);
+
 
             // Arrange
             _ = IndexOperationWrapper.ExistsAsync(Arg.Any<string>())
-                .Throws(_ => new CloudException(AzureWrapperException));
+                .Throws(_ => new IndexExistsException(
+                    "Test Error",
+                    Fixture.Create<Exception>()));
 
             _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<string>())
-                .Throws(_ => new CloudException(AzureWrapperException));
+                .Throws(_ => new IndexCreateOrUpdateException(
+                    "Test Error",
+                    Fixture.Create<Exception>()));
 
             // Act
-            indexOperationResult = await _azureIndexOperation.IndexClearAsync();
+            domainException = await Record.ExceptionAsync(async () => await _azureIndexOperation.IndexClearAsync());
 
             // Assert
-            Assert.NotNull(indexOperationResult);
-            Assert.False(indexOperationResult.Succeeded);
-            Assert.Equal($"An issue occurred on clearing index: {TestDocumentModelDefinition.IndexName}. Could not create index.", indexOperationResult.Message);
+            Assert.NotNull(domainException);
+            Assert.Equal("Test Error", domainException.Message);
+            Assert.NotNull(domainException.InnerException);
         }
 
         #endregion Index Clear Tests

@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Threading.Tasks;
+using Azure.Search.Documents.Indexes.Models;
 using Cogworks.AzureSearch.Models;
-using Microsoft.Azure.Search.Models;
-using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Interfaces.Wrappers
 {
@@ -12,8 +10,8 @@ namespace Cogworks.AzureSearch.Interfaces.Wrappers
 
         Task DeleteAsync(string indexName);
 
-        Task<Index> CreateOrUpdateAsync<TAzureModel>(string indexName) where TAzureModel : class, IAzureModel, new();
+        Task<SearchIndex> CreateOrUpdateAsync<TAzureModel>(string indexName) where TAzureModel : class, IAzureModel, new();
 
-        Task<Index> CreateOrUpdateAsync<TAzureModel>(Index customIndexDefinition, bool overrideFields) where TAzureModel : class, IAzureModel, new();
+        Task<SearchIndex> CreateOrUpdateAsync<TAzureModel>(SearchIndex customIndexDefinition, bool overrideFields) where TAzureModel : class, IAzureModel, new();
     }
 }

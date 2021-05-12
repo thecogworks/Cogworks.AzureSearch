@@ -16,6 +16,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Extensions
                     .RegisterIndexes()
                     .RegisterSearchers()
                     .RegisterInitializers()
-                    .RegisterWrappers();
+                    .RegisterWrappers()
+                    .RegisterOperations();
     }
 }

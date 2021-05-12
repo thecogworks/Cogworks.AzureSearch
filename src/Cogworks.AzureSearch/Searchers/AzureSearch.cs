@@ -1,22 +1,49 @@
-﻿using Cogworks.AzureSearch.Interfaces.Searches;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Cogworks.AzureSearch.Extensions;
+using Cogworks.AzureSearch.Interfaces.Searches;
+using Cogworks.AzureSearch.Interfaces.Wrappers;
+using Cogworks.AzureSearch.Mappers;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Models.Dtos;
-using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Searchers
 {
-    public class AzureSearch<TAzureModel> : IAzureSearch<TAzureModel>
+    internal class AzureSearch<TAzureModel> : IAzureSearch<TAzureModel>
         where TAzureModel : class, IAzureModel, new()
     {
-        private readonly IAzureDocumentSearch<TAzureModel> _azureSearchRepository;
+        private readonly IDocumentOperationWrapper<TAzureModel> _documentOperationWrapper;
 
-        public AzureSearch(IAzureDocumentSearch<TAzureModel> azureSearchRepository)
-            => _azureSearchRepository = azureSearchRepository;
+        public AzureSearch(IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)
+            => _documentOperationWrapper = documentOperationWrapper;
 
         public SearchResult<TAzureModel> Search(string keyword, AzureSearchParameters azureSearchParameters)
-            => _azureSearchRepository.Search(keyword, azureSearchParameters);
+        {
+            var searchText = GetSearchText(keyword);
+            var parameters = AzureSearchParametersMapper.Map(azureSearchParameters);
+            var results = _documentOperationWrapper.Search($"{searchText}", parameters);
+
+            return SearchResultMapper.Map(
+                results,
+                azureSearchParameters.Skip,
+                azureSearchParameters.Take);
+        }
 
         public async Task<SearchResult<TAzureModel>> SearchAsync(string keyword, AzureSearchParameters azureSearchParameters)
-            => await _azureSearchRepository.SearchAsync(keyword, azureSearchParameters);
+        {
+            var searchText = GetSearchText(keyword);
+            var parameters = AzureSearchParametersMapper.Map(azureSearchParameters);
+            var results = await _documentOperationWrapper.SearchAsync(searchText, parameters);
+
+            return SearchResultMapper.Map(
+                results,
+                azureSearchParameters.Skip,
+                azureSearchParameters.Take);
+        }
+
+        private static string GetSearchText(string keyword)
+            => keyword.EscapeHyphen().HasValue()
+                ? keyword.EscapeHyphen()
+                : "*";
     }
 }

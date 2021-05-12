@@ -1,4 +1,5 @@
-﻿using Cogworks.AzureSearch.Builder;
+﻿using Azure.Search.Documents.Indexes.Models;
+using Cogworks.AzureSearch.Builder;
 using Cogworks.AzureSearch.Indexes;
 using Cogworks.AzureSearch.Initializers;
 using Cogworks.AzureSearch.Interfaces.Indexes;
@@ -11,8 +12,8 @@ using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
+using Cogworks.AzureSearch.Services;
 using Cogworks.AzureSearch.Wrappers;
-using Microsoft.Azure.Search.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -39,9 +40,12 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials)
+        public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl)
         {
-            _serviceCollection.TryAddSingleton(_ => new AzureSearchClientOption(serviceName, credentials));
+            _serviceCollection.TryAddSingleton(_ => new AzureSearchClientOption(
+                serviceName,
+                credentials,
+                serviceEndpointUrl));
 
             return this;
         }
@@ -54,7 +58,7 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(Index customIndex)
+        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(SearchIndex customIndex)
             where TDocument : class, IAzureModel, new()
         {
             _serviceCollection.TryAddSingleton(_ => new AzureIndexDefinition<TDocument>(customIndex));
@@ -80,10 +84,9 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
 
         internal AzureSearchBuilder RegisterRepositories()
         {
-            _serviceCollection.TryAddScoped(typeof(IAzureSearchRepository<>), typeof(AzureSearchRepository<>));
-            _serviceCollection.TryAddScoped(typeof(IAzureIndexOperation<>), typeof(AzureSearchRepository<>));
-            _serviceCollection.TryAddScoped(typeof(IAzureDocumentOperation<>), typeof(AzureSearchRepository<>));
-            _serviceCollection.TryAddScoped(typeof(IAzureDocumentSearch<>), typeof(AzureSearchRepository<>));
+            _serviceCollection.TryAddScoped(
+                typeof(IAzureSearchRepository<>),
+                typeof(AzureSearchRepository<>));
 
             return this;
         }
@@ -95,9 +98,18 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
             return this;
         }
 
+        internal AzureSearchBuilder RegisterOperations()
+        {
+            _serviceCollection.TryAddScoped(typeof(IAzureDocumentOperation<>), typeof(AzureDocumentOperationService<>));
+
+            _serviceCollection.TryAddScoped(typeof(IAzureIndexOperation<>), typeof(AzureIndexOperationService<>));
+
+            return this;
+        }
+
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
             where TDocument : class, IAzureModel, new()
-            where TSearcher : class, IAzureSearch<TDocument>, TSearcherType
+            where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {
             _serviceCollection.TryAddSingleton<TSearcherType, TSearcher>();
@@ -105,8 +117,10 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
             return this;
         }
 
-        IAzureSearchBuilder IAzureSearchBuilder.RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(
-            TSearcherType instance)
+        public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(TSearcherType instance)
+            where TDocument : class, IAzureModel, new()
+            where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
+            where TSearcherType : class
         {
             _serviceCollection.TryAddSingleton(instance);
 

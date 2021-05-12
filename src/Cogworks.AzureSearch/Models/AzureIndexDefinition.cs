@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Microsoft.Azure.Search.Models;
+﻿using Azure.Search.Documents.Indexes.Models;
 
 namespace Cogworks.AzureSearch.Models
 {
@@ -7,12 +6,12 @@ namespace Cogworks.AzureSearch.Models
     {
         public string IndexName { get; }
 
-        public Index CustomIndexDefinition { get; }
+        public SearchIndex CustomIndexDefinition { get; }
 
         public AzureIndexDefinition(string indexName)
             => IndexName = indexName;
 
-        public AzureIndexDefinition(Index customIndex)
+        public AzureIndexDefinition(SearchIndex customIndex)
             => (CustomIndexDefinition, IndexName) = (customIndex, customIndex.Name);
     }
 }

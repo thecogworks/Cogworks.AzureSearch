@@ -1,15 +1,17 @@
-﻿using Cogworks.AzureSearch.Models;
-using Microsoft.Azure.Search.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Azure;
+using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
+using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.Interfaces.Wrappers
 {
     public interface IDocumentOperationWrapper<TAzureModel> where TAzureModel : class, IAzureModel, new()
     {
-        DocumentSearchResult<TAzureModel> Search(string searchText, SearchParameters parameters = null);
+        SearchResults<TAzureModel> Search(string searchText, SearchOptions parameters = null);
 
-        Task<DocumentSearchResult<TAzureModel>> SearchAsync(string searchText, SearchParameters parameters = null);
+        Task<SearchResults<TAzureModel>> SearchAsync(string searchText, SearchOptions parameters = null);
 
-        Task<DocumentIndexResult> IndexAsync(IndexBatch<TAzureModel> indexBatch);
+        Task<Response<IndexDocumentsResult>> IndexAsync(IndexDocumentsBatch<TAzureModel> indexBatch);
     }
 }

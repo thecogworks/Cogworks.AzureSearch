@@ -8,10 +8,10 @@ namespace Cogworks.AzureSearch.Interfaces.Operations
     {
         Task<bool> IndexExistsAsync();
 
-        Task<AzureIndexOperationResult> IndexDeleteAsync();
+        Task IndexDeleteAsync();
 
-        Task<AzureIndexOperationResult> IndexCreateOrUpdateAsync();
+        Task IndexCreateOrUpdateAsync();
 
-        Task<AzureIndexOperationResult> IndexClearAsync();
+        Task IndexClearAsync();
     }
 }

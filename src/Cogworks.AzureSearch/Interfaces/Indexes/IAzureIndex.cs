@@ -1,7 +1,8 @@
-﻿using Cogworks.AzureSearch.Models;
-using Cogworks.AzureSearch.Models.Dtos;
+﻿
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cogworks.AzureSearch.Models;
+using Cogworks.AzureSearch.Models.Dtos;
 
 namespace Cogworks.AzureSearch.Interfaces.Indexes
 {

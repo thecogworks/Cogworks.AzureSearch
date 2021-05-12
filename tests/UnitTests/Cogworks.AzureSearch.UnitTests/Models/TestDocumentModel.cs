@@ -1,15 +1,18 @@
-﻿using Cogworks.AzureSearch.Models;
-using Microsoft.Azure.Search;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Azure.Search.Documents.Indexes;
+using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.UnitTests.Models
 {
     public class TestDocumentModel : IAzureModel
     {
-        [Key, IsFilterable, IsRetrievable(true), IsSearchable]
+        [SimpleField(IsKey = true, IsFilterable = true)]
+        [SearchableField()]
         public string Id { get; set; }
 
-        [IsFilterable, IsSearchable]
+        [SimpleField(IsFilterable = true)]
+        [SearchableField()]
+
         public string Name { get; set; }
     }
 }

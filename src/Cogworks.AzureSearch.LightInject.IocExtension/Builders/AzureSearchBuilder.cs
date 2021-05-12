@@ -1,4 +1,5 @@
-﻿using Cogworks.AzureSearch.Builder;
+﻿using Azure.Search.Documents.Indexes.Models;
+using Cogworks.AzureSearch.Builder;
 using Cogworks.AzureSearch.Indexes;
 using Cogworks.AzureSearch.Initializers;
 using Cogworks.AzureSearch.Interfaces.Indexes;
@@ -11,9 +12,9 @@ using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
+using Cogworks.AzureSearch.Services;
 using Cogworks.AzureSearch.Wrappers;
 using LightInject;
-using Microsoft.Azure.Search.Models;
 
 namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
 {
@@ -42,10 +43,13 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials)
+        public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl)
         {
             _ = _container.Register(
-                _ => new AzureSearchClientOption(serviceName, credentials),
+                _ => new AzureSearchClientOption(
+                    serviceName,
+                    credentials,
+                    serviceEndpointUrl),
                 new PerContainerLifetime());
 
             return this;
@@ -61,7 +65,7 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(Index customIndex)
+        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(SearchIndex customIndex)
             where TDocument : class, IAzureModel, new()
         {
             _ = _container.Register(
@@ -97,18 +101,6 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
                 typeof(IAzureSearchRepository<>),
                 typeof(AzureSearchRepository<>));
 
-            _ = _container.Register(
-                typeof(IAzureIndexOperation<>),
-                typeof(AzureSearchRepository<>));
-
-            _ = _container.Register(
-                typeof(IAzureDocumentOperation<>),
-                typeof(AzureSearchRepository<>));
-
-            _ = _container.Register(
-                typeof(IAzureDocumentSearch<>),
-                typeof(AzureSearchRepository<>));
-
             return this;
         }
 
@@ -120,10 +112,24 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
 
             return this;
         }
+        internal AzureSearchBuilder RegisterOperations()
+        {
+            _ = _container.Register(
+                typeof(IAzureDocumentOperation<>),
+                typeof(AzureDocumentOperationService<>),
+                new PerContainerLifetime());
+
+            _ = _container.Register(
+                typeof(IAzureIndexOperation<>),
+                typeof(AzureIndexOperationService<>),
+                new PerContainerLifetime());
+
+            return this;
+        }
 
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
             where TDocument : class, IAzureModel, new()
-            where TSearcher : class, IAzureSearch<TDocument>, TSearcherType
+            where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {
             _ = _container.Register(typeof(TSearcherType), typeof(TSearcher), new PerContainerLifetime());
@@ -132,9 +138,9 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
         }
 
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(TSearcherType instance)
-            where TSearcher : class, IAzureSearch<TDocument>, TSearcherType
-            where TSearcherType : class
             where TDocument : class, IAzureModel, new()
+            where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
+            where TSearcherType : class
         {
             _ = _container.RegisterInstance(instance); ;
 

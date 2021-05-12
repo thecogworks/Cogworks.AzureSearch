@@ -1,10 +1,11 @@
-﻿using Cogworks.AzureSearch.Interfaces.Initializers;
+﻿using System;
+using System.Threading.Tasks;
+using Cogworks.AzureSearch.Exceptions.IndexExceptions;
+using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Models.Dtos;
 using Cogworks.AzureSearch.Options;
-using System;
-using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Initializers
 {
@@ -20,7 +21,7 @@ namespace Cogworks.AzureSearch.Initializers
             _azureIndexOperation = azureIndexOperation;
         }
 
-        public async Task<AzureIndexOperationResult> InitializeAsync()
+        public async Task InitializeAsync()
         {
             if (_azureSearchIndexOption.Recreate)
             {
@@ -29,7 +30,7 @@ namespace Cogworks.AzureSearch.Initializers
 
             try
             {
-                return await _azureIndexOperation.IndexCreateOrUpdateAsync();
+                await _azureIndexOperation.IndexCreateOrUpdateAsync();
             }
             catch (Exception)
             {
@@ -39,7 +40,14 @@ namespace Cogworks.AzureSearch.Initializers
                 }
             }
 
-            return await _azureIndexOperation.IndexCreateOrUpdateAsync();
+            try
+            {
+                await _azureIndexOperation.IndexCreateOrUpdateAsync();
+            }
+            catch (Exception exception)
+            {
+                throw new IndexInitializerException(exception.Message, exception.InnerException);
+            }
         }
     }
 }

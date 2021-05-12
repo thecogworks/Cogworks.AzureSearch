@@ -11,6 +11,7 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Extensions
                 .RegisterIndexes()
                 .RegisterSearchers()
                 .RegisterInitializers()
-                .RegisterWrappers();
+                .RegisterWrappers()
+                .RegisterOperations();
     }
 }

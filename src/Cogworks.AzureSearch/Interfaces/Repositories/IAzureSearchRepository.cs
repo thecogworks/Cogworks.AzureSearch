@@ -7,7 +7,7 @@ namespace Cogworks.AzureSearch.Interfaces.Repositories
     public interface IAzureSearchRepository<TAzureModel> :
         IAzureDocumentOperation<TAzureModel>,
         IAzureIndexOperation<TAzureModel>,
-        IAzureDocumentSearch<TAzureModel>
+        IAzureSearch<TAzureModel>
         where TAzureModel : class, IAzureModel, new()
     {
     }
