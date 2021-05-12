@@ -8,7 +8,7 @@ namespace Cogworks.AzureSearch.Interfaces.Repositories
         IDocumentOperation<TAzureModel>,
         IIndexOperation<TAzureModel>,
         IAzureSearch<TAzureModel>
-        where TAzureModel : class, IAzureModel, new()
+        where TAzureModel : class, IModel, new()
     {
     }
 }

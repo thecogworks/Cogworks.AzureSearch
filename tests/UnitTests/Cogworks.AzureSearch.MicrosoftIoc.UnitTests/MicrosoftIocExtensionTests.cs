@@ -203,9 +203,9 @@ namespace Cogworks.AzureSearch.MicrosoftIoc.UnitTests
             // ReSharper disable once PossibleNullReferenceException
             using (var serviceProvider = _serviceContainer.BuildServiceProvider())
             {
-                var firstTestDocumentIndexDefinition = serviceProvider.GetService<AzureIndexDefinition<FirstTestDocumentModel>>();
-                var secondTestDocumentIndexDefinition = serviceProvider.GetService<AzureIndexDefinition<SecondTestDocumentModel>>();
-                var thirdTestDocumentIndexDefinition = serviceProvider.GetService<AzureIndexDefinition<ThirdTestDocumentModel>>();
+                var firstTestDocumentIndexDefinition = serviceProvider.GetService<IndexDefinition<FirstTestDocumentModel>>();
+                var secondTestDocumentIndexDefinition = serviceProvider.GetService<IndexDefinition<SecondTestDocumentModel>>();
+                var thirdTestDocumentIndexDefinition = serviceProvider.GetService<IndexDefinition<ThirdTestDocumentModel>>();
 
                 // Assert
                 Assert.NotNull(firstTestDocumentIndexDefinition);

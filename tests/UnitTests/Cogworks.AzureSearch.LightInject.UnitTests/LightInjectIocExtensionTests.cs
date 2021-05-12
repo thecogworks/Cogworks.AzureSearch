@@ -201,9 +201,9 @@ namespace Cogworks.AzureSearch.LightInject.UnitTests
             // ReSharper disable once PossibleNullReferenceException
             using (var scope = _container.BeginScope())
             {
-                var firstTestDocumentIndexDefinition = scope.GetInstance<AzureIndexDefinition<FirstTestDocumentModel>>();
-                var secondTestDocumentIndexDefinition = scope.GetInstance<AzureIndexDefinition<SecondTestDocumentModel>>();
-                var thirdTestDocumentIndexDefinition = scope.GetInstance<AzureIndexDefinition<ThirdTestDocumentModel>>();
+                var firstTestDocumentIndexDefinition = scope.GetInstance<IndexDefinition<FirstTestDocumentModel>>();
+                var secondTestDocumentIndexDefinition = scope.GetInstance<IndexDefinition<SecondTestDocumentModel>>();
+                var thirdTestDocumentIndexDefinition = scope.GetInstance<IndexDefinition<ThirdTestDocumentModel>>();
 
                 // Assert
                 Assert.NotNull(firstTestDocumentIndexDefinition);

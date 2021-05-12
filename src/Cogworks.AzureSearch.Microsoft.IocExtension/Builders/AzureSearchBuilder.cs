@@ -51,17 +51,17 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
         }
 
         public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(string indexName)
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
         {
-            _serviceCollection.TryAddSingleton(_ => new AzureIndexDefinition<TDocument>(indexName));
+            _serviceCollection.TryAddSingleton(_ => new IndexDefinition<TDocument>(indexName));
 
             return this;
         }
 
         public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(SearchIndex customIndex)
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
         {
-            _serviceCollection.TryAddSingleton(_ => new AzureIndexDefinition<TDocument>(customIndex));
+            _serviceCollection.TryAddSingleton(_ => new IndexDefinition<TDocument>(customIndex));
 
             return this;
         }
@@ -108,7 +108,7 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
         }
 
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {
@@ -118,7 +118,7 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
         }
 
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(TSearcherType instance)
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {

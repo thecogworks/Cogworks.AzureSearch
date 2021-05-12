@@ -6,14 +6,14 @@ using Cogworks.AzureSearch.Models.Dtos;
 
 namespace Cogworks.AzureSearch.Interfaces.Indexes
 {
-    public interface IIndex<in TAzureModel> where TAzureModel : class, IAzureModel, new()
+    public interface IIndex<in TAzureModel> where TAzureModel : class, IModel, new()
     {
-        Task<AzureDocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model);
+        Task<DocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model);
 
-        Task<AzureBatchDocumentsOperationResult> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models);
+        Task<BatchDocumentsOperationResult> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models);
 
-        Task<AzureDocumentOperationResult> TryRemoveDocumentAsync(TAzureModel model);
+        Task<DocumentOperationResult> TryRemoveDocumentAsync(TAzureModel model);
 
-        Task<AzureBatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
+        Task<BatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models);
     }
 }

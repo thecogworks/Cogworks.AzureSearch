@@ -21,7 +21,7 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests.Searchers
             // ...
             // End of custom filters
 
-            //  _ = base.Search("test", new AzureSearchParameters());
+            //  _ = base.Search("test", new SearchParameters());
         }
     }
 }

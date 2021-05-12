@@ -9,7 +9,7 @@ namespace Cogworks.AzureSearch.Mappers
         public static SearchResult<TAzureModel> Map<TAzureModel>(
             Azure.Search.Documents.Models.SearchResults<TAzureModel> results,
             int skip,
-            int take) where TAzureModel : class, IAzureModel, new()
+            int take) where TAzureModel : class, IModel, new()
         {
             var resultsCount = results.TotalCount ?? 0;
 

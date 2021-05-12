@@ -56,20 +56,20 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
         }
 
         public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(string indexName)
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
         {
             _ = _container.Register(
-                _ => new AzureIndexDefinition<TDocument>(indexName),
+                _ => new IndexDefinition<TDocument>(indexName),
                 new PerContainerLifetime());
 
             return this;
         }
 
         public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(SearchIndex customIndex)
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
         {
             _ = _container.Register(
-                _ => new AzureIndexDefinition<TDocument>(customIndex),
+                _ => new IndexDefinition<TDocument>(customIndex),
                 new PerContainerLifetime());
 
             return this;
@@ -128,7 +128,7 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
         }
 
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {
@@ -138,7 +138,7 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
         }
 
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(TSearcherType instance)
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {

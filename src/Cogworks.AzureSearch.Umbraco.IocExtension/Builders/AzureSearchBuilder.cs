@@ -57,20 +57,20 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
         }
 
         public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(string indexName)
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
         {
             _composingRegister.Register(
-                _ => new AzureIndexDefinition<TDocument>(indexName),
+                _ => new IndexDefinition<TDocument>(indexName),
                 Lifetime.Singleton);
 
             return this;
         }
 
         public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(SearchIndex customIndex)
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
         {
             _composingRegister.Register(
-                _ => new AzureIndexDefinition<TDocument>(customIndex),
+                _ => new IndexDefinition<TDocument>(customIndex),
                 Lifetime.Singleton);
 
             return this;
@@ -128,7 +128,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
         }
 
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {
@@ -138,7 +138,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
         }
 
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(TSearcherType instance)
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {

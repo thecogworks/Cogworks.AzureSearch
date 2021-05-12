@@ -9,7 +9,7 @@ using Cogworks.AzureSearch.Models.Dtos;
 namespace Cogworks.AzureSearch.Repositories
 {
     internal class Repository<TAzureModel> : IRepository<TAzureModel>
-        where TAzureModel : class, IAzureModel, new()
+        where TAzureModel : class, IModel, new()
     {
         private readonly IIndexOperation<TAzureModel> _indexOperation;
         private readonly IDocumentOperation<TAzureModel> _documentOperation;
@@ -25,16 +25,16 @@ namespace Cogworks.AzureSearch.Repositories
             _search = search;
         }
 
-        public async Task<AzureDocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)
+        public async Task<DocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)
             => await _documentOperation.AddOrUpdateDocumentAsync(model);
 
-        public async Task<AzureBatchDocumentsOperationResult> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models)
+        public async Task<BatchDocumentsOperationResult> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models)
             => await _documentOperation.AddOrUpdateDocumentsAsync(models);
 
-        public async Task<AzureDocumentOperationResult> TryRemoveDocumentAsync(TAzureModel model)
+        public async Task<DocumentOperationResult> TryRemoveDocumentAsync(TAzureModel model)
             => await _documentOperation.TryRemoveDocumentAsync(model);
 
-        public async Task<AzureBatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models)
+        public async Task<BatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models)
             => await _documentOperation.TryRemoveDocumentsAsync(models);
 
         public async Task<bool> IndexExistsAsync()
@@ -49,11 +49,11 @@ namespace Cogworks.AzureSearch.Repositories
         public async Task IndexClearAsync()
             => await _indexOperation.IndexClearAsync();
 
-        public SearchResult<TAzureModel> Search(string keyword, AzureSearchParameters azureSearchParameters)
-            => _search.Search(keyword, azureSearchParameters);
+        public SearchResult<TAzureModel> Search(string keyword, SearchParameters searchParameters)
+            => _search.Search(keyword, searchParameters);
 
         public async Task<SearchResult<TAzureModel>> SearchAsync(string keyword,
-            AzureSearchParameters azureSearchParameters)
-            => await _search.SearchAsync(keyword, azureSearchParameters);
+            SearchParameters searchParameters)
+            => await _search.SearchAsync(keyword, searchParameters);
     }
 }

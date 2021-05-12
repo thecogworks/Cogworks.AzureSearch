@@ -6,7 +6,7 @@ using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.Interfaces.Wrappers
 {
-    public interface IDocumentOperationWrapper<TAzureModel> where TAzureModel : class, IAzureModel, new()
+    public interface IDocumentOperationWrapper<TAzureModel> where TAzureModel : class, IModel, new()
     {
         SearchResults<TAzureModel> Search(string searchText, SearchOptions parameters = null);
 

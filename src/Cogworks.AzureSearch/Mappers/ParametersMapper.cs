@@ -8,67 +8,67 @@ namespace Cogworks.AzureSearch.Mappers
 {
     public static class ParametersMapper
     {
-        internal static SearchOptions Map(AzureSearchParameters azureSearchParameters)
+        internal static SearchOptions Map(SearchParameters searchParameters)
         {
-            var searchParameters = new SearchOptions
+            var searchOptions = new SearchOptions
             {
-                Filter = azureSearchParameters.Filter,
-                HighlightPostTag = azureSearchParameters.HighlightPostTag,
-                HighlightPreTag = azureSearchParameters.HighlightPreTag,
-                IncludeTotalCount = azureSearchParameters.IncludeTotalResultCount,
-                MinimumCoverage = azureSearchParameters.MinimumCoverage,
-                QueryType = azureSearchParameters.QueryType == AzureQueryType.Full
+                Filter = searchParameters.Filter,
+                HighlightPostTag = searchParameters.HighlightPostTag,
+                HighlightPreTag = searchParameters.HighlightPreTag,
+                IncludeTotalCount = searchParameters.IncludeTotalResultCount,
+                MinimumCoverage = searchParameters.MinimumCoverage,
+                QueryType = searchParameters.QueryType == AzureQueryType.Full
                     ? SearchQueryType.Full
                     : SearchQueryType.Simple,
-                ScoringProfile = azureSearchParameters.ScoringProfile,
-                SearchMode = azureSearchParameters.SearchMode == AzureSearchModeType.Any
+                ScoringProfile = searchParameters.ScoringProfile,
+                SearchMode = searchParameters.SearchMode == AzureSearchModeType.Any
                     ? SearchMode.Any
                     : SearchMode.All,
-                Skip = azureSearchParameters.Skip,
-                Size = azureSearchParameters.Take
+                Skip = searchParameters.Skip,
+                Size = searchParameters.Take
             };
 
-            if (azureSearchParameters.Select.HasAny())
+            if (searchParameters.Select.HasAny())
             {
-                foreach (var selectField in azureSearchParameters.Select)
+                foreach (var selectField in searchParameters.Select)
                 {
-                    searchParameters.Select.Add(selectField);
+                    searchOptions.Select.Add(selectField);
                 }
             }
 
-            if (azureSearchParameters.SearchFields.HasAny())
+            if (searchParameters.SearchFields.HasAny())
             {
-                foreach (var searchField in azureSearchParameters.SearchFields)
+                foreach (var searchField in searchParameters.SearchFields)
                 {
-                    searchParameters.SearchFields.Add(searchField);
+                    searchOptions.SearchFields.Add(searchField);
                 }
             }
 
-            if (azureSearchParameters.HighlightFields.HasAny())
+            if (searchParameters.HighlightFields.HasAny())
             {
-                foreach (var highlightField in azureSearchParameters.HighlightFields)
+                foreach (var highlightField in searchParameters.HighlightFields)
                 {
-                    searchParameters.HighlightFields.Add(highlightField);
+                    searchOptions.HighlightFields.Add(highlightField);
                 }
             }
 
-            if (azureSearchParameters.Facets.HasAny())
+            if (searchParameters.Facets.HasAny())
             {
-                foreach (var facet in azureSearchParameters.Facets)
+                foreach (var facet in searchParameters.Facets)
                 {
-                    searchParameters.Facets.Add(facet);
+                    searchOptions.Facets.Add(facet);
                 }
             }
 
-            if (azureSearchParameters.OrderBy.HasAny())
+            if (searchParameters.OrderBy.HasAny())
             {
-                foreach (var order in azureSearchParameters.OrderBy)
+                foreach (var order in searchParameters.OrderBy)
                 {
-                    searchParameters.OrderBy.Add(order);
+                    searchOptions.OrderBy.Add(order);
                 }
             }
 
-            return searchParameters;
+            return searchOptions;
         }
     }
 }

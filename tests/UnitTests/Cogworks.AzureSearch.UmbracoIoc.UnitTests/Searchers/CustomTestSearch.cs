@@ -21,7 +21,7 @@ namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests.Searchers
             // ...
             // End of custom filters
 
-            //  _ = base.Search("test", new AzureSearchParameters());
+            //  _ = base.Search("test", new SearchParameters());
         }
     }
 }

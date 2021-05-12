@@ -4,10 +4,10 @@ using Cogworks.AzureSearch.Models.Dtos;
 
 namespace Cogworks.AzureSearch.Interfaces.Searches
 {
-    public interface IAzureSearch<TAzureModel> where TAzureModel : class, IAzureModel, new()
+    public interface IAzureSearch<TAzureModel> where TAzureModel : class, IModel, new()
     {
-        SearchResult<TAzureModel> Search(string keyword, AzureSearchParameters azureSearchParameters);
+        SearchResult<TAzureModel> Search(string keyword, SearchParameters searchParameters);
 
-        Task<SearchResult<TAzureModel>> SearchAsync(string keyword, AzureSearchParameters azureSearchParameters);
+        Task<SearchResult<TAzureModel>> SearchAsync(string keyword, SearchParameters searchParameters);
     }
 }

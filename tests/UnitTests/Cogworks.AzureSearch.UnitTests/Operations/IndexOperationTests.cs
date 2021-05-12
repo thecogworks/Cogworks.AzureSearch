@@ -157,7 +157,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
             // Arrange
             var index = new SearchIndex(Fixture.Create<string>());
 
-            var customModelDefinition = new AzureIndexDefinition<TestDocumentModel>(index);
+            var customModelDefinition = new IndexDefinition<TestDocumentModel>(index);
 
             var customIndexOperationService = new IndexOperation<TestDocumentModel>(
                 customModelDefinition,
@@ -199,7 +199,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
             // Arrange
             var index = new SearchIndex(Fixture.Create<string>());
 
-            var customModelDefinition = new AzureIndexDefinition<TestDocumentModel>(index);
+            var customModelDefinition = new IndexDefinition<TestDocumentModel>(index);
 
             var customIndexOperationService = new IndexOperation<TestDocumentModel>(
                 customModelDefinition,

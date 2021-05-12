@@ -9,7 +9,7 @@ using Cogworks.AzureSearch.Options;
 namespace Cogworks.AzureSearch.Initializers
 {
     internal class Initializer<TAzureModel> : IInitializer<TAzureModel>
-        where TAzureModel : class, IAzureModel, new()
+        where TAzureModel : class, IModel, new()
     {
         private readonly AzureSearchIndexOption _azureSearchIndexOption;
         private readonly IIndexOperation<TAzureModel> _indexOperation;

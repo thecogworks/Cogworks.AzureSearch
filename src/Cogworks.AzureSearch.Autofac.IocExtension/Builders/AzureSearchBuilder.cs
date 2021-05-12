@@ -56,9 +56,9 @@ namespace Cogworks.AzureSearch.Autofac.Builders
         }
 
         public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(string indexName)
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
         {
-            _ = _builder.Register(_ => new AzureIndexDefinition<TDocument>(indexName))
+            _ = _builder.Register(_ => new IndexDefinition<TDocument>(indexName))
                 .AsSelf()
                 .SingleInstance();
 
@@ -66,9 +66,9 @@ namespace Cogworks.AzureSearch.Autofac.Builders
         }
 
         public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(SearchIndex customIndex)
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
         {
-            _ = _builder.Register(_ => new AzureIndexDefinition<TDocument>(customIndex))
+            _ = _builder.Register(_ => new IndexDefinition<TDocument>(customIndex))
                 .AsSelf()
                 .SingleInstance();
 
@@ -129,7 +129,7 @@ namespace Cogworks.AzureSearch.Autofac.Builders
         }
 
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {
@@ -142,7 +142,7 @@ namespace Cogworks.AzureSearch.Autofac.Builders
         }
 
         public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(TSearcherType instance)
-            where TDocument : class, IAzureModel, new()
+            where TDocument : class, IModel, new()
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {

@@ -11,19 +11,19 @@ using Cogworks.AzureSearch.Options;
 namespace Cogworks.AzureSearch.Wrappers
 {
     internal class DocumentOperationWrapper<TAzureModel> : IDocumentOperationWrapper<TAzureModel>
-        where TAzureModel : class, IAzureModel, new()
+        where TAzureModel : class, IModel, new()
     {
         private readonly SearchClient _searchClient;
 
         public DocumentOperationWrapper(
-            AzureIndexDefinition<TAzureModel> azureIndexDefinition,
+            IndexDefinition<TAzureModel> indexDefinition,
             AzureSearchClientOption azureSearchClientOption)
         {
             var azureKeyCredential = new AzureKeyCredential(azureSearchClientOption.Credentials);
 
             _searchClient = new SearchClient(
                 endpoint: new Uri(azureSearchClientOption.ServiceUrlEndpoint),
-                indexName: azureIndexDefinition.IndexName,
+                indexName: indexDefinition.IndexName,
                 credential: azureKeyCredential,
                 options: azureSearchClientOption.ClientOptions
 

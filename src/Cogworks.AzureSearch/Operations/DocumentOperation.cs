@@ -13,7 +13,7 @@ using Cogworks.AzureSearch.Models.Dtos;
 namespace Cogworks.AzureSearch.Operations
 {
     public class DocumentOperation<TAzureModel> : IDocumentOperation<TAzureModel>
-        where TAzureModel : class, IAzureModel, new()
+        where TAzureModel : class, IModel, new()
     {
         private readonly IDocumentOperationWrapper<TAzureModel> _documentOperationWrapper;
 
@@ -22,7 +22,7 @@ namespace Cogworks.AzureSearch.Operations
         public DocumentOperation(IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)
             => _documentOperationWrapper = documentOperationWrapper;
 
-        public async Task<AzureDocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)
+        public async Task<DocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)
         {
             var azureBatchDocumentsOperationResult = await AddOrUpdateDocumentsAsync(new[] { model });
 
@@ -31,11 +31,11 @@ namespace Cogworks.AzureSearch.Operations
                 : azureBatchDocumentsOperationResult.FailedDocuments.FirstOrDefault();
         }
 
-        public async Task<AzureBatchDocumentsOperationResult> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models)
+        public async Task<BatchDocumentsOperationResult> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models)
         {
             if (!models.HasAny())
             {
-                return new AzureBatchDocumentsOperationResult()
+                return new BatchDocumentsOperationResult()
                 {
                     Succeeded = true,
                     Message = "No documents found to index."
@@ -67,7 +67,7 @@ namespace Cogworks.AzureSearch.Operations
             return GetBatchOperationStatus(indexResults, "adding or updating");
         }
 
-        public async Task<AzureDocumentOperationResult> TryRemoveDocumentAsync(TAzureModel model)
+        public async Task<DocumentOperationResult> TryRemoveDocumentAsync(TAzureModel model)
         {
             var azureBatchDocumentsOperationResult = await TryRemoveDocumentsAsync(new[] { model });
 
@@ -76,11 +76,11 @@ namespace Cogworks.AzureSearch.Operations
                 : azureBatchDocumentsOperationResult.FailedDocuments.FirstOrDefault();
         }
 
-        public async Task<AzureBatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models)
+        public async Task<BatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models)
         {
             if (!models.HasAny())
             {
-                return new AzureBatchDocumentsOperationResult()
+                return new BatchDocumentsOperationResult()
                 {
                     Succeeded = true,
                     Message = "No documents found to delete."
@@ -112,22 +112,22 @@ namespace Cogworks.AzureSearch.Operations
             return GetBatchOperationStatus(indexResults, "removing");
         }
 
-        private static AzureBatchDocumentsOperationResult GetBatchOperationStatus(IEnumerable<IndexingResult> indexingResults, string operationType)
+        private static BatchDocumentsOperationResult GetBatchOperationStatus(IEnumerable<IndexingResult> indexingResults, string operationType)
         {
             var successfullyItems = indexingResults.Where(x => x.Succeeded).ToList();
             var failedItems = indexingResults.Where(x => !x.Succeeded).ToList();
 
-            return new AzureBatchDocumentsOperationResult
+            return new BatchDocumentsOperationResult
             {
                 Succeeded = !failedItems.Any(),
-                SucceededDocuments = successfullyItems.Select(successfullyItem => new AzureDocumentOperationResult
+                SucceededDocuments = successfullyItems.Select(successfullyItem => new DocumentOperationResult
                 {
                     Succeeded = true,
                     Message = $"Successfully {operationType} document.",
                     ModelId = successfullyItem.Key,
                     StatusCode = successfullyItem.Status
                 }).ToList(),
-                FailedDocuments = failedItems.Select(failedItem => new AzureDocumentOperationResult
+                FailedDocuments = failedItems.Select(failedItem => new DocumentOperationResult
                 {
                     Message = $"Failed {operationType} document.",
                     InnerMessage = failedItem.ErrorMessage,

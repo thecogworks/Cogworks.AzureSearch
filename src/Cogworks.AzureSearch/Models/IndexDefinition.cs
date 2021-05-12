@@ -2,16 +2,16 @@
 
 namespace Cogworks.AzureSearch.Models
 {
-    public class AzureIndexDefinition<TAzureModel> where TAzureModel : class, IAzureModel, new()
+    public class IndexDefinition<TAzureModel> where TAzureModel : class, IModel, new()
     {
         public string IndexName { get; }
 
         public SearchIndex CustomIndexDefinition { get; }
 
-        public AzureIndexDefinition(string indexName)
+        public IndexDefinition(string indexName)
             => IndexName = indexName;
 
-        public AzureIndexDefinition(SearchIndex customIndex)
+        public IndexDefinition(SearchIndex customIndex)
             => (CustomIndexDefinition, IndexName) = (customIndex, customIndex.Name);
     }
 }

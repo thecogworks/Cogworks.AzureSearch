@@ -207,9 +207,9 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
             // ReSharper disable once PossibleNullReferenceException
             using (var scope = _containerBuilder.Build().BeginLifetimeScope())
             {
-                var firstTestDocumentIndexDefinition = scope.Resolve<AzureIndexDefinition<FirstTestDocumentModel>>();
-                var secondTestDocumentIndexDefinition = scope.Resolve<AzureIndexDefinition<SecondTestDocumentModel>>();
-                var thirdTestDocumentIndexDefinition = scope.Resolve<AzureIndexDefinition<ThirdTestDocumentModel>>();
+                var firstTestDocumentIndexDefinition = scope.Resolve<IndexDefinition<FirstTestDocumentModel>>();
+                var secondTestDocumentIndexDefinition = scope.Resolve<IndexDefinition<SecondTestDocumentModel>>();
+                var thirdTestDocumentIndexDefinition = scope.Resolve<IndexDefinition<ThirdTestDocumentModel>>();
 
                 // Assert
                 Assert.NotNull(firstTestDocumentIndexDefinition);
