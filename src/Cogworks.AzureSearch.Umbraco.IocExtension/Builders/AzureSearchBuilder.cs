@@ -99,8 +99,8 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
         internal AzureSearchBuilder RegisterRepositories()
         {
             _composingRegister.Register(
-                typeof(IAzureSearchRepository<>),
-                typeof(AzureSearchRepository<>));
+                typeof(ISearchRepository<>),
+                typeof(SearchRepository<>));
 
             return this;
         }
@@ -117,12 +117,12 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
         internal AzureSearchBuilder RegisterOperations()
         {
             _composingRegister.Register(
-                typeof(IAzureDocumentOperation<>),
-                typeof(AzureDocumentOperation<>));
+                typeof(IDocumentOperation<>),
+                typeof(DocumentOperation<>));
 
             _composingRegister.Register(
-                typeof(IAzureIndexOperation<>),
-                typeof(AzureIndexOperation<>));
+                typeof(IIndexOperation<>),
+                typeof(IndexOperation<>));
 
             return this;
         }

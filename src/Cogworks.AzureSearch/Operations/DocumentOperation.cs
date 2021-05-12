@@ -12,14 +12,14 @@ using Cogworks.AzureSearch.Models.Dtos;
 
 namespace Cogworks.AzureSearch.Operations
 {
-    public class AzureDocumentOperation<TAzureModel> : IAzureDocumentOperation<TAzureModel>
+    public class DocumentOperation<TAzureModel> : IDocumentOperation<TAzureModel>
         where TAzureModel : class, IAzureModel, new()
     {
         private readonly IDocumentOperationWrapper<TAzureModel> _documentOperationWrapper;
 
         private const int BatchOperationSize = 500;
 
-        public AzureDocumentOperation(IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)
+        public DocumentOperation(IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)
             => _documentOperationWrapper = documentOperationWrapper;
 
         public async Task<AzureDocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)

@@ -99,8 +99,8 @@ namespace Cogworks.AzureSearch.Autofac.Builders
 
         internal AzureSearchBuilder RegisterRepositories()
         {
-            _ = _builder.RegisterGeneric(typeof(AzureSearchRepository<>))
-                .As(typeof(IAzureSearchRepository<>))
+            _ = _builder.RegisterGeneric(typeof(SearchRepository<>))
+                .As(typeof(ISearchRepository<>))
                 .InstancePerDependency();
 
             return this;
@@ -117,12 +117,12 @@ namespace Cogworks.AzureSearch.Autofac.Builders
 
         internal AzureSearchBuilder RegisterOperations()
         {
-            _ = _builder.RegisterGeneric(typeof(AzureDocumentOperation<>))
-                .As(typeof(IAzureDocumentOperation<>))
+            _ = _builder.RegisterGeneric(typeof(DocumentOperation<>))
+                .As(typeof(IDocumentOperation<>))
                 .InstancePerDependency();
 
-            _ = _builder.RegisterGeneric(typeof(AzureIndexOperation<>))
-                .As(typeof(IAzureIndexOperation<>))
+            _ = _builder.RegisterGeneric(typeof(IndexOperation<>))
+                .As(typeof(IIndexOperation<>))
                 .InstancePerDependency();
 
             return this;

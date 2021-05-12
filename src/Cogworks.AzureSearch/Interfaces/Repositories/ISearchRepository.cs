@@ -4,9 +4,9 @@ using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.Interfaces.Repositories
 {
-    public interface IAzureSearchRepository<TAzureModel> :
-        IAzureDocumentOperation<TAzureModel>,
-        IAzureIndexOperation<TAzureModel>,
+    public interface ISearchRepository<TAzureModel> :
+        IDocumentOperation<TAzureModel>,
+        IIndexOperation<TAzureModel>,
         IAzureSearch<TAzureModel>
         where TAzureModel : class, IAzureModel, new()
     {

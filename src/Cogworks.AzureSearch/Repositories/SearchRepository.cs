@@ -8,16 +8,16 @@ using Cogworks.AzureSearch.Models.Dtos;
 
 namespace Cogworks.AzureSearch.Repositories
 {
-    internal class AzureSearchRepository<TAzureModel> : IAzureSearchRepository<TAzureModel>
+    internal class SearchRepository<TAzureModel> : ISearchRepository<TAzureModel>
         where TAzureModel : class, IAzureModel, new()
     {
-        private readonly IAzureIndexOperation<TAzureModel> _indexOperation;
-        private readonly IAzureDocumentOperation<TAzureModel> _documentOperation;
+        private readonly IIndexOperation<TAzureModel> _indexOperation;
+        private readonly IDocumentOperation<TAzureModel> _documentOperation;
         private readonly IAzureSearch<TAzureModel> _search;
 
-        public AzureSearchRepository(
-            IAzureIndexOperation<TAzureModel> indexOperation,
-            IAzureDocumentOperation<TAzureModel> documentOperation,
+        public SearchRepository(
+            IIndexOperation<TAzureModel> indexOperation,
+            IDocumentOperation<TAzureModel> documentOperation,
             IAzureSearch<TAzureModel> search)
         {
             _indexOperation = indexOperation;

@@ -98,8 +98,8 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
         internal AzureSearchBuilder RegisterRepositories()
         {
             _ = _container.Register(
-                typeof(IAzureSearchRepository<>),
-                typeof(AzureSearchRepository<>));
+                typeof(ISearchRepository<>),
+                typeof(SearchRepository<>));
 
             return this;
         }
@@ -115,13 +115,13 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
         internal AzureSearchBuilder RegisterOperations()
         {
             _ = _container.Register(
-                typeof(IAzureDocumentOperation<>),
-                typeof(AzureDocumentOperation<>),
+                typeof(IDocumentOperation<>),
+                typeof(DocumentOperation<>),
                 new PerContainerLifetime());
 
             _ = _container.Register(
-                typeof(IAzureIndexOperation<>),
-                typeof(AzureIndexOperation<>),
+                typeof(IIndexOperation<>),
+                typeof(IndexOperation<>),
                 new PerContainerLifetime());
 
             return this;

@@ -9,9 +9,9 @@ namespace Cogworks.AzureSearch.Indexes
 {
     internal class Index<TAzureModel> : IIndex<TAzureModel> where TAzureModel : class, IAzureModel, new()
     {
-        private readonly IAzureDocumentOperation<TAzureModel> _documentOperation;
+        private readonly IDocumentOperation<TAzureModel> _documentOperation;
 
-        public Index(IAzureDocumentOperation<TAzureModel> documentOperation)
+        public Index(IDocumentOperation<TAzureModel> documentOperation)
             => _documentOperation = documentOperation;
 
         public async Task<AzureDocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)

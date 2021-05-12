@@ -7,13 +7,13 @@ using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.Operations
 {
-    public class AzureIndexOperation<TAzureModel> : IAzureIndexOperation<TAzureModel>
+    public class IndexOperation<TAzureModel> : IIndexOperation<TAzureModel>
         where TAzureModel : class, IAzureModel, new()
     {
         private readonly AzureIndexDefinition<TAzureModel> _azureIndexDefinition;
         private readonly IIndexOperationWrapper _indexOperationWrapper;
 
-        public AzureIndexOperation(
+        public IndexOperation(
             AzureIndexDefinition<TAzureModel> azureIndexDefinition,
             IIndexOperationWrapper indexOperationWrapper)
         {

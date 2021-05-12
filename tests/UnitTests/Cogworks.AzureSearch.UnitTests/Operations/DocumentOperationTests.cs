@@ -15,12 +15,12 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
 {
     public class DocumentOperationTests : TestBase
     {
-        private readonly IAzureDocumentOperation<TestDocumentModel> _azureDocumentOperation;
+        private readonly IDocumentOperation<TestDocumentModel> _documentOperation;
 
         public DocumentOperationTests()
-            => _azureDocumentOperation = new AzureSearchRepository<TestDocumentModel>(
-                AzureIndexOperationService,
-                AzureDocumentOperationService,
+            => _documentOperation = new SearchRepository<TestDocumentModel>(
+                IndexOperationService,
+                DocumentOperationService,
                 Search);
 
         [Theory]
@@ -51,7 +51,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 .Returns(new TestResponse<IndexDocumentsResult>(documentIndexResult));
 
             // Act
-            var result = await _azureDocumentOperation.AddOrUpdateDocumentsAsync(testDocuments);
+            var result = await _documentOperation.AddOrUpdateDocumentsAsync(testDocuments);
 
             // Assert
             Assert.NotNull(result);
@@ -105,7 +105,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 .Returns(new TestResponse<IndexDocumentsResult>(documentIndexResult));
 
             // Act
-            var result = await _azureDocumentOperation.AddOrUpdateDocumentsAsync(testDocuments);
+            var result = await _documentOperation.AddOrUpdateDocumentsAsync(testDocuments);
 
             // Assert
             Assert.NotNull(result);
@@ -149,7 +149,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 .Returns(documentIndexResult);
 
             // Act
-            var result = await _azureDocumentOperation.AddOrUpdateDocumentsAsync(testDocuments);
+            var result = await _documentOperation.AddOrUpdateDocumentsAsync(testDocuments);
 
             // Assert
             Assert.NotNull(result);
@@ -174,7 +174,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 .Returns(documentIndexResult);
 
             // Act
-            var result = await _azureDocumentOperation.TryRemoveDocumentsAsync(testDocuments);
+            var result = await _documentOperation.TryRemoveDocumentsAsync(testDocuments);
 
             // Assert
             Assert.NotNull(result);
@@ -211,7 +211,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 .Returns(new TestResponse<IndexDocumentsResult>(documentIndexResult));
 
             // Act
-            var result = await _azureDocumentOperation.TryRemoveDocumentsAsync(testDocuments);
+            var result = await _documentOperation.TryRemoveDocumentsAsync(testDocuments);
 
             // Assert
             Assert.NotNull(result);
@@ -256,7 +256,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 .Returns(new TestResponse<IndexDocumentsResult>(documentIndexResult));
 
             // Act
-            var result = await _azureDocumentOperation.TryRemoveDocumentsAsync(testDocuments);
+            var result = await _documentOperation.TryRemoveDocumentsAsync(testDocuments);
 
             // Assert
             Assert.NotNull(result);
@@ -293,7 +293,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
 
             // Assert
             var domainException = await Assert.ThrowsAsync<AddOrUpdateDocumentException>(async () =>
-                await _azureDocumentOperation.AddOrUpdateDocumentsAsync(testDocuments));
+                await _documentOperation.AddOrUpdateDocumentsAsync(testDocuments));
 
             Assert.NotNull(domainException);
             Assert.Equal("Test Error", domainException.Message);
@@ -337,7 +337,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
 
             // Assert
             var domainException = await Assert.ThrowsAsync<RemoveDocumentException>(async () =>
-                await _azureDocumentOperation.TryRemoveDocumentsAsync(testDocuments));
+                await _documentOperation.TryRemoveDocumentsAsync(testDocuments));
 
             Assert.NotNull(domainException);
             Assert.Equal("Test Error", domainException.Message);

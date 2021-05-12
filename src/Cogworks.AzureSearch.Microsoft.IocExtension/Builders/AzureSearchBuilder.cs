@@ -85,8 +85,8 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
         internal AzureSearchBuilder RegisterRepositories()
         {
             _serviceCollection.TryAddScoped(
-                typeof(IAzureSearchRepository<>),
-                typeof(AzureSearchRepository<>));
+                typeof(ISearchRepository<>),
+                typeof(SearchRepository<>));
 
             return this;
         }
@@ -100,9 +100,9 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
 
         internal AzureSearchBuilder RegisterOperations()
         {
-            _serviceCollection.TryAddScoped(typeof(IAzureDocumentOperation<>), typeof(AzureDocumentOperation<>));
+            _serviceCollection.TryAddScoped(typeof(IDocumentOperation<>), typeof(DocumentOperation<>));
 
-            _serviceCollection.TryAddScoped(typeof(IAzureIndexOperation<>), typeof(AzureIndexOperation<>));
+            _serviceCollection.TryAddScoped(typeof(IIndexOperation<>), typeof(IndexOperation<>));
 
             return this;
         }
