@@ -8,12 +8,12 @@ using Cogworks.AzureSearch.Models.Dtos;
 
 namespace Cogworks.AzureSearch.Searchers
 {
-    internal class AzureSearch<TAzureModel> : IAzureSearch<TAzureModel>
+    internal class Searcher<TAzureModel> : ISearcher<TAzureModel>
         where TAzureModel : class, IModel, new()
     {
         private readonly IDocumentOperationWrapper<TAzureModel> _documentOperationWrapper;
 
-        public AzureSearch(IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)
+        public Searcher(IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)
             => _documentOperationWrapper = documentOperationWrapper;
 
         public SearchResult<TAzureModel> Search(string keyword, SearchParameters searchParameters)

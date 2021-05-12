@@ -13,12 +13,12 @@ namespace Cogworks.AzureSearch.Repositories
     {
         private readonly IIndexOperation<TAzureModel> _indexOperation;
         private readonly IDocumentOperation<TAzureModel> _documentOperation;
-        private readonly IAzureSearch<TAzureModel> _search;
+        private readonly ISearcher<TAzureModel> _search;
 
         public Repository(
             IIndexOperation<TAzureModel> indexOperation,
             IDocumentOperation<TAzureModel> documentOperation,
-            IAzureSearch<TAzureModel> search)
+            ISearcher<TAzureModel> search)
         {
             _indexOperation = indexOperation;
             _documentOperation = documentOperation;

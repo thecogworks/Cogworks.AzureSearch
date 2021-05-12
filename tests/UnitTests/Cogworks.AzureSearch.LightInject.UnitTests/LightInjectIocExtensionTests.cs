@@ -41,13 +41,13 @@ namespace Cogworks.AzureSearch.LightInject.UnitTests
         [InlineData(typeof(IRepository<FirstTestDocumentModel>))]
         [InlineData(typeof(IIndexOperation<FirstTestDocumentModel>))]
         [InlineData(typeof(IDocumentOperation<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<FirstTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<FirstTestDocumentModel>))]
         [InlineData(typeof(IIndex<FirstTestDocumentModel>))]
         [InlineData(typeof(IInitializer<FirstTestDocumentModel>))]
         [InlineData(typeof(IRepository<SecondTestDocumentModel>))]
         [InlineData(typeof(IIndexOperation<SecondTestDocumentModel>))]
         [InlineData(typeof(IDocumentOperation<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<SecondTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<SecondTestDocumentModel>))]
         [InlineData(typeof(IIndex<SecondTestDocumentModel>))]
         [InlineData(typeof(IInitializer<SecondTestDocumentModel>))]
         [InlineData(typeof(IRepository<ThirdTestDocumentModel>))]
@@ -55,7 +55,7 @@ namespace Cogworks.AzureSearch.LightInject.UnitTests
         [InlineData(typeof(IDocumentOperation<ThirdTestDocumentModel>))]
         [InlineData(typeof(IIndex<ThirdTestDocumentModel>))]
         [InlineData(typeof(IInitializer<ThirdTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<ThirdTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<ThirdTestDocumentModel>))]
         public void Should_ReturnDedicatedRepositoryInstance(Type desiredObjectType)
         {
             // Arrange
@@ -80,19 +80,19 @@ namespace Cogworks.AzureSearch.LightInject.UnitTests
         [InlineData(typeof(IDocumentOperation<FirstTestDocumentModel>))]
         [InlineData(typeof(IIndex<FirstTestDocumentModel>))]
         [InlineData(typeof(IInitializer<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<FirstTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<FirstTestDocumentModel>))]
         [InlineData(typeof(IRepository<SecondTestDocumentModel>))]
         [InlineData(typeof(IIndexOperation<SecondTestDocumentModel>))]
         [InlineData(typeof(IDocumentOperation<SecondTestDocumentModel>))]
         [InlineData(typeof(IIndex<SecondTestDocumentModel>))]
         [InlineData(typeof(IInitializer<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<SecondTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<SecondTestDocumentModel>))]
         [InlineData(typeof(IRepository<ThirdTestDocumentModel>))]
         [InlineData(typeof(IIndexOperation<ThirdTestDocumentModel>))]
         [InlineData(typeof(IDocumentOperation<ThirdTestDocumentModel>))]
         [InlineData(typeof(IIndex<ThirdTestDocumentModel>))]
         [InlineData(typeof(IInitializer<ThirdTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<ThirdTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<ThirdTestDocumentModel>))]
         public void Should_Not_ThrowException_When_IndexRegistered(Type desiredObjectType)
         {
             // Arrange
@@ -109,7 +109,7 @@ namespace Cogworks.AzureSearch.LightInject.UnitTests
         [InlineData(typeof(IDocumentOperation<NotRegisteredTestDocumentModel>))]
         [InlineData(typeof(IIndex<NotRegisteredTestDocumentModel>))]
         [InlineData(typeof(IInitializer<NotRegisteredTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<NotRegisteredTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<NotRegisteredTestDocumentModel>))]
         public void Should_ThrowException_When_IndexNotRegistered(Type desiredObjectType)
         {
             // Arrange

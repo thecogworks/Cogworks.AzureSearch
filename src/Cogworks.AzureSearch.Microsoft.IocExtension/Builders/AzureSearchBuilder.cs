@@ -93,7 +93,7 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
 
         internal AzureSearchBuilder RegisterSearchers()
         {
-            _serviceCollection.TryAddScoped(typeof(IAzureSearch<>), typeof(AzureSearch<>));
+            _serviceCollection.TryAddScoped(typeof(ISearcher<>), typeof(Searcher<>));
 
             return this;
         }

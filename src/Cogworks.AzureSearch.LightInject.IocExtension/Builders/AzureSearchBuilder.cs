@@ -107,8 +107,8 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
         internal AzureSearchBuilder RegisterSearchers()
         {
             _ = _container.Register(
-                typeof(IAzureSearch<>),
-                typeof(AzureSearch<>));
+                typeof(ISearcher<>),
+                typeof(Searcher<>));
 
             return this;
         }

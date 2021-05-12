@@ -4,7 +4,7 @@ using Cogworks.AzureSearch.Models.Dtos;
 
 namespace Cogworks.AzureSearch.Interfaces.Searches
 {
-    public interface IAzureSearch<TAzureModel> where TAzureModel : class, IModel, new()
+    public interface ISearcher<TAzureModel> where TAzureModel : class, IModel, new()
     {
         SearchResult<TAzureModel> Search(string keyword, SearchParameters searchParameters);
 

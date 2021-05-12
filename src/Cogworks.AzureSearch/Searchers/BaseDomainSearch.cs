@@ -8,9 +8,9 @@ namespace Cogworks.AzureSearch.Searchers
     public abstract class BaseDomainSearch<TAzureModel>
         where TAzureModel : class, IModel, new()
     {
-        protected IAzureSearch<TAzureModel> Searcher { get; }
+        protected ISearcher<TAzureModel> Searcher { get; }
 
-        protected BaseDomainSearch(IAzureSearch<TAzureModel> search)
+        protected BaseDomainSearch(ISearcher<TAzureModel> search)
             => Searcher = search;
 
         public virtual SearchResult<TAzureModel> Search(string keyword, SearchParameters searchParameters)
