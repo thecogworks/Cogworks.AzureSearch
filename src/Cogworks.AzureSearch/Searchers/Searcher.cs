@@ -8,15 +8,15 @@ using Cogworks.AzureSearch.Models.Dtos;
 
 namespace Cogworks.AzureSearch.Searchers
 {
-    internal class Searcher<TAzureModel> : ISearcher<TAzureModel>
-        where TAzureModel : class, IModel, new()
+    internal class Searcher<TModel> : ISearcher<TModel>
+        where TModel : class, IModel, new()
     {
-        private readonly IDocumentOperationWrapper<TAzureModel> _documentOperationWrapper;
+        private readonly IDocumentOperationWrapper<TModel> _documentOperationWrapper;
 
-        public Searcher(IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)
+        public Searcher(IDocumentOperationWrapper<TModel> documentOperationWrapper)
             => _documentOperationWrapper = documentOperationWrapper;
 
-        public SearchResult<TAzureModel> Search(string keyword, SearchParameters searchParameters)
+        public SearchResult<TModel> Search(string keyword, SearchParameters searchParameters)
         {
             var searchText = GetSearchText(keyword);
             var parameters = ParametersMapper.Map(searchParameters);
@@ -28,7 +28,7 @@ namespace Cogworks.AzureSearch.Searchers
                 searchParameters.Take);
         }
 
-        public async Task<SearchResult<TAzureModel>> SearchAsync(string keyword, SearchParameters searchParameters)
+        public async Task<SearchResult<TModel>> SearchAsync(string keyword, SearchParameters searchParameters)
         {
             var searchText = GetSearchText(keyword);
             var parameters = ParametersMapper.Map(searchParameters);

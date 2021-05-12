@@ -3,7 +3,7 @@ using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.Interfaces.Operations
 {
-    public interface IIndexOperation<in TAzureModel> where TAzureModel : class, IModel, new()
+    public interface IIndexOperation<in TModel> where TModel : class, IModel, new()
     {
         Task<bool> IndexExistsAsync();
 

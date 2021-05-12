@@ -7,14 +7,14 @@ using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.Operations
 {
-    public class IndexOperation<TAzureModel> : IIndexOperation<TAzureModel>
-        where TAzureModel : class, IModel, new()
+    public class IndexOperation<TModel> : IIndexOperation<TModel>
+        where TModel : class, IModel, new()
     {
-        private readonly IndexDefinition<TAzureModel> _indexDefinition;
+        private readonly IndexDefinition<TModel> _indexDefinition;
         private readonly IIndexOperationWrapper _indexOperationWrapper;
 
         public IndexOperation(
-            IndexDefinition<TAzureModel> indexDefinition,
+            IndexDefinition<TModel> indexDefinition,
             IIndexOperationWrapper indexOperationWrapper)
         {
             _indexDefinition = indexDefinition;
@@ -51,8 +51,8 @@ namespace Cogworks.AzureSearch.Operations
             {
 
                 _ = _indexDefinition.CustomIndexDefinition != null
-                    ? await _indexOperationWrapper.CreateOrUpdateAsync<TAzureModel>(_indexDefinition.CustomIndexDefinition, true)
-                    : await _indexOperationWrapper.CreateOrUpdateAsync<TAzureModel>(_indexDefinition.IndexName);
+                    ? await _indexOperationWrapper.CreateOrUpdateAsync<TModel>(_indexDefinition.CustomIndexDefinition, true)
+                    : await _indexOperationWrapper.CreateOrUpdateAsync<TModel>(_indexDefinition.IndexName);
 
             }
             catch (Exception exception)

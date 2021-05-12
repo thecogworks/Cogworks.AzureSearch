@@ -10,13 +10,13 @@ using Cogworks.AzureSearch.Options;
 
 namespace Cogworks.AzureSearch.Wrappers
 {
-    internal class DocumentOperationWrapper<TAzureModel> : IDocumentOperationWrapper<TAzureModel>
-        where TAzureModel : class, IModel, new()
+    internal class DocumentOperationWrapper<TModel> : IDocumentOperationWrapper<TModel>
+        where TModel : class, IModel, new()
     {
         private readonly SearchClient _searchClient;
 
         public DocumentOperationWrapper(
-            IndexDefinition<TAzureModel> indexDefinition,
+            IndexDefinition<TModel> indexDefinition,
             ClientOption clientOption)
         {
             var azureKeyCredential = new AzureKeyCredential(clientOption.Credentials);
@@ -30,13 +30,13 @@ namespace Cogworks.AzureSearch.Wrappers
             );
         }
 
-        public SearchResults<TAzureModel> Search(string searchText, SearchOptions parameters = null)
-            => _searchClient.Search<TAzureModel>(searchText, parameters);
+        public SearchResults<TModel> Search(string searchText, SearchOptions parameters = null)
+            => _searchClient.Search<TModel>(searchText, parameters);
 
-        public async Task<SearchResults<TAzureModel>> SearchAsync(string searchText, SearchOptions parameters = null)
-            => await _searchClient.SearchAsync<TAzureModel>(searchText, parameters);
+        public async Task<SearchResults<TModel>> SearchAsync(string searchText, SearchOptions parameters = null)
+            => await _searchClient.SearchAsync<TModel>(searchText, parameters);
 
-        public async Task<Response<IndexDocumentsResult>> IndexAsync(IndexDocumentsBatch<TAzureModel> indexBatch)
+        public async Task<Response<IndexDocumentsResult>> IndexAsync(IndexDocumentsBatch<TModel> indexBatch)
             => await _searchClient.IndexDocumentsAsync(indexBatch);
     }
 }

@@ -12,17 +12,17 @@ using Cogworks.AzureSearch.Models.Dtos;
 
 namespace Cogworks.AzureSearch.Operations
 {
-    public class DocumentOperation<TAzureModel> : IDocumentOperation<TAzureModel>
-        where TAzureModel : class, IModel, new()
+    public class DocumentOperation<TModel> : IDocumentOperation<TModel>
+        where TModel : class, IModel, new()
     {
-        private readonly IDocumentOperationWrapper<TAzureModel> _documentOperationWrapper;
+        private readonly IDocumentOperationWrapper<TModel> _documentOperationWrapper;
 
         private const int BatchOperationSize = 500;
 
-        public DocumentOperation(IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)
+        public DocumentOperation(IDocumentOperationWrapper<TModel> documentOperationWrapper)
             => _documentOperationWrapper = documentOperationWrapper;
 
-        public async Task<DocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)
+        public async Task<DocumentOperationResult> AddOrUpdateDocumentAsync(TModel model)
         {
             var azureBatchDocumentsOperationResult = await AddOrUpdateDocumentsAsync(new[] { model });
 
@@ -31,7 +31,7 @@ namespace Cogworks.AzureSearch.Operations
                 : azureBatchDocumentsOperationResult.FailedDocuments.FirstOrDefault();
         }
 
-        public async Task<BatchDocumentsOperationResult> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models)
+        public async Task<BatchDocumentsOperationResult> AddOrUpdateDocumentsAsync(IEnumerable<TModel> models)
         {
             if (!models.HasAny())
             {
@@ -51,7 +51,7 @@ namespace Cogworks.AzureSearch.Operations
 
             foreach (var batchActions in chunkedBatchActions)
             {
-                var batch = IndexDocumentsBatch.Create<TAzureModel>(batchActions.ToArray());
+                var batch = IndexDocumentsBatch.Create<TModel>(batchActions.ToArray());
 
                 try
                 {
@@ -67,7 +67,7 @@ namespace Cogworks.AzureSearch.Operations
             return GetBatchOperationStatus(indexResults, "adding or updating");
         }
 
-        public async Task<DocumentOperationResult> TryRemoveDocumentAsync(TAzureModel model)
+        public async Task<DocumentOperationResult> TryRemoveDocumentAsync(TModel model)
         {
             var azureBatchDocumentsOperationResult = await TryRemoveDocumentsAsync(new[] { model });
 
@@ -76,7 +76,7 @@ namespace Cogworks.AzureSearch.Operations
                 : azureBatchDocumentsOperationResult.FailedDocuments.FirstOrDefault();
         }
 
-        public async Task<BatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models)
+        public async Task<BatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TModel> models)
         {
             if (!models.HasAny())
             {
@@ -96,7 +96,7 @@ namespace Cogworks.AzureSearch.Operations
 
             foreach (var batchActions in chunkedBatchActions)
             {
-                var batch = IndexDocumentsBatch.Create<TAzureModel>(batchActions.ToArray());
+                var batch = IndexDocumentsBatch.Create<TModel>(batchActions.ToArray());
 
                 try
                 {

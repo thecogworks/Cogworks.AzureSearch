@@ -2,7 +2,7 @@
 
 namespace Cogworks.AzureSearch.Models
 {
-    public class IndexDefinition<TAzureModel> where TAzureModel : class, IModel, new()
+    public class IndexDefinition<TModel> where TModel : class, IModel, new()
     {
         public string IndexName { get; }
 

@@ -8,13 +8,13 @@ using Cogworks.AzureSearch.Options;
 
 namespace Cogworks.AzureSearch.Initializers
 {
-    internal class Initializer<TAzureModel> : IInitializer<TAzureModel>
-        where TAzureModel : class, IModel, new()
+    internal class Initializer<TModel> : IInitializer<TModel>
+        where TModel : class, IModel, new()
     {
         private readonly IndexOption _indexOption;
-        private readonly IIndexOperation<TAzureModel> _indexOperation;
+        private readonly IIndexOperation<TModel> _indexOperation;
 
-        public Initializer(IndexOption indexOption, IIndexOperation<TAzureModel> indexOperation)
+        public Initializer(IndexOption indexOption, IIndexOperation<TModel> indexOperation)
         {
             _indexOption = indexOption;
             _indexOperation = indexOperation;

@@ -4,11 +4,11 @@ using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.Interfaces.Repositories
 {
-    public interface IRepository<TAzureModel> :
-        IDocumentOperation<TAzureModel>,
-        IIndexOperation<TAzureModel>,
-        ISearcher<TAzureModel>
-        where TAzureModel : class, IModel, new()
+    public interface IRepository<TModel> :
+        IDocumentOperation<TModel>,
+        IIndexOperation<TModel>,
+        ISearcher<TModel>
+        where TModel : class, IModel, new()
     {
     }
 }

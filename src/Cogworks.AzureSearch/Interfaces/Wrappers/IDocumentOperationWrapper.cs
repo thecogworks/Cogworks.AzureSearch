@@ -6,12 +6,12 @@ using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.Interfaces.Wrappers
 {
-    public interface IDocumentOperationWrapper<TAzureModel> where TAzureModel : class, IModel, new()
+    public interface IDocumentOperationWrapper<TModel> where TModel : class, IModel, new()
     {
-        SearchResults<TAzureModel> Search(string searchText, SearchOptions parameters = null);
+        SearchResults<TModel> Search(string searchText, SearchOptions parameters = null);
 
-        Task<SearchResults<TAzureModel>> SearchAsync(string searchText, SearchOptions parameters = null);
+        Task<SearchResults<TModel>> SearchAsync(string searchText, SearchOptions parameters = null);
 
-        Task<Response<IndexDocumentsResult>> IndexAsync(IndexDocumentsBatch<TAzureModel> indexBatch);
+        Task<Response<IndexDocumentsResult>> IndexAsync(IndexDocumentsBatch<TModel> indexBatch);
     }
 }

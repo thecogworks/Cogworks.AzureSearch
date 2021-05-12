@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Indexes
 {
-    internal class Index<TAzureModel> : IIndex<TAzureModel> where TAzureModel : class, IModel, new()
+    internal class Index<TModel> : IIndex<TModel> where TModel : class, IModel, new()
     {
-        private readonly IDocumentOperation<TAzureModel> _documentOperation;
+        private readonly IDocumentOperation<TModel> _documentOperation;
 
-        public Index(IDocumentOperation<TAzureModel> documentOperation)
+        public Index(IDocumentOperation<TModel> documentOperation)
             => _documentOperation = documentOperation;
 
-        public async Task<DocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)
+        public async Task<DocumentOperationResult> AddOrUpdateDocumentAsync(TModel model)
             => await _documentOperation.AddOrUpdateDocumentAsync(model);
 
-        public async Task<DocumentOperationResult> TryRemoveDocumentAsync(TAzureModel model)
+        public async Task<DocumentOperationResult> TryRemoveDocumentAsync(TModel model)
             => await _documentOperation.TryRemoveDocumentAsync(model);
 
-        public async Task<BatchDocumentsOperationResult> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models)
+        public async Task<BatchDocumentsOperationResult> AddOrUpdateDocumentsAsync(IEnumerable<TModel> models)
             => await _documentOperation.AddOrUpdateDocumentsAsync(models);
 
-        public async Task<BatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models)
+        public async Task<BatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TModel> models)
             => await _documentOperation.TryRemoveDocumentsAsync(models);
     }
 }

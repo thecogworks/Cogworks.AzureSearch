@@ -8,33 +8,33 @@ using Cogworks.AzureSearch.Models.Dtos;
 
 namespace Cogworks.AzureSearch.Repositories
 {
-    internal class Repository<TAzureModel> : IRepository<TAzureModel>
-        where TAzureModel : class, IModel, new()
+    internal class Repository<TModel> : IRepository<TModel>
+        where TModel : class, IModel, new()
     {
-        private readonly IIndexOperation<TAzureModel> _indexOperation;
-        private readonly IDocumentOperation<TAzureModel> _documentOperation;
-        private readonly ISearcher<TAzureModel> _search;
+        private readonly IIndexOperation<TModel> _indexOperation;
+        private readonly IDocumentOperation<TModel> _documentOperation;
+        private readonly ISearcher<TModel> _search;
 
         public Repository(
-            IIndexOperation<TAzureModel> indexOperation,
-            IDocumentOperation<TAzureModel> documentOperation,
-            ISearcher<TAzureModel> search)
+            IIndexOperation<TModel> indexOperation,
+            IDocumentOperation<TModel> documentOperation,
+            ISearcher<TModel> search)
         {
             _indexOperation = indexOperation;
             _documentOperation = documentOperation;
             _search = search;
         }
 
-        public async Task<DocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)
+        public async Task<DocumentOperationResult> AddOrUpdateDocumentAsync(TModel model)
             => await _documentOperation.AddOrUpdateDocumentAsync(model);
 
-        public async Task<BatchDocumentsOperationResult> AddOrUpdateDocumentsAsync(IEnumerable<TAzureModel> models)
+        public async Task<BatchDocumentsOperationResult> AddOrUpdateDocumentsAsync(IEnumerable<TModel> models)
             => await _documentOperation.AddOrUpdateDocumentsAsync(models);
 
-        public async Task<DocumentOperationResult> TryRemoveDocumentAsync(TAzureModel model)
+        public async Task<DocumentOperationResult> TryRemoveDocumentAsync(TModel model)
             => await _documentOperation.TryRemoveDocumentAsync(model);
 
-        public async Task<BatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TAzureModel> models)
+        public async Task<BatchDocumentsOperationResult> TryRemoveDocumentsAsync(IEnumerable<TModel> models)
             => await _documentOperation.TryRemoveDocumentsAsync(models);
 
         public async Task<bool> IndexExistsAsync()
@@ -49,10 +49,10 @@ namespace Cogworks.AzureSearch.Repositories
         public async Task IndexClearAsync()
             => await _indexOperation.IndexClearAsync();
 
-        public SearchResult<TAzureModel> Search(string keyword, SearchParameters searchParameters)
+        public SearchResult<TModel> Search(string keyword, SearchParameters searchParameters)
             => _search.Search(keyword, searchParameters);
 
-        public async Task<SearchResult<TAzureModel>> SearchAsync(string keyword,
+        public async Task<SearchResult<TModel>> SearchAsync(string keyword,
             SearchParameters searchParameters)
             => await _search.SearchAsync(keyword, searchParameters);
     }

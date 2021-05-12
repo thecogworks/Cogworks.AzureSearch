@@ -28,10 +28,10 @@ namespace Cogworks.AzureSearch.Wrappers
         public async Task DeleteAsync(string indexName)
             => await _searchIndexClient.DeleteIndexAsync(indexName);
 
-        public async Task<SearchIndex> CreateOrUpdateAsync<TAzureModel>(string indexName) where TAzureModel : class, IModel, new()
+        public async Task<SearchIndex> CreateOrUpdateAsync<TModel>(string indexName) where TModel : class, IModel, new()
         {
             var fieldBuilder = new FieldBuilder();
-            var searchFields = fieldBuilder.Build(typeof(TAzureModel));
+            var searchFields = fieldBuilder.Build(typeof(TModel));
 
             var definition = new SearchIndex(
                 indexName,
@@ -40,12 +40,12 @@ namespace Cogworks.AzureSearch.Wrappers
             return await _searchIndexClient.CreateOrUpdateIndexAsync(definition);
         }
 
-        public async Task<SearchIndex> CreateOrUpdateAsync<TAzureModel>(SearchIndex customIndexDefinition, bool overrideFields) where TAzureModel : class, IModel, new()
+        public async Task<SearchIndex> CreateOrUpdateAsync<TModel>(SearchIndex customIndexDefinition, bool overrideFields) where TModel : class, IModel, new()
         {
             if (overrideFields)
             {
                 var fieldBuilder = new FieldBuilder();
-                var searchFields = fieldBuilder.Build(typeof(TAzureModel));
+                var searchFields = fieldBuilder.Build(typeof(TModel));
 
                 customIndexDefinition.Fields = searchFields;
             }
