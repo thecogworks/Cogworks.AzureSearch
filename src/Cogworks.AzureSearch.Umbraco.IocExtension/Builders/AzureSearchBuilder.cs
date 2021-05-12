@@ -29,8 +29,8 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
         internal AzureSearchBuilder RegisterInitializers()
         {
             _composingRegister.Register(
-                typeof(IAzureInitializer<>),
-                typeof(AzureInitializer<>));
+                typeof(IInitializer<>),
+                typeof(Initializer<>));
 
             return this;
         }
