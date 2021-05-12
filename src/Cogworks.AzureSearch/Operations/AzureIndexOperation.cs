@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Cogworks.AzureSearch.Exceptions;
 using Cogworks.AzureSearch.Exceptions.IndexExceptions;
 using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
-using Cogworks.AzureSearch.Models.Dtos;
 
-namespace Cogworks.AzureSearch.Services
+namespace Cogworks.AzureSearch.Operations
 {
-    public class AzureIndexOperationService<TAzureModel> : IAzureIndexOperation<TAzureModel>
+    public class AzureIndexOperation<TAzureModel> : IAzureIndexOperation<TAzureModel>
         where TAzureModel : class, IAzureModel, new()
     {
         private readonly AzureIndexDefinition<TAzureModel> _azureIndexDefinition;
         private readonly IIndexOperationWrapper _indexOperationWrapper;
 
-        public AzureIndexOperationService(
+        public AzureIndexOperation(
             AzureIndexDefinition<TAzureModel> azureIndexDefinition,
             IIndexOperationWrapper indexOperationWrapper)
         {

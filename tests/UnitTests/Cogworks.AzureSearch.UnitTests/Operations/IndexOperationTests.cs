@@ -5,8 +5,8 @@ using Azure.Search.Documents.Indexes.Models;
 using Cogworks.AzureSearch.Exceptions.IndexExceptions;
 using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Models;
+using Cogworks.AzureSearch.Operations;
 using Cogworks.AzureSearch.Repositories;
-using Cogworks.AzureSearch.Services;
 using Cogworks.AzureSearch.UnitTests.Models;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
@@ -159,7 +159,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
 
             var customModelDefinition = new AzureIndexDefinition<TestDocumentModel>(index);
 
-            var customIndexOperationService = new AzureIndexOperationService<TestDocumentModel>(
+            var customIndexOperationService = new AzureIndexOperation<TestDocumentModel>(
                 customModelDefinition,
                 IndexOperationWrapper);
 
@@ -201,7 +201,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
 
             var customModelDefinition = new AzureIndexDefinition<TestDocumentModel>(index);
 
-            var customIndexOperationService = new AzureIndexOperationService<TestDocumentModel>(
+            var customIndexOperationService = new AzureIndexOperation<TestDocumentModel>(
                 customModelDefinition,
                 IndexOperationWrapper);
 

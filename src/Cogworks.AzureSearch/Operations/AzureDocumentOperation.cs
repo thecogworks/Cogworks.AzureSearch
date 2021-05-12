@@ -10,16 +10,16 @@ using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Models.Dtos;
 
-namespace Cogworks.AzureSearch.Services
+namespace Cogworks.AzureSearch.Operations
 {
-    public class AzureDocumentOperationService<TAzureModel> : IAzureDocumentOperation<TAzureModel>
+    public class AzureDocumentOperation<TAzureModel> : IAzureDocumentOperation<TAzureModel>
         where TAzureModel : class, IAzureModel, new()
     {
         private readonly IDocumentOperationWrapper<TAzureModel> _documentOperationWrapper;
 
         private const int BatchOperationSize = 500;
 
-        public AzureDocumentOperationService(IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)
+        public AzureDocumentOperation(IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)
             => _documentOperationWrapper = documentOperationWrapper;
 
 

@@ -9,10 +9,10 @@ using Cogworks.AzureSearch.Interfaces.Repositories;
 using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
+using Cogworks.AzureSearch.Operations;
 using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
-using Cogworks.AzureSearch.Services;
 using Cogworks.AzureSearch.Wrappers;
 using LightInject;
 
@@ -116,12 +116,12 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
         {
             _ = _container.Register(
                 typeof(IAzureDocumentOperation<>),
-                typeof(AzureDocumentOperationService<>),
+                typeof(AzureDocumentOperation<>),
                 new PerContainerLifetime());
 
             _ = _container.Register(
                 typeof(IAzureIndexOperation<>),
-                typeof(AzureIndexOperationService<>),
+                typeof(AzureIndexOperation<>),
                 new PerContainerLifetime());
 
             return this;

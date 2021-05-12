@@ -9,10 +9,10 @@ using Cogworks.AzureSearch.Interfaces.Repositories;
 using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
+using Cogworks.AzureSearch.Operations;
 using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
-using Cogworks.AzureSearch.Services;
 using Cogworks.AzureSearch.Wrappers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -100,9 +100,9 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
 
         internal AzureSearchBuilder RegisterOperations()
         {
-            _serviceCollection.TryAddScoped(typeof(IAzureDocumentOperation<>), typeof(AzureDocumentOperationService<>));
+            _serviceCollection.TryAddScoped(typeof(IAzureDocumentOperation<>), typeof(AzureDocumentOperation<>));
 
-            _serviceCollection.TryAddScoped(typeof(IAzureIndexOperation<>), typeof(AzureIndexOperationService<>));
+            _serviceCollection.TryAddScoped(typeof(IAzureIndexOperation<>), typeof(AzureIndexOperation<>));
 
             return this;
         }

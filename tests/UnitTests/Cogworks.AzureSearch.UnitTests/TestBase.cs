@@ -4,7 +4,7 @@ using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
-using Cogworks.AzureSearch.Services;
+using Cogworks.AzureSearch.Operations;
 using Cogworks.AzureSearch.UnitTests.Models;
 using NSubstitute;
 
@@ -34,10 +34,10 @@ namespace Cogworks.AzureSearch.UnitTests
 
             Search = Substitute.For<IAzureSearch<TestDocumentModel>>();
 
-            AzureDocumentOperationService = new AzureDocumentOperationService<TestDocumentModel>(
+            AzureDocumentOperationService = new AzureDocumentOperation<TestDocumentModel>(
                 DocumentOperationWrapper);
 
-            AzureIndexOperationService = new AzureIndexOperationService<TestDocumentModel>(
+            AzureIndexOperationService = new AzureIndexOperation<TestDocumentModel>(
                 TestDocumentModelDefinition,
                 IndexOperationWrapper);
         }

@@ -10,10 +10,10 @@ using Cogworks.AzureSearch.Interfaces.Repositories;
 using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
+using Cogworks.AzureSearch.Operations;
 using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
-using Cogworks.AzureSearch.Services;
 using Cogworks.AzureSearch.Wrappers;
 
 namespace Cogworks.AzureSearch.Autofac.Builders
@@ -117,11 +117,11 @@ namespace Cogworks.AzureSearch.Autofac.Builders
 
         internal AzureSearchBuilder RegisterOperations()
         {
-            _ = _builder.RegisterGeneric(typeof(AzureDocumentOperationService<>))
+            _ = _builder.RegisterGeneric(typeof(AzureDocumentOperation<>))
                 .As(typeof(IAzureDocumentOperation<>))
                 .InstancePerDependency();
 
-            _ = _builder.RegisterGeneric(typeof(AzureIndexOperationService<>))
+            _ = _builder.RegisterGeneric(typeof(AzureIndexOperation<>))
                 .As(typeof(IAzureIndexOperation<>))
                 .InstancePerDependency();
 

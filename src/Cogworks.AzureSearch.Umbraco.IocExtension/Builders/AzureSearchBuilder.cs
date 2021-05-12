@@ -9,10 +9,10 @@ using Cogworks.AzureSearch.Interfaces.Repositories;
 using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
+using Cogworks.AzureSearch.Operations;
 using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
-using Cogworks.AzureSearch.Services;
 using Cogworks.AzureSearch.Wrappers;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
@@ -119,11 +119,11 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
         {
             _composingRegister.Register(
                 typeof(IAzureDocumentOperation<>),
-                typeof(AzureDocumentOperationService<>));
+                typeof(AzureDocumentOperation<>));
 
             _composingRegister.Register(
                 typeof(IAzureIndexOperation<>),
-                typeof(AzureIndexOperationService<>));
+                typeof(AzureIndexOperation<>));
 
             return this;
         }
