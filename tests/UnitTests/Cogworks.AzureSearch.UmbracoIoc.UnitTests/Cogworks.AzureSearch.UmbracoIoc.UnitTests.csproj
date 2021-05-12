@@ -252,13 +252,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\FirstTestDocumentModel.cs" />
-    <Compile Include="Models\NotRegistredTestDocumentModel.cs" />
-    <Compile Include="Models\SecondTestDocumentModel.cs" />
-    <Compile Include="Models\ThirdTestDocumentModel.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Searchers\CustomTestSearch.cs" />
-    <Compile Include="UmbracoIocExtensionTests.cs" />
+    <Compile Include="**\*.cs" Exclude="bin\**\*.cs;obj\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
