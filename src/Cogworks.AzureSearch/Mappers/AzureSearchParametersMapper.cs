@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Azure.Search.Documents;
+﻿using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 using Cogworks.AzureSearch.Enums;
 using Cogworks.AzureSearch.Extensions;

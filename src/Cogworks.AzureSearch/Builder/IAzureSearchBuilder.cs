@@ -1,5 +1,4 @@
 ﻿using Azure.Search.Documents.Indexes.Models;
-using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Searchers;
 

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Azure.Search.Documents.Indexes;
+﻿using Azure.Search.Documents.Indexes;
 using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.UnitTests.Models

@@ -4,7 +4,6 @@ using Cogworks.AzureSearch.Exceptions.IndexExceptions;
 using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Models;
-using Cogworks.AzureSearch.Models.Dtos;
 using Cogworks.AzureSearch.Options;
 
 namespace Cogworks.AzureSearch.Initializers

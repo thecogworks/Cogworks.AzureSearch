@@ -1,6 +1,5 @@
 ﻿using Cogworks.AzureSearch.AutofacIoc.UnitTests.Models;
 using Cogworks.AzureSearch.Interfaces.Searches;
-using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Searchers;
 
 namespace Cogworks.AzureSearch.AutofacIoc.UnitTests.Searchers

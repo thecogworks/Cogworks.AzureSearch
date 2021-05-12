@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Azure;
-using Azure.Search.Documents.Models;
+﻿using Azure;
 
 namespace Cogworks.AzureSearch.UnitTests.Models
 {
