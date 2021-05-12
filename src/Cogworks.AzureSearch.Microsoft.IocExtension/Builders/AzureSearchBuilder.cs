@@ -85,8 +85,8 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
         internal AzureSearchBuilder RegisterRepositories()
         {
             _serviceCollection.TryAddScoped(
-                typeof(ISearchRepository<>),
-                typeof(SearchRepository<>));
+                typeof(IRepository<>),
+                typeof(Repository<>));
 
             return this;
         }

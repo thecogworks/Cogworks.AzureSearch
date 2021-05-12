@@ -19,7 +19,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
         private readonly IIndexOperation<TestDocumentModel> _indexOperation;
 
         public IndexOperationTests()
-            => _indexOperation = new SearchRepository<TestDocumentModel>(
+            => _indexOperation = new Repository<TestDocumentModel>(
                 IndexOperationService,
                 DocumentOperationService,
                 Search);
@@ -163,7 +163,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 customModelDefinition,
                 IndexOperationWrapper);
 
-            var azureIndexOperation = new SearchRepository<TestDocumentModel>(
+            var azureIndexOperation = new Repository<TestDocumentModel>(
                 customIndexOperationService,
                 DocumentOperationService,
                 Search);
@@ -205,7 +205,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 customModelDefinition,
                 IndexOperationWrapper);
 
-            var azureIndexOperation = new SearchRepository<TestDocumentModel>(
+            var azureIndexOperation = new Repository<TestDocumentModel>(
                 customIndexOperationService,
                 DocumentOperationService,
                 Search);

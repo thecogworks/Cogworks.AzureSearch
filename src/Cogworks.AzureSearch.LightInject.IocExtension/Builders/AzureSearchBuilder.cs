@@ -98,8 +98,8 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
         internal AzureSearchBuilder RegisterRepositories()
         {
             _ = _container.Register(
-                typeof(ISearchRepository<>),
-                typeof(SearchRepository<>));
+                typeof(IRepository<>),
+                typeof(Repository<>));
 
             return this;
         }
