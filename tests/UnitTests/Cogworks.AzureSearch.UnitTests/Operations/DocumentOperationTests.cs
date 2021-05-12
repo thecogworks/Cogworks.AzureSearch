@@ -19,8 +19,8 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
 
         public DocumentOperationTests()
             => _documentOperation = new Repository<TestDocumentModel>(
-                IndexOperationService,
-                DocumentOperationService,
+                IndexOperation,
+                DocumentOperation,
                 Search);
 
         [Theory]

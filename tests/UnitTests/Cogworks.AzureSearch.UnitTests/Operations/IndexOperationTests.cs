@@ -20,8 +20,8 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
 
         public IndexOperationTests()
             => _indexOperation = new Repository<TestDocumentModel>(
-                IndexOperationService,
-                DocumentOperationService,
+                IndexOperation,
+                DocumentOperation,
                 Search);
 
         #region Exists Tests
@@ -165,7 +165,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
 
             var azureIndexOperation = new Repository<TestDocumentModel>(
                 customIndexOperationService,
-                DocumentOperationService,
+                DocumentOperation,
                 Search);
 
             // Act
@@ -207,7 +207,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
 
             var azureIndexOperation = new Repository<TestDocumentModel>(
                 customIndexOperationService,
-                DocumentOperationService,
+                DocumentOperation,
                 Search);
 
             _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<SearchIndex>(), Arg.Any<bool>())

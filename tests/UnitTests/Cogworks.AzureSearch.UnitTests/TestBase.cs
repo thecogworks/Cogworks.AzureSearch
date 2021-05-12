@@ -22,8 +22,8 @@ namespace Cogworks.AzureSearch.UnitTests
         protected readonly IndexDefinition<TestDocumentModel> TestDocumentModelDefinition;
         protected readonly ISearcher<TestDocumentModel> Search;
 
-        protected readonly IDocumentOperation<TestDocumentModel> DocumentOperationService;
-        protected readonly IIndexOperation<TestDocumentModel> IndexOperationService;
+        protected readonly IDocumentOperation<TestDocumentModel> DocumentOperation;
+        protected readonly IIndexOperation<TestDocumentModel> IndexOperation;
 
         protected TestBase()
         {
@@ -34,10 +34,10 @@ namespace Cogworks.AzureSearch.UnitTests
 
             Search = Substitute.For<ISearcher<TestDocumentModel>>();
 
-            DocumentOperationService = new DocumentOperation<TestDocumentModel>(
+            DocumentOperation = new DocumentOperation<TestDocumentModel>(
                 DocumentOperationWrapper);
 
-            IndexOperationService = new IndexOperation<TestDocumentModel>(
+            IndexOperation = new IndexOperation<TestDocumentModel>(
                 TestDocumentModelDefinition,
                 IndexOperationWrapper);
         }
