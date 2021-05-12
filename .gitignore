@@ -804,3 +804,6 @@ $RECYCLE.BIN/
 # Ionide (cross platform F# VS Code tools) working folder
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudio,visualstudiocode,rider,csharp,aspnetcore,dotnetcore
+
+.editorconfig
+!linting/.editorconfig
