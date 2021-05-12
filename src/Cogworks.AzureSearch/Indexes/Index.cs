@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Indexes
 {
-    internal class AzureIndex<TAzureModel> : IAzureIndex<TAzureModel> where TAzureModel : class, IAzureModel, new()
+    internal class Index<TAzureModel> : IIndex<TAzureModel> where TAzureModel : class, IAzureModel, new()
     {
         private readonly IAzureDocumentOperation<TAzureModel> _documentOperation;
 
-        public AzureIndex(IAzureDocumentOperation<TAzureModel> documentOperation)
+        public Index(IAzureDocumentOperation<TAzureModel> documentOperation)
             => _documentOperation = documentOperation;
 
         public async Task<AzureDocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)

@@ -68,7 +68,7 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
 
         internal AzureSearchBuilder RegisterIndexes()
         {
-            _serviceCollection.TryAddScoped(typeof(IAzureIndex<>), typeof(AzureIndex<>));
+            _serviceCollection.TryAddScoped(typeof(IIndex<>), typeof(Index<>));
 
             return this;
         }

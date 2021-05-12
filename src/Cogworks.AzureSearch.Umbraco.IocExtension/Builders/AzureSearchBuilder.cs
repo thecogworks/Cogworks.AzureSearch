@@ -79,8 +79,8 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
         internal AzureSearchBuilder RegisterIndexes()
         {
             _composingRegister.Register(
-                typeof(IAzureIndex<>),
-                typeof(AzureIndex<>));
+                typeof(IIndex<>),
+                typeof(Index<>));
 
             return this;
         }

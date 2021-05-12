@@ -78,8 +78,8 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
         internal AzureSearchBuilder RegisterIndexes()
         {
             _ = _container.Register(
-                typeof(IAzureIndex<>),
-                typeof(AzureIndex<>));
+                typeof(IIndex<>),
+                typeof(Index<>));
 
             return this;
         }

@@ -77,8 +77,8 @@ namespace Cogworks.AzureSearch.Autofac.Builders
 
         internal AzureSearchBuilder RegisterIndexes()
         {
-            _ = _builder.RegisterGeneric(typeof(AzureIndex<>))
-                .As(typeof(IAzureIndex<>))
+            _ = _builder.RegisterGeneric(typeof(Index<>))
+                .As(typeof(IIndex<>))
                 .InstancePerDependency();
 
             return this;

@@ -6,7 +6,7 @@ using Cogworks.AzureSearch.Models.Dtos;
 
 namespace Cogworks.AzureSearch.Interfaces.Indexes
 {
-    public interface IAzureIndex<in TAzureModel> where TAzureModel : class, IAzureModel, new()
+    public interface IIndex<in TAzureModel> where TAzureModel : class, IAzureModel, new()
     {
         Task<AzureDocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model);
 
