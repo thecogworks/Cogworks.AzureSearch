@@ -11,18 +11,18 @@ namespace Cogworks.AzureSearch.Initializers
     internal class Initializer<TAzureModel> : IInitializer<TAzureModel>
         where TAzureModel : class, IModel, new()
     {
-        private readonly AzureSearchIndexOption _azureSearchIndexOption;
+        private readonly IndexOption _indexOption;
         private readonly IIndexOperation<TAzureModel> _indexOperation;
 
-        public Initializer(AzureSearchIndexOption azureSearchIndexOption, IIndexOperation<TAzureModel> indexOperation)
+        public Initializer(IndexOption indexOption, IIndexOperation<TAzureModel> indexOperation)
         {
-            _azureSearchIndexOption = azureSearchIndexOption;
+            _indexOption = indexOption;
             _indexOperation = indexOperation;
         }
 
         public async Task InitializeAsync()
         {
-            if (_azureSearchIndexOption.Recreate)
+            if (_indexOption.Recreate)
             {
                 await _indexOperation.IndexDeleteAsync();
             }
@@ -33,7 +33,7 @@ namespace Cogworks.AzureSearch.Initializers
             }
             catch (Exception)
             {
-                if (_azureSearchIndexOption.RecreateOnUpdateFailure)
+                if (_indexOption.RecreateOnUpdateFailure)
                 {
                     await _indexOperation.IndexDeleteAsync();
                 }

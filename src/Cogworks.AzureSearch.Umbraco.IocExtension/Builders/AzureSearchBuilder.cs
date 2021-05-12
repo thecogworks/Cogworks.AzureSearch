@@ -38,7 +38,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
         public IAzureSearchBuilder RegisterIndexOptions(bool recreate, bool recreateOnUpdateFailure = false)
         {
             _composingRegister.Register(
-                _ => new AzureSearchIndexOption(recreate, recreateOnUpdateFailure),
+                _ => new IndexOption(recreate, recreateOnUpdateFailure),
                 Lifetime.Singleton);
 
             return this;
@@ -47,7 +47,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
         public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl)
         {
             _composingRegister.Register(
-                _ => new AzureSearchClientOption(
+                _ => new ClientOption(
                     serviceName,
                     credentials,
                     serviceEndpointUrl),

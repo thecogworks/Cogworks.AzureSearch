@@ -13,12 +13,12 @@ namespace Cogworks.AzureSearch.Wrappers
     {
         private readonly SearchIndexClient _searchIndexClient;
 
-        public IndexOperationWrapper(AzureSearchClientOption azureSearchClientOption)
+        public IndexOperationWrapper(ClientOption clientOption)
         {
-            var azureKeyCredential = new AzureKeyCredential(azureSearchClientOption.Credentials);
+            var azureKeyCredential = new AzureKeyCredential(clientOption.Credentials);
 
             _searchIndexClient = new SearchIndexClient(
-                endpoint: new Uri(azureSearchClientOption.ServiceUrlEndpoint),
+                endpoint: new Uri(clientOption.ServiceUrlEndpoint),
                 credential: azureKeyCredential);
         }
 

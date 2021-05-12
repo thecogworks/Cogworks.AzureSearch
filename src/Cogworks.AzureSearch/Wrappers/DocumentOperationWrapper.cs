@@ -17,15 +17,15 @@ namespace Cogworks.AzureSearch.Wrappers
 
         public DocumentOperationWrapper(
             IndexDefinition<TAzureModel> indexDefinition,
-            AzureSearchClientOption azureSearchClientOption)
+            ClientOption clientOption)
         {
-            var azureKeyCredential = new AzureKeyCredential(azureSearchClientOption.Credentials);
+            var azureKeyCredential = new AzureKeyCredential(clientOption.Credentials);
 
             _searchClient = new SearchClient(
-                endpoint: new Uri(azureSearchClientOption.ServiceUrlEndpoint),
+                endpoint: new Uri(clientOption.ServiceUrlEndpoint),
                 indexName: indexDefinition.IndexName,
                 credential: azureKeyCredential,
-                options: azureSearchClientOption.ClientOptions
+                options: clientOption.ClientOptions
 
             );
         }

@@ -37,7 +37,7 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
         public IAzureSearchBuilder RegisterIndexOptions(bool recreate, bool recreateOnUpdateFailure = false)
         {
             _ = _container.Register(
-                _ => new AzureSearchIndexOption(recreate, recreateOnUpdateFailure),
+                _ => new IndexOption(recreate, recreateOnUpdateFailure),
                 new PerContainerLifetime());
 
             return this;
@@ -46,7 +46,7 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Builders
         public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl)
         {
             _ = _container.Register(
-                _ => new AzureSearchClientOption(
+                _ => new ClientOption(
                     serviceName,
                     credentials,
                     serviceEndpointUrl),

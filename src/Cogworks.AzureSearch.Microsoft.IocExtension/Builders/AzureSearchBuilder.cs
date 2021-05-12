@@ -35,14 +35,14 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Builders
 
         public IAzureSearchBuilder RegisterIndexOptions(bool recreate, bool recreateOnUpdateFailure = false)
         {
-            _serviceCollection.TryAddSingleton(_ => new AzureSearchIndexOption(recreate, recreateOnUpdateFailure));
+            _serviceCollection.TryAddSingleton(_ => new IndexOption(recreate, recreateOnUpdateFailure));
 
             return this;
         }
 
         public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl)
         {
-            _serviceCollection.TryAddSingleton(_ => new AzureSearchClientOption(
+            _serviceCollection.TryAddSingleton(_ => new ClientOption(
                 serviceName,
                 credentials,
                 serviceEndpointUrl));

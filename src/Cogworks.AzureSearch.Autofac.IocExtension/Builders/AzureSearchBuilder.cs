@@ -36,7 +36,7 @@ namespace Cogworks.AzureSearch.Autofac.Builders
 
         public IAzureSearchBuilder RegisterIndexOptions(bool recreate, bool recreateOnUpdateFailure = false)
         {
-            _ = _builder.Register(_ => new AzureSearchIndexOption(recreate, recreateOnUpdateFailure))
+            _ = _builder.Register(_ => new IndexOption(recreate, recreateOnUpdateFailure))
                 .AsSelf()
                 .SingleInstance();
 
@@ -45,7 +45,7 @@ namespace Cogworks.AzureSearch.Autofac.Builders
 
         public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl)
         {
-            _ = _builder.Register(_ => new AzureSearchClientOption(
+            _ = _builder.Register(_ => new ClientOption(
                     serviceName,
                     credentials,
                     serviceEndpointUrl))
