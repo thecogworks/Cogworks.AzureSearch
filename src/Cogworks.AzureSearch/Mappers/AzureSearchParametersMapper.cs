@@ -44,14 +44,12 @@ namespace Cogworks.AzureSearch.Mappers
                 }
             }
 
-
             if (azureSearchParameters.HighlightFields.HasAny())
             {
                 foreach (var highlightField in azureSearchParameters.HighlightFields)
                 {
                     searchParameters.HighlightFields.Add(highlightField);
                 }
-
             }
 
             if (azureSearchParameters.Facets.HasAny())
@@ -60,7 +58,6 @@ namespace Cogworks.AzureSearch.Mappers
                 {
                     searchParameters.Facets.Add(facet);
                 }
-
             }
 
             if (azureSearchParameters.OrderBy.HasAny())
@@ -69,7 +66,6 @@ namespace Cogworks.AzureSearch.Mappers
                 {
                     searchParameters.OrderBy.Add(order);
                 }
-
             }
 
             return searchParameters;

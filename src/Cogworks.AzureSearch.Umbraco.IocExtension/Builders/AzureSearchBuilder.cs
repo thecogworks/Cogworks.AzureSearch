@@ -114,7 +114,6 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-
         internal AzureSearchBuilder RegisterOperations()
         {
             _composingRegister.Register(

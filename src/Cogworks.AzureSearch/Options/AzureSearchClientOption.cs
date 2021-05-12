@@ -14,8 +14,6 @@ namespace Cogworks.AzureSearch.Options
 
         public SearchClientOptions ClientOptions { get; }
 
-
-
         public AzureSearchClientOption(string serviceName, string credentials, string serviceUrlEndpoint)
         {
             ServiceName = serviceName;
@@ -24,11 +22,9 @@ namespace Cogworks.AzureSearch.Options
             ClientOptions = GetOptions();
         }
 
-
         private static SearchClientOptions GetOptions()
         {
             var clientOptions = new SearchClientOptions();
-
 
             clientOptions.AddPolicy(
                 new SearchIdPipelinePolicy(),
@@ -44,5 +40,5 @@ namespace Cogworks.AzureSearch.Options
                     .Headers
                     .SetValue("x-ms-azs-return-searchid", "true");
         }
-}
+    }
 }

@@ -22,7 +22,6 @@ namespace Cogworks.AzureSearch.Operations
         public AzureDocumentOperation(IDocumentOperationWrapper<TAzureModel> documentOperationWrapper)
             => _documentOperationWrapper = documentOperationWrapper;
 
-
         public async Task<AzureDocumentOperationResult> AddOrUpdateDocumentAsync(TAzureModel model)
         {
             var azureBatchDocumentsOperationResult = await AddOrUpdateDocumentsAsync(new[] { model });

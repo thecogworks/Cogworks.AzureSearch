@@ -15,7 +15,6 @@ namespace Cogworks.AzureSearch.Wrappers
     {
         private readonly SearchClient _searchClient;
 
-
         public DocumentOperationWrapper(
             AzureIndexDefinition<TAzureModel> azureIndexDefinition,
             AzureSearchClientOption azureSearchClientOption)
