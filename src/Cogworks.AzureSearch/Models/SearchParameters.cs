@@ -3,7 +3,7 @@ using Cogworks.AzureSearch.Enums;
 
 namespace Cogworks.AzureSearch.Models
 {
-    public class AzureSearchParameters
+    public class SearchParameters
     {
         public bool IncludeTotalResultCount { get; set; }
 

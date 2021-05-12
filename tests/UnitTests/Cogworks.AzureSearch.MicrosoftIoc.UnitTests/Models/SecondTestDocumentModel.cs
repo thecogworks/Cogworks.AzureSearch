@@ -3,7 +3,7 @@ using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.MicrosoftIoc.UnitTests.Models
 {
-    public class SecondTestDocumentModel : IAzureModel
+    public class SecondTestDocumentModel : IModel
     {
         [SimpleField(IsKey = true, IsFilterable = true)]
         [SearchableField()]

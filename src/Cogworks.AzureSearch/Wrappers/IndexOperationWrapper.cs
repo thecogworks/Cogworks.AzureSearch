@@ -13,12 +13,12 @@ namespace Cogworks.AzureSearch.Wrappers
     {
         private readonly SearchIndexClient _searchIndexClient;
 
-        public IndexOperationWrapper(AzureSearchClientOption azureSearchClientOption)
+        public IndexOperationWrapper(ClientOption clientOption)
         {
-            var azureKeyCredential = new AzureKeyCredential(azureSearchClientOption.Credentials);
+            var azureKeyCredential = new AzureKeyCredential(clientOption.Credentials);
 
             _searchIndexClient = new SearchIndexClient(
-                endpoint: new Uri(azureSearchClientOption.ServiceUrlEndpoint),
+                endpoint: new Uri(clientOption.ServiceUrlEndpoint),
                 credential: azureKeyCredential);
         }
 
@@ -28,10 +28,10 @@ namespace Cogworks.AzureSearch.Wrappers
         public async Task DeleteAsync(string indexName)
             => await _searchIndexClient.DeleteIndexAsync(indexName);
 
-        public async Task<SearchIndex> CreateOrUpdateAsync<TAzureModel>(string indexName) where TAzureModel : class, IAzureModel, new()
+        public async Task<SearchIndex> CreateOrUpdateAsync<TModel>(string indexName) where TModel : class, IModel, new()
         {
             var fieldBuilder = new FieldBuilder();
-            var searchFields = fieldBuilder.Build(typeof(TAzureModel));
+            var searchFields = fieldBuilder.Build(typeof(TModel));
 
             var definition = new SearchIndex(
                 indexName,
@@ -40,12 +40,12 @@ namespace Cogworks.AzureSearch.Wrappers
             return await _searchIndexClient.CreateOrUpdateIndexAsync(definition);
         }
 
-        public async Task<SearchIndex> CreateOrUpdateAsync<TAzureModel>(SearchIndex customIndexDefinition, bool overrideFields) where TAzureModel : class, IAzureModel, new()
+        public async Task<SearchIndex> CreateOrUpdateAsync<TModel>(SearchIndex customIndexDefinition, bool overrideFields) where TModel : class, IModel, new()
         {
             if (overrideFields)
             {
                 var fieldBuilder = new FieldBuilder();
-                var searchFields = fieldBuilder.Build(typeof(TAzureModel));
+                var searchFields = fieldBuilder.Build(typeof(TModel));
 
                 customIndexDefinition.Fields = searchFields;
             }

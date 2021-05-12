@@ -10,33 +10,33 @@ using Cogworks.AzureSearch.Options;
 
 namespace Cogworks.AzureSearch.Wrappers
 {
-    internal class DocumentOperationWrapper<TAzureModel> : IDocumentOperationWrapper<TAzureModel>
-        where TAzureModel : class, IAzureModel, new()
+    internal class DocumentOperationWrapper<TModel> : IDocumentOperationWrapper<TModel>
+        where TModel : class, IModel, new()
     {
         private readonly SearchClient _searchClient;
 
         public DocumentOperationWrapper(
-            AzureIndexDefinition<TAzureModel> azureIndexDefinition,
-            AzureSearchClientOption azureSearchClientOption)
+            IndexDefinition<TModel> indexDefinition,
+            ClientOption clientOption)
         {
-            var azureKeyCredential = new AzureKeyCredential(azureSearchClientOption.Credentials);
+            var azureKeyCredential = new AzureKeyCredential(clientOption.Credentials);
 
             _searchClient = new SearchClient(
-                endpoint: new Uri(azureSearchClientOption.ServiceUrlEndpoint),
-                indexName: azureIndexDefinition.IndexName,
+                endpoint: new Uri(clientOption.ServiceUrlEndpoint),
+                indexName: indexDefinition.IndexName,
                 credential: azureKeyCredential,
-                options: azureSearchClientOption.ClientOptions
+                options: clientOption.ClientOptions
 
             );
         }
 
-        public SearchResults<TAzureModel> Search(string searchText, SearchOptions parameters = null)
-            => _searchClient.Search<TAzureModel>(searchText, parameters);
+        public SearchResults<TModel> Search(string searchText, SearchOptions parameters = null)
+            => _searchClient.Search<TModel>(searchText, parameters);
 
-        public async Task<SearchResults<TAzureModel>> SearchAsync(string searchText, SearchOptions parameters = null)
-            => await _searchClient.SearchAsync<TAzureModel>(searchText, parameters);
+        public async Task<SearchResults<TModel>> SearchAsync(string searchText, SearchOptions parameters = null)
+            => await _searchClient.SearchAsync<TModel>(searchText, parameters);
 
-        public async Task<Response<IndexDocumentsResult>> IndexAsync(IndexDocumentsBatch<TAzureModel> indexBatch)
+        public async Task<Response<IndexDocumentsResult>> IndexAsync(IndexDocumentsBatch<TModel> indexBatch)
             => await _searchClient.IndexDocumentsAsync(indexBatch);
     }
 }

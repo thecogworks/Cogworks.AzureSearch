@@ -3,7 +3,7 @@ using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.UmbracoIoc.UnitTests.Models
 {
-    public class NotRegisteredTestDocumentModel : IAzureModel
+    public class NotRegisteredTestDocumentModel : IModel
     {
         [SimpleField(IsKey = true, IsFilterable = true)]
         [SearchableField()]

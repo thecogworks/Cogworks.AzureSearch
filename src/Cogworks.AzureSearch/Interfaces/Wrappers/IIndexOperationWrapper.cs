@@ -10,8 +10,8 @@ namespace Cogworks.AzureSearch.Interfaces.Wrappers
 
         Task DeleteAsync(string indexName);
 
-        Task<SearchIndex> CreateOrUpdateAsync<TAzureModel>(string indexName) where TAzureModel : class, IAzureModel, new();
+        Task<SearchIndex> CreateOrUpdateAsync<TModel>(string indexName) where TModel : class, IModel, new();
 
-        Task<SearchIndex> CreateOrUpdateAsync<TAzureModel>(SearchIndex customIndexDefinition, bool overrideFields) where TAzureModel : class, IAzureModel, new();
+        Task<SearchIndex> CreateOrUpdateAsync<TModel>(SearchIndex customIndexDefinition, bool overrideFields) where TModel : class, IModel, new();
     }
 }

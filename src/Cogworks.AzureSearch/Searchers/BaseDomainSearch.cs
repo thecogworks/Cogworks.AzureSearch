@@ -5,18 +5,18 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Searchers
 {
-    public abstract class BaseDomainSearch<TAzureModel>
-        where TAzureModel : class, IAzureModel, new()
+    public abstract class BaseDomainSearch<TModel>
+        where TModel : class, IModel, new()
     {
-        protected IAzureSearch<TAzureModel> Searcher { get; }
+        protected ISearcher<TModel> Searcher { get; }
 
-        protected BaseDomainSearch(IAzureSearch<TAzureModel> search)
+        protected BaseDomainSearch(ISearcher<TModel> search)
             => Searcher = search;
 
-        public virtual SearchResult<TAzureModel> Search(string keyword, AzureSearchParameters azureSearchParameters)
-            => Searcher.Search(keyword, azureSearchParameters);
+        public virtual SearchResult<TModel> Search(string keyword, SearchParameters searchParameters)
+            => Searcher.Search(keyword, searchParameters);
 
-        public async Task<SearchResult<TAzureModel>> SearchAsync(string keyword, AzureSearchParameters azureSearchParameters)
-            => await Searcher.SearchAsync(keyword, azureSearchParameters);
+        public async Task<SearchResult<TModel>> SearchAsync(string keyword, SearchParameters searchParameters)
+            => await Searcher.SearchAsync(keyword, searchParameters);
     }
 }

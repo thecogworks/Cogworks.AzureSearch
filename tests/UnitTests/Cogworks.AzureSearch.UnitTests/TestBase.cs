@@ -19,25 +19,25 @@ namespace Cogworks.AzureSearch.UnitTests
 
         protected readonly IIndexOperationWrapper IndexOperationWrapper;
         protected readonly IDocumentOperationWrapper<TestDocumentModel> DocumentOperationWrapper;
-        protected readonly AzureIndexDefinition<TestDocumentModel> TestDocumentModelDefinition;
-        protected readonly IAzureSearch<TestDocumentModel> Search;
+        protected readonly IndexDefinition<TestDocumentModel> TestDocumentModelDefinition;
+        protected readonly ISearcher<TestDocumentModel> Search;
 
-        protected readonly IAzureDocumentOperation<TestDocumentModel> AzureDocumentOperationService;
-        protected readonly IAzureIndexOperation<TestDocumentModel> AzureIndexOperationService;
+        protected readonly IDocumentOperation<TestDocumentModel> DocumentOperation;
+        protected readonly IIndexOperation<TestDocumentModel> IndexOperation;
 
         protected TestBase()
         {
-            TestDocumentModelDefinition = Fixture.Create<AzureIndexDefinition<TestDocumentModel>>();
+            TestDocumentModelDefinition = Fixture.Create<IndexDefinition<TestDocumentModel>>();
 
             IndexOperationWrapper = Substitute.For<IIndexOperationWrapper>();
             DocumentOperationWrapper = Substitute.For<IDocumentOperationWrapper<TestDocumentModel>>();
 
-            Search = Substitute.For<IAzureSearch<TestDocumentModel>>();
+            Search = Substitute.For<ISearcher<TestDocumentModel>>();
 
-            AzureDocumentOperationService = new AzureDocumentOperation<TestDocumentModel>(
+            DocumentOperation = new DocumentOperation<TestDocumentModel>(
                 DocumentOperationWrapper);
 
-            AzureIndexOperationService = new AzureIndexOperation<TestDocumentModel>(
+            IndexOperation = new IndexOperation<TestDocumentModel>(
                 TestDocumentModelDefinition,
                 IndexOperationWrapper);
         }

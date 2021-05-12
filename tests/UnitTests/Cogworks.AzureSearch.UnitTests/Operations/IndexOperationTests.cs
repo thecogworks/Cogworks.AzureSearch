@@ -16,12 +16,12 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
 {
     public class IndexOperationTests : TestBase
     {
-        private readonly IAzureIndexOperation<TestDocumentModel> _azureIndexOperation;
+        private readonly IIndexOperation<TestDocumentModel> _indexOperation;
 
         public IndexOperationTests()
-            => _azureIndexOperation = new AzureSearchRepository<TestDocumentModel>(
-                AzureIndexOperationService,
-                AzureDocumentOperationService,
+            => _indexOperation = new Repository<TestDocumentModel>(
+                IndexOperation,
+                DocumentOperation,
                 Search);
 
         #region Exists Tests
@@ -34,7 +34,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 .Returns(true);
 
             // Act
-            var result = await _azureIndexOperation.IndexExistsAsync();
+            var result = await _indexOperation.IndexExistsAsync();
 
             // Assert
             Assert.True(result);
@@ -48,7 +48,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 .Returns(false);
 
             // Act
-            var result = await _azureIndexOperation.IndexExistsAsync();
+            var result = await _indexOperation.IndexExistsAsync();
 
             // Assert
             Assert.False(result);
@@ -64,7 +64,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                     Fixture.Create<Exception>()));
 
             // Assert
-            var domainException = await Assert.ThrowsAsync<IndexExistsException>(async () => await _azureIndexOperation.IndexExistsAsync());
+            var domainException = await Assert.ThrowsAsync<IndexExistsException>(async () => await _indexOperation.IndexExistsAsync());
 
             Assert.NotNull(domainException);
             Assert.Equal("Test Error", domainException.Message);
@@ -96,7 +96,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
         {
             // Act
 
-            var deleteResult = await Record.ExceptionAsync(async () => await _azureIndexOperation.IndexDeleteAsync());
+            var deleteResult = await Record.ExceptionAsync(async () => await _indexOperation.IndexDeleteAsync());
 
             // Assert
             Assert.Null(deleteResult);
@@ -122,7 +122,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                     Fixture.Create<Exception>()));
 
             // Act
-            var domainException = await Assert.ThrowsAsync<IndexDeleteException>(async () => await _azureIndexOperation.IndexDeleteAsync());
+            var domainException = await Assert.ThrowsAsync<IndexDeleteException>(async () => await _indexOperation.IndexDeleteAsync());
 
             // Assert
             Assert.NotNull(domainException);
@@ -144,7 +144,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 .Returns(createdOrUpdatedIndex);
 
             // Act
-            var indexResult = await Record.ExceptionAsync(async () => await _azureIndexOperation.IndexCreateOrUpdateAsync());
+            var indexResult = await Record.ExceptionAsync(async () => await _indexOperation.IndexCreateOrUpdateAsync());
 
             // Assert
             Assert.Null(indexResult);
@@ -157,15 +157,15 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
             // Arrange
             var index = new SearchIndex(Fixture.Create<string>());
 
-            var customModelDefinition = new AzureIndexDefinition<TestDocumentModel>(index);
+            var customModelDefinition = new IndexDefinition<TestDocumentModel>(index);
 
-            var customIndexOperationService = new AzureIndexOperation<TestDocumentModel>(
+            var customIndexOperationService = new IndexOperation<TestDocumentModel>(
                 customModelDefinition,
                 IndexOperationWrapper);
 
-            var azureIndexOperation = new AzureSearchRepository<TestDocumentModel>(
+            var azureIndexOperation = new Repository<TestDocumentModel>(
                 customIndexOperationService,
-                AzureDocumentOperationService,
+                DocumentOperation,
                 Search);
 
             // Act
@@ -185,7 +185,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                     Fixture.Create<Exception>()));
 
             // Act
-            var domainException = await Assert.ThrowsAsync<IndexCreateOrUpdateException>(async () => await _azureIndexOperation.IndexCreateOrUpdateAsync());
+            var domainException = await Assert.ThrowsAsync<IndexCreateOrUpdateException>(async () => await _indexOperation.IndexCreateOrUpdateAsync());
 
             // Assert
             Assert.NotNull(domainException);
@@ -199,15 +199,15 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
             // Arrange
             var index = new SearchIndex(Fixture.Create<string>());
 
-            var customModelDefinition = new AzureIndexDefinition<TestDocumentModel>(index);
+            var customModelDefinition = new IndexDefinition<TestDocumentModel>(index);
 
-            var customIndexOperationService = new AzureIndexOperation<TestDocumentModel>(
+            var customIndexOperationService = new IndexOperation<TestDocumentModel>(
                 customModelDefinition,
                 IndexOperationWrapper);
 
-            var azureIndexOperation = new AzureSearchRepository<TestDocumentModel>(
+            var azureIndexOperation = new Repository<TestDocumentModel>(
                 customIndexOperationService,
-                AzureDocumentOperationService,
+                DocumentOperation,
                 Search);
 
             _ = IndexOperationWrapper.CreateOrUpdateAsync<TestDocumentModel>(Arg.Any<SearchIndex>(), Arg.Any<bool>())
@@ -236,7 +236,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 .Returns(true);
 
              // Act
-            var indexResult = await Record.ExceptionAsync(async () => await _azureIndexOperation.IndexClearAsync());
+            var indexResult = await Record.ExceptionAsync(async () => await _indexOperation.IndexClearAsync());
 
             // Assert
             Assert.Null(indexResult);
@@ -250,7 +250,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                 .Returns(false);
 
             // Act
-            var indexResult = await Record.ExceptionAsync(async () => await _azureIndexOperation.IndexClearAsync());
+            var indexResult = await Record.ExceptionAsync(async () => await _indexOperation.IndexClearAsync());
 
             // Assert
             Assert.Null(indexResult);
@@ -269,7 +269,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                     Fixture.Create<Exception>()));
 
             // Act
-            var domainException = await Record.ExceptionAsync(async () => await _azureIndexOperation.IndexClearAsync());
+            var domainException = await Record.ExceptionAsync(async () => await _indexOperation.IndexClearAsync());
 
             // Assert
             Assert.NotNull(domainException);
@@ -289,7 +289,7 @@ namespace Cogworks.AzureSearch.UnitTests.Operations
                     Fixture.Create<Exception>()));
 
             // Act
-            domainException = await Record.ExceptionAsync(async () => await _azureIndexOperation.IndexClearAsync());
+            domainException = await Record.ExceptionAsync(async () => await _indexOperation.IndexClearAsync());
 
             // Assert
             Assert.NotNull(domainException);

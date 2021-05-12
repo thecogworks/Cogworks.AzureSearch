@@ -1,6 +1,5 @@
-﻿using Autofac;
+﻿using AutofacContainerBuilder = Autofac.ContainerBuilder;
 using Cogworks.AzureSearch.Autofac.Extensions;
-using Cogworks.AzureSearch.Builder;
 using Cogworks.AzureSearch.Interfaces.Indexes;
 using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Operations;
@@ -9,18 +8,20 @@ using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Models;
 using NSubstitute;
 using System;
+using Autofac;
 using Cogworks.AzureSearch.AutofacIoc.UnitTests.Models;
 using Cogworks.AzureSearch.AutofacIoc.UnitTests.Searchers;
 using Xunit;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
+using Cogworks.AzureSearch.Interfaces.Builder;
 
 namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
 {
     public class AutofacIocExtensionTests
     {
-        private readonly IAzureSearchBuilder _azureSearchBuilder;
-        private readonly ContainerBuilder _containerBuilder;
+        private readonly IContainerBuilder _containerBuilder;
+        private readonly AutofacContainerBuilder _autofacContainerBuilder;
 
         private const string FirstDocumentIndexName = "first-test-document";
         private const string SecondDocumentIndexName = "second-test-document";
@@ -28,9 +29,9 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
 
         public AutofacIocExtensionTests()
         {
-            _containerBuilder = new ContainerBuilder();
+            _autofacContainerBuilder = new AutofacContainerBuilder();
 
-            _azureSearchBuilder = _containerBuilder.RegisterAzureSearch()
+            _containerBuilder = _autofacContainerBuilder.RegisterAzureSearch()
                 .RegisterClientOptions("test", "test", "https://localhost")
                 .RegisterIndexOptions(false, false)
                 .RegisterIndexDefinitions<FirstTestDocumentModel>(FirstDocumentIndexName)
@@ -39,30 +40,30 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
         }
 
         [Theory]
-        [InlineData(typeof(IAzureSearchRepository<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndexOperation<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureDocumentOperation<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndex<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureInitializer<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearchRepository<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndexOperation<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureDocumentOperation<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndex<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureInitializer<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearchRepository<ThirdTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndexOperation<ThirdTestDocumentModel>))]
-        [InlineData(typeof(IAzureDocumentOperation<ThirdTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<ThirdTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndex<ThirdTestDocumentModel>))]
-        [InlineData(typeof(IAzureInitializer<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IRepository<FirstTestDocumentModel>))]
+        [InlineData(typeof(IIndexOperation<FirstTestDocumentModel>))]
+        [InlineData(typeof(IDocumentOperation<FirstTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<FirstTestDocumentModel>))]
+        [InlineData(typeof(IIndex<FirstTestDocumentModel>))]
+        [InlineData(typeof(IInitializer<FirstTestDocumentModel>))]
+        [InlineData(typeof(IRepository<SecondTestDocumentModel>))]
+        [InlineData(typeof(IIndexOperation<SecondTestDocumentModel>))]
+        [InlineData(typeof(IDocumentOperation<SecondTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<SecondTestDocumentModel>))]
+        [InlineData(typeof(IIndex<SecondTestDocumentModel>))]
+        [InlineData(typeof(IInitializer<SecondTestDocumentModel>))]
+        [InlineData(typeof(IRepository<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IIndexOperation<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IDocumentOperation<ThirdTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IIndex<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IInitializer<ThirdTestDocumentModel>))]
         public void Should_ReturnDedicatedRepositoryInstance(Type desiredObjectType)
         {
             // Arrange
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var scope = _containerBuilder.Build().BeginLifetimeScope().BeginLifetimeScope())
+            using (var scope = _autofacContainerBuilder.Build().BeginLifetimeScope().BeginLifetimeScope())
             {
                 // Act
                 var instance = scope.Resolve(desiredObjectType);
@@ -76,24 +77,24 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
         }
 
         [Theory]
-        [InlineData(typeof(IAzureSearchRepository<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndexOperation<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureDocumentOperation<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndex<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureInitializer<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<FirstTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearchRepository<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndexOperation<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureDocumentOperation<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndex<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureInitializer<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<SecondTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearchRepository<ThirdTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndexOperation<ThirdTestDocumentModel>))]
-        [InlineData(typeof(IAzureDocumentOperation<ThirdTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndex<ThirdTestDocumentModel>))]
-        [InlineData(typeof(IAzureInitializer<ThirdTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IRepository<FirstTestDocumentModel>))]
+        [InlineData(typeof(IIndexOperation<FirstTestDocumentModel>))]
+        [InlineData(typeof(IDocumentOperation<FirstTestDocumentModel>))]
+        [InlineData(typeof(IIndex<FirstTestDocumentModel>))]
+        [InlineData(typeof(IInitializer<FirstTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<FirstTestDocumentModel>))]
+        [InlineData(typeof(IRepository<SecondTestDocumentModel>))]
+        [InlineData(typeof(IIndexOperation<SecondTestDocumentModel>))]
+        [InlineData(typeof(IDocumentOperation<SecondTestDocumentModel>))]
+        [InlineData(typeof(IIndex<SecondTestDocumentModel>))]
+        [InlineData(typeof(IInitializer<SecondTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<SecondTestDocumentModel>))]
+        [InlineData(typeof(IRepository<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IIndexOperation<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IDocumentOperation<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IIndex<ThirdTestDocumentModel>))]
+        [InlineData(typeof(IInitializer<ThirdTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<ThirdTestDocumentModel>))]
         public void Should_Not_ThrowException_When_IndexRegistered(Type desiredObjectType)
         {
             // Arrange
@@ -105,12 +106,12 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
         }
 
         [Theory]
-        [InlineData(typeof(IAzureSearchRepository<NotRegisteredTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndexOperation<NotRegisteredTestDocumentModel>))]
-        [InlineData(typeof(IAzureDocumentOperation<NotRegisteredTestDocumentModel>))]
-        [InlineData(typeof(IAzureIndex<NotRegisteredTestDocumentModel>))]
-        [InlineData(typeof(IAzureInitializer<NotRegisteredTestDocumentModel>))]
-        [InlineData(typeof(IAzureSearch<NotRegisteredTestDocumentModel>))]
+        [InlineData(typeof(IRepository<NotRegisteredTestDocumentModel>))]
+        [InlineData(typeof(IIndexOperation<NotRegisteredTestDocumentModel>))]
+        [InlineData(typeof(IDocumentOperation<NotRegisteredTestDocumentModel>))]
+        [InlineData(typeof(IIndex<NotRegisteredTestDocumentModel>))]
+        [InlineData(typeof(IInitializer<NotRegisteredTestDocumentModel>))]
+        [InlineData(typeof(ISearcher<NotRegisteredTestDocumentModel>))]
         public void Should_ThrowException_When_IndexNotRegistered(Type desiredObjectType)
         {
             //            NotRegisteredTestDocumentModel
@@ -120,7 +121,7 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
             var exceptionRecord = Record.Exception(() =>
             {
                 // ReSharper disable once PossibleNullReferenceException
-                using (var scope = _containerBuilder.Build().BeginLifetimeScope())
+                using (var scope = _autofacContainerBuilder.Build().BeginLifetimeScope())
                 {
                     // Act
                     _ = scope.Resolve(desiredObjectType);
@@ -146,10 +147,10 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
         public void Should_ReturnCustomSearchService()
         {
             // Arrange
-            _azureSearchBuilder.RegisterDomainSearcher<CustomTestSearch, CustomTestSearch, FirstTestDocumentModel>();
+            _containerBuilder.RegisterDomainSearcher<CustomTestSearch, CustomTestSearch, FirstTestDocumentModel>();
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var scope = _containerBuilder.Build().BeginLifetimeScope())
+            using (var scope = _autofacContainerBuilder.Build().BeginLifetimeScope())
             {
 
                 var customTestSearch = scope.Resolve<CustomTestSearch>();
@@ -167,10 +168,10 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
             // Arrange
             var mockedCustomTestSearch = Substitute.For<ICustomTestSearch>();
 
-            _azureSearchBuilder.RegisterDomainSearcher<CustomTestSearch, ICustomTestSearch, FirstTestDocumentModel>(mockedCustomTestSearch);
+            _containerBuilder.RegisterDomainSearcher<CustomTestSearch, ICustomTestSearch, FirstTestDocumentModel>(mockedCustomTestSearch);
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var scope = _containerBuilder.Build().BeginLifetimeScope())
+            using (var scope = _autofacContainerBuilder.Build().BeginLifetimeScope())
             {
                 var customTestSearch = scope.Resolve<ICustomTestSearch>();
 
@@ -205,11 +206,11 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
             // Act
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var scope = _containerBuilder.Build().BeginLifetimeScope())
+            using (var scope = _autofacContainerBuilder.Build().BeginLifetimeScope())
             {
-                var firstTestDocumentIndexDefinition = scope.Resolve<AzureIndexDefinition<FirstTestDocumentModel>>();
-                var secondTestDocumentIndexDefinition = scope.Resolve<AzureIndexDefinition<SecondTestDocumentModel>>();
-                var thirdTestDocumentIndexDefinition = scope.Resolve<AzureIndexDefinition<ThirdTestDocumentModel>>();
+                var firstTestDocumentIndexDefinition = scope.Resolve<IndexDefinition<FirstTestDocumentModel>>();
+                var secondTestDocumentIndexDefinition = scope.Resolve<IndexDefinition<SecondTestDocumentModel>>();
+                var thirdTestDocumentIndexDefinition = scope.Resolve<IndexDefinition<ThirdTestDocumentModel>>();
 
                 // Assert
                 Assert.NotNull(firstTestDocumentIndexDefinition);

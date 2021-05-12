@@ -6,22 +6,22 @@ namespace Cogworks.AzureSearch.Mappers
 {
     public static class SearchResultMapper
     {
-        public static SearchResult<TAzureModel> Map<TAzureModel>(
-            Azure.Search.Documents.Models.SearchResults<TAzureModel> results,
+        public static SearchResult<TModel> Map<TModel>(
+            Azure.Search.Documents.Models.SearchResults<TModel> results,
             int skip,
-            int take) where TAzureModel : class, IAzureModel, new()
+            int take) where TModel : class, IModel, new()
         {
             var resultsCount = results.TotalCount ?? 0;
 
             var searchedDocuments = results.GetResults()
-                .Select(resultDocument => new SearchResultItem<TAzureModel>(
+                .Select(resultDocument => new SearchResultItem<TModel>(
                     resultDocument.Document,
                     resultDocument.Highlights,
                     resultDocument.Score ?? default
                 ))
                 .ToArray();
 
-            return new SearchResult<TAzureModel>()
+            return new SearchResult<TModel>()
             {
                 HasMoreItems = skip + take < resultsCount,
                 TotalCount = resultsCount,

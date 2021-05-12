@@ -7,17 +7,17 @@ using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.Operations
 {
-    public class AzureIndexOperation<TAzureModel> : IAzureIndexOperation<TAzureModel>
-        where TAzureModel : class, IAzureModel, new()
+    public class IndexOperation<TModel> : IIndexOperation<TModel>
+        where TModel : class, IModel, new()
     {
-        private readonly AzureIndexDefinition<TAzureModel> _azureIndexDefinition;
+        private readonly IndexDefinition<TModel> _indexDefinition;
         private readonly IIndexOperationWrapper _indexOperationWrapper;
 
-        public AzureIndexOperation(
-            AzureIndexDefinition<TAzureModel> azureIndexDefinition,
+        public IndexOperation(
+            IndexDefinition<TModel> indexDefinition,
             IIndexOperationWrapper indexOperationWrapper)
         {
-            _azureIndexDefinition = azureIndexDefinition;
+            _indexDefinition = indexDefinition;
             _indexOperationWrapper = indexOperationWrapper;
         }
 
@@ -25,7 +25,7 @@ namespace Cogworks.AzureSearch.Operations
         {
             try
             {
-                return await _indexOperationWrapper.ExistsAsync(_azureIndexDefinition.IndexName);
+                return await _indexOperationWrapper.ExistsAsync(_indexDefinition.IndexName);
             }
             catch (Exception exception)
             {
@@ -37,7 +37,7 @@ namespace Cogworks.AzureSearch.Operations
         {
             try
             {
-                await _indexOperationWrapper.DeleteAsync(_azureIndexDefinition.IndexName);
+                await _indexOperationWrapper.DeleteAsync(_indexDefinition.IndexName);
             }
             catch (Exception exception)
             {
@@ -50,9 +50,9 @@ namespace Cogworks.AzureSearch.Operations
             try
             {
 
-                _ = _azureIndexDefinition.CustomIndexDefinition != null
-                    ? await _indexOperationWrapper.CreateOrUpdateAsync<TAzureModel>(_azureIndexDefinition.CustomIndexDefinition, true)
-                    : await _indexOperationWrapper.CreateOrUpdateAsync<TAzureModel>(_azureIndexDefinition.IndexName);
+                _ = _indexDefinition.CustomIndexDefinition != null
+                    ? await _indexOperationWrapper.CreateOrUpdateAsync<TModel>(_indexDefinition.CustomIndexDefinition, true)
+                    : await _indexOperationWrapper.CreateOrUpdateAsync<TModel>(_indexDefinition.IndexName);
 
             }
             catch (Exception exception)

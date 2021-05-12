@@ -11,7 +11,7 @@ namespace Cogworks.AzureSearch.MicrosoftIoc.UnitTests.Searchers
 
     public class CustomTestSearch : BaseDomainSearch<FirstTestDocumentModel>, ICustomTestSearch
     {
-        public CustomTestSearch(IAzureSearch<FirstTestDocumentModel> search) : base(search)
+        public CustomTestSearch(ISearcher<FirstTestDocumentModel> search) : base(search)
         {
         }
 
@@ -21,7 +21,7 @@ namespace Cogworks.AzureSearch.MicrosoftIoc.UnitTests.Searchers
             // ...
             // End of custom filters
 
-            //  _ = base.Search("test", new AzureSearchParameters());
+            //  _ = base.Search("test", new SearchParameters());
         }
     }
 }

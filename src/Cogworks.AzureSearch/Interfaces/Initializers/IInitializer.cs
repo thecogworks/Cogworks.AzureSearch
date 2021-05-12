@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Interfaces.Initializers
 {
-    public interface IAzureInitializer<in TAzureModel> where TAzureModel : class, IAzureModel, new()
+    public interface IInitializer<in TModel> where TModel : class, IModel, new()
     {
         Task InitializeAsync();
     }

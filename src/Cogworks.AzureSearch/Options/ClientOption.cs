@@ -4,7 +4,7 @@ using Azure.Search.Documents;
 
 namespace Cogworks.AzureSearch.Options
 {
-    public class AzureSearchClientOption
+    public class ClientOption
     {
         public string ServiceName { get; }
 
@@ -14,7 +14,7 @@ namespace Cogworks.AzureSearch.Options
 
         public SearchClientOptions ClientOptions { get; }
 
-        public AzureSearchClientOption(string serviceName, string credentials, string serviceUrlEndpoint)
+        public ClientOption(string serviceName, string credentials, string serviceUrlEndpoint)
         {
             ServiceName = serviceName;
             Credentials = credentials;
