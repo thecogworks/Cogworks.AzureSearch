@@ -6,7 +6,7 @@ using Cogworks.AzureSearch.Models;
 
 namespace Cogworks.AzureSearch.Mappers
 {
-    public static class AzureSearchParametersMapper
+    public static class ParametersMapper
     {
         internal static SearchOptions Map(AzureSearchParameters azureSearchParameters)
         {

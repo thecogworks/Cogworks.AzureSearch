@@ -19,7 +19,7 @@ namespace Cogworks.AzureSearch.Searchers
         public SearchResult<TAzureModel> Search(string keyword, AzureSearchParameters azureSearchParameters)
         {
             var searchText = GetSearchText(keyword);
-            var parameters = AzureSearchParametersMapper.Map(azureSearchParameters);
+            var parameters = ParametersMapper.Map(azureSearchParameters);
             var results = _documentOperationWrapper.Search($"{searchText}", parameters);
 
             return SearchResultMapper.Map(
@@ -31,7 +31,7 @@ namespace Cogworks.AzureSearch.Searchers
         public async Task<SearchResult<TAzureModel>> SearchAsync(string keyword, AzureSearchParameters azureSearchParameters)
         {
             var searchText = GetSearchText(keyword);
-            var parameters = AzureSearchParametersMapper.Map(azureSearchParameters);
+            var parameters = ParametersMapper.Map(azureSearchParameters);
             var results = await _documentOperationWrapper.SearchAsync(searchText, parameters);
 
             return SearchResultMapper.Map(
