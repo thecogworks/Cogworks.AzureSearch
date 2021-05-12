@@ -1,5 +1,4 @@
-﻿using Cogworks.AzureSearch.Builder;
-using Cogworks.AzureSearch.Interfaces.Indexes;
+﻿using Cogworks.AzureSearch.Interfaces.Indexes;
 using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Interfaces.Repositories;
@@ -12,13 +11,14 @@ using LightInject;
 using NSubstitute;
 using System;
 using Azure.Search.Documents.Indexes.Models;
+using Cogworks.AzureSearch.Interfaces.Builder;
 using Xunit;
 
 namespace Cogworks.AzureSearch.LightInject.UnitTests
 {
     public class LightInjectIocExtensionTests
     {
-        private readonly IAzureSearchBuilder _azureSearchBuilder;
+        private readonly IContainerBuilder _containerBuilder;
         private readonly IServiceContainer _container;
 
         private const string FirstDocumentIndexName = "first-test-document";
@@ -29,7 +29,7 @@ namespace Cogworks.AzureSearch.LightInject.UnitTests
         {
             _container = new ServiceContainer();
 
-            _azureSearchBuilder = _container.RegisterAzureSearch()
+            _containerBuilder = _container.RegisterAzureSearch()
                 .RegisterClientOptions("test", "test", "https://localhost")
                 .RegisterIndexOptions(false, false)
                 .RegisterIndexDefinitions<FirstTestDocumentModel>(FirstDocumentIndexName)
@@ -143,7 +143,7 @@ namespace Cogworks.AzureSearch.LightInject.UnitTests
         public void Should_ReturnCustomSearchService()
         {
             // Arrange
-            _azureSearchBuilder.RegisterDomainSearcher<CustomTestSearch, CustomTestSearch, FirstTestDocumentModel>();
+            _containerBuilder.RegisterDomainSearcher<CustomTestSearch, CustomTestSearch, FirstTestDocumentModel>();
 
             // ReSharper disable once PossibleNullReferenceException
             using (var scope = _container.BeginScope())
@@ -161,7 +161,7 @@ namespace Cogworks.AzureSearch.LightInject.UnitTests
             // Arrange
             var mockedCustomTestSearch = Substitute.For<ICustomTestSearch>();
 
-            _azureSearchBuilder.RegisterDomainSearcher<CustomTestSearch, ICustomTestSearch, FirstTestDocumentModel>(mockedCustomTestSearch);
+            _containerBuilder.RegisterDomainSearcher<CustomTestSearch, ICustomTestSearch, FirstTestDocumentModel>(mockedCustomTestSearch);
 
             // ReSharper disable once PossibleNullReferenceException
             using (var scope = _container.BeginScope())

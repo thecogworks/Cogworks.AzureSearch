@@ -1,6 +1,5 @@
-﻿using Autofac;
+﻿using AutofacContainerBuilder = Autofac.ContainerBuilder;
 using Cogworks.AzureSearch.Autofac.Extensions;
-using Cogworks.AzureSearch.Builder;
 using Cogworks.AzureSearch.Interfaces.Indexes;
 using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Operations;
@@ -9,18 +8,20 @@ using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Models;
 using NSubstitute;
 using System;
+using Autofac;
 using Cogworks.AzureSearch.AutofacIoc.UnitTests.Models;
 using Cogworks.AzureSearch.AutofacIoc.UnitTests.Searchers;
 using Xunit;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
+using Cogworks.AzureSearch.Interfaces.Builder;
 
 namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
 {
     public class AutofacIocExtensionTests
     {
-        private readonly IAzureSearchBuilder _azureSearchBuilder;
-        private readonly ContainerBuilder _containerBuilder;
+        private readonly IContainerBuilder _containerBuilder;
+        private readonly AutofacContainerBuilder _autofacContainerBuilder;
 
         private const string FirstDocumentIndexName = "first-test-document";
         private const string SecondDocumentIndexName = "second-test-document";
@@ -28,9 +29,9 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
 
         public AutofacIocExtensionTests()
         {
-            _containerBuilder = new ContainerBuilder();
+            _autofacContainerBuilder = new AutofacContainerBuilder();
 
-            _azureSearchBuilder = _containerBuilder.RegisterAzureSearch()
+            _containerBuilder = _autofacContainerBuilder.RegisterAzureSearch()
                 .RegisterClientOptions("test", "test", "https://localhost")
                 .RegisterIndexOptions(false, false)
                 .RegisterIndexDefinitions<FirstTestDocumentModel>(FirstDocumentIndexName)
@@ -62,7 +63,7 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
             // Arrange
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var scope = _containerBuilder.Build().BeginLifetimeScope().BeginLifetimeScope())
+            using (var scope = _autofacContainerBuilder.Build().BeginLifetimeScope().BeginLifetimeScope())
             {
                 // Act
                 var instance = scope.Resolve(desiredObjectType);
@@ -120,7 +121,7 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
             var exceptionRecord = Record.Exception(() =>
             {
                 // ReSharper disable once PossibleNullReferenceException
-                using (var scope = _containerBuilder.Build().BeginLifetimeScope())
+                using (var scope = _autofacContainerBuilder.Build().BeginLifetimeScope())
                 {
                     // Act
                     _ = scope.Resolve(desiredObjectType);
@@ -146,10 +147,10 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
         public void Should_ReturnCustomSearchService()
         {
             // Arrange
-            _azureSearchBuilder.RegisterDomainSearcher<CustomTestSearch, CustomTestSearch, FirstTestDocumentModel>();
+            _containerBuilder.RegisterDomainSearcher<CustomTestSearch, CustomTestSearch, FirstTestDocumentModel>();
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var scope = _containerBuilder.Build().BeginLifetimeScope())
+            using (var scope = _autofacContainerBuilder.Build().BeginLifetimeScope())
             {
 
                 var customTestSearch = scope.Resolve<CustomTestSearch>();
@@ -167,10 +168,10 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
             // Arrange
             var mockedCustomTestSearch = Substitute.For<ICustomTestSearch>();
 
-            _azureSearchBuilder.RegisterDomainSearcher<CustomTestSearch, ICustomTestSearch, FirstTestDocumentModel>(mockedCustomTestSearch);
+            _containerBuilder.RegisterDomainSearcher<CustomTestSearch, ICustomTestSearch, FirstTestDocumentModel>(mockedCustomTestSearch);
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var scope = _containerBuilder.Build().BeginLifetimeScope())
+            using (var scope = _autofacContainerBuilder.Build().BeginLifetimeScope())
             {
                 var customTestSearch = scope.Resolve<ICustomTestSearch>();
 
@@ -205,7 +206,7 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
             // Act
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var scope = _containerBuilder.Build().BeginLifetimeScope())
+            using (var scope = _autofacContainerBuilder.Build().BeginLifetimeScope())
             {
                 var firstTestDocumentIndexDefinition = scope.Resolve<IndexDefinition<FirstTestDocumentModel>>();
                 var secondTestDocumentIndexDefinition = scope.Resolve<IndexDefinition<SecondTestDocumentModel>>();

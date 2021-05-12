@@ -1,7 +1,7 @@
 ﻿using Azure.Search.Documents.Indexes.Models;
-using Cogworks.AzureSearch.Builder;
 using Cogworks.AzureSearch.Indexes;
 using Cogworks.AzureSearch.Initializers;
+using Cogworks.AzureSearch.Interfaces.Builder;
 using Cogworks.AzureSearch.Interfaces.Indexes;
 using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Operations;
@@ -19,14 +19,14 @@ using Umbraco.Core.Composing;
 
 namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
 {
-    public class AzureSearchBuilder : IAzureSearchBuilder
+    public class ContainerBuilder : IContainerBuilder
     {
         private readonly IRegister _composingRegister;
 
-        public AzureSearchBuilder(IRegister composingRegister)
+        public ContainerBuilder(IRegister composingRegister)
             => _composingRegister = composingRegister;
 
-        internal AzureSearchBuilder RegisterInitializers()
+        internal ContainerBuilder RegisterInitializers()
         {
             _composingRegister.Register(
                 typeof(IInitializer<>),
@@ -35,7 +35,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterIndexOptions(bool recreate, bool recreateOnUpdateFailure = false)
+        public IContainerBuilder RegisterIndexOptions(bool recreate, bool recreateOnUpdateFailure = false)
         {
             _composingRegister.Register(
                 _ => new IndexOption(recreate, recreateOnUpdateFailure),
@@ -44,7 +44,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl)
+        public IContainerBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl)
         {
             _composingRegister.Register(
                 _ => new ClientOption(
@@ -56,7 +56,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(string indexName)
+        public IContainerBuilder RegisterIndexDefinitions<TDocument>(string indexName)
             where TDocument : class, IModel, new()
         {
             _composingRegister.Register(
@@ -66,7 +66,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterIndexDefinitions<TDocument>(SearchIndex customIndex)
+        public IContainerBuilder RegisterIndexDefinitions<TDocument>(SearchIndex customIndex)
             where TDocument : class, IModel, new()
         {
             _composingRegister.Register(
@@ -76,7 +76,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-        internal AzureSearchBuilder RegisterIndexes()
+        internal ContainerBuilder RegisterIndexes()
         {
             _composingRegister.Register(
                 typeof(IIndex<>),
@@ -85,7 +85,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-        internal AzureSearchBuilder RegisterWrappers()
+        internal ContainerBuilder RegisterWrappers()
         {
             _composingRegister.Register(
                 typeof(IDocumentOperationWrapper<>),
@@ -96,7 +96,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-        internal AzureSearchBuilder RegisterRepositories()
+        internal ContainerBuilder RegisterRepositories()
         {
             _composingRegister.Register(
                 typeof(IRepository<>),
@@ -105,7 +105,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-        internal AzureSearchBuilder RegisterSearchers()
+        internal ContainerBuilder RegisterSearchers()
         {
             _composingRegister.Register(
                 typeof(ISearcher<>),
@@ -114,7 +114,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-        internal AzureSearchBuilder RegisterOperations()
+        internal ContainerBuilder RegisterOperations()
         {
             _composingRegister.Register(
                 typeof(IDocumentOperation<>),
@@ -127,7 +127,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
+        public IContainerBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>()
             where TDocument : class, IModel, new()
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
@@ -137,7 +137,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             return this;
         }
 
-        public IAzureSearchBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(TSearcherType instance)
+        public IContainerBuilder RegisterDomainSearcher<TSearcher, TSearcherType, TDocument>(TSearcherType instance)
             where TDocument : class, IModel, new()
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class

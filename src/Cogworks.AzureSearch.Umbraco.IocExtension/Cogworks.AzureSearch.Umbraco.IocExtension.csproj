@@ -179,7 +179,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\AzureSearchBuilder.cs" />
+    <Compile Include="Builders\ContainerBuilder.cs" />
     <Compile Include="Extensions\RegisterExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
