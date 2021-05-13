@@ -1,7 +1,33 @@
 <Project>
-  <PropertyGroup>
-    <NoWarn>NU1603</NoWarn>
-    <NoWarn>NU5128</NoWarn>
-    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+
+<PropertyGroup>
+    <Company>Cogworks</Company>
+    <Authors>$(Company)</Authors>
+    <Copyright>Copyright (c) $(Company) $([System.DateTime]::Now.Year)</Copyright>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <NoWarn>1591;1701;1702;8032;NU1701;AD0001</NoWarn>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Deterministic>true</Deterministic>
+    <BuildInParallel>false</BuildInParallel>
+  </PropertyGroup>
+
+  <!-- Additional files which are consumed by all projects -->
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)linting\stylecop.json" />
+  </ItemGroup>
+
+  <PropertyGroup>
+      <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)linting\codeanalysis.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)linting\stylecop.json" Visible="false" />
+    <None Include="$(MSBuildThisFileDirectory)linting\codeanalysis.ruleset" Visible="false" />
+    <None Include="$(MSBuildThisFileDirectory)linting\.editorconfig" Visible="false" />
+    <None Include="$(MSBuildThisFileDirectory).editorconfig" Visible="false" />
+  </ItemGroup>
+
 </Project>

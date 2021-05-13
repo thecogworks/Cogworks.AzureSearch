@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <!-- Package versions for package references across all projects -->
+  <ItemGroup>
+    <PackageReference Update="StyleCop.Analyzers" PrivateAssets="All" Version="1.1.118" />
+    <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" PrivateAssets="All" Version="2.9.8" />
+    <PackageReference Update="Microsoft.CodeQuality.Analyzers" PrivateAssets="All" Version="2.9.8" />
+    <PackageReference Update="Microsoft.NetCore.Analyzers" PrivateAssets="All" Version="2.9.8" />
+    <PackageReference Update="Microsoft.NetFramework.Analyzers" PrivateAssets="All" Version="2.9.8" />
+    <PackageReference Update="Microsoft.CodeAnalysis.VersionCheckAnalyzer" PrivateAssets="All" Version="2.9.8" />
+    <PackageReference Update="SmartanAlyzers.ExceptionAnalyzer" PrivateAssets="All" Version="1.0.10" />
+  </ItemGroup>
+
+</Project>

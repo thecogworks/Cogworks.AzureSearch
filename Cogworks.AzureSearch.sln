@@ -29,6 +29,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.Umbraco.IocExtension", "src\Cogworks.AzureSearch.Umbraco.IocExtension\Cogworks.AzureSearch.Umbraco.IocExtension.csproj", "{E1317854-28A7-491E-97B1-FBEEEF7B5982}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9D0073AC-CE06-400A-B362-297CB9A332BE}"
+	ProjectSection(SolutionItems) = preProject
+		linting\.editorconfig = linting\.editorconfig
+		CHANGELOG.md = CHANGELOG.md
+		linting\codeanalysis.ruleset = linting\codeanalysis.ruleset
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		LICENSE = LICENSE
+		README.md = README.md
+		linting\stylecop.json = linting\stylecop.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

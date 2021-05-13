@@ -45,7 +45,9 @@ namespace Cogworks.AzureSearch.Initializers
             }
             catch (Exception exception)
             {
-                throw new IndexInitializerException(exception.Message, exception.InnerException);
+                var domainException = new IndexInitializerException(exception.Message, exception.InnerException);
+
+                throw domainException;
             }
         }
     }
