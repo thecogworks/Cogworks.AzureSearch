@@ -1,0 +1,85 @@
+name: Changelog generator
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  changelog_generator:
+    name: Changelog Generator
+    runs-on: ubuntu-latest
+    env:
+      branch: master
+      CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Set local user
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+
+    - name: Get tag branch
+      run: |
+        branch_check=$(git branch -r --contains $(git rev-parse $GITHUB_REF~0) | sed 's/remotes\/origin\///' | sed 's/origin\///' | sed 's/develop//' | sed 's/* //' | sed -r '/^\s*$/d' | head -1)
+
+        echo $branch_check
+
+        if [[ $branch_check =~ ^(release|master)$ ]]; then
+          echo "Not correct branch. Allowed branches release and master."
+          exit 1
+        fi
+
+        echo "branch=$branch_check" >> $GITHUB_ENV
+
+    - uses: actions/checkout@v2
+      name: Checkout tag branch
+      with:
+        fetch-depth: 0
+        ref: ${{ env.branch }}
+
+    - name: Get tag
+      run: |
+        echo "Describe: $(git describe)"
+        echo "Rev parse: $(git rev-parse $GITHUB_REF~0)"
+
+        tag_check=$(git describe --exact-match `git rev-parse $GITHUB_REF~0`)
+        echo "tag=$tag_check" >> $GITHUB_ENV
+
+    - name: Install dependencies
+      run: |
+        rm -rf node_modules
+        npm install
+
+    - name: Generate changelog and update npm version
+      run: |
+        npm run release
+
+    - name: Remove tag
+      run: |
+        git tag -d ${{ env.tag }}
+
+    - name: Updating tags
+      run: |
+        git pull "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" master
+        git tag -a ${{ env.tag }} -m "${{ env.tag }}"
+        git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tag -f
+
+    - name: Pushing latest changes to master
+      run: |
+        git pull "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" master
+        git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" ${{ env.branch }}:master
+
+    - name: Checkout master
+      run: |
+        git checkout master
+        git pull "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" master
+
+    - name: Generate GitHub release notes
+      run: |
+        npm run github-release
+      continue-on-error: true

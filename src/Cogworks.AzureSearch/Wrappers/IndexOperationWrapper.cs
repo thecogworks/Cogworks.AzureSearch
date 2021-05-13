@@ -1,48 +1,56 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Options;
-using Microsoft.Azure.Search;
-using Microsoft.Azure.Search.Models;
-using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Wrappers
 {
     internal class IndexOperationWrapper : IIndexOperationWrapper
     {
-        private readonly IIndexesOperations _indexOperation;
+        private readonly SearchIndexClient _searchIndexClient;
 
-        public IndexOperationWrapper(AzureSearchClientOption azureSearchClientOption)
-            => _indexOperation = azureSearchClientOption.GetSearchServiceClient().Indexes;
-
-        public async Task<bool> ExistsAsync(string indexName)
-            => await _indexOperation.ExistsAsync(indexName);
-
-        public async Task DeleteAsync(string indexName)
-            => await _indexOperation.DeleteAsync(indexName);
-
-        public async Task<Index> CreateOrUpdateAsync<TAzureModel>(string indexName) where TAzureModel : class, IAzureModel, new()
+        public IndexOperationWrapper(ClientOption clientOption)
         {
-            var indexDefinition = new Index
-            {
-                Name = indexName,
-                Fields = FieldBuilder.BuildForType<TAzureModel>(),
+            var azureKeyCredential = new AzureKeyCredential(clientOption.Credentials);
 
-            };
-
-            return await _indexOperation.CreateOrUpdateAsync(indexDefinition);
+            _searchIndexClient = new SearchIndexClient(
+                endpoint: new Uri(clientOption.ServiceUrlEndpoint),
+                credential: azureKeyCredential);
         }
 
-        public async Task<Index> CreateOrUpdateAsync<TAzureModel>(Index customIndexDefinition, bool overrideFields = true) where TAzureModel : class, IAzureModel, new()
+        public async Task<bool> ExistsAsync(string indexName)
+            => (await _searchIndexClient.GetIndexAsync(indexName)).Value != null;
+
+        public async Task DeleteAsync(string indexName)
+            => await _searchIndexClient.DeleteIndexAsync(indexName);
+
+        public async Task<SearchIndex> CreateOrUpdateAsync<TModel>(string indexName) where TModel : class, IModel, new()
+        {
+            var fieldBuilder = new FieldBuilder();
+            var searchFields = fieldBuilder.Build(typeof(TModel));
+
+            var definition = new SearchIndex(
+                indexName,
+                searchFields);
+
+            return await _searchIndexClient.CreateOrUpdateIndexAsync(definition);
+        }
+
+        public async Task<SearchIndex> CreateOrUpdateAsync<TModel>(SearchIndex customIndexDefinition, bool overrideFields) where TModel : class, IModel, new()
         {
             if (overrideFields)
             {
-                customIndexDefinition.Fields = FieldBuilder.BuildForType<TAzureModel>();
+                var fieldBuilder = new FieldBuilder();
+                var searchFields = fieldBuilder.Build(typeof(TModel));
+
+                customIndexDefinition.Fields = searchFields;
             }
 
-            return await _indexOperation.CreateOrUpdateAsync(customIndexDefinition);
+            return await _searchIndexClient.CreateOrUpdateIndexAsync(customIndexDefinition);
         }
     }
 }

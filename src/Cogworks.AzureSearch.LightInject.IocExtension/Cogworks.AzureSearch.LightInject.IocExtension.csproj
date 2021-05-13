@@ -13,10 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cogworks.AzureSearch\Cogworks.AzureSearch.csproj" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.Umbraco.IocExtension" />
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Cogworks.AzureSearch.Umbraco.IocExtension" />
+    <ProjectReference Include="..\Cogworks.AzureSearch\Cogworks.AzureSearch.csproj" />
   </ItemGroup>
 </Project>

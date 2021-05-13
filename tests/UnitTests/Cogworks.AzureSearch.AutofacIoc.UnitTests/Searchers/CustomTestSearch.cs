@@ -1,5 +1,6 @@
 ﻿using Cogworks.AzureSearch.AutofacIoc.UnitTests.Models;
 using Cogworks.AzureSearch.Interfaces.Searches;
+using Cogworks.AzureSearch.Searchers;
 
 namespace Cogworks.AzureSearch.AutofacIoc.UnitTests.Searchers
 {
@@ -8,9 +9,9 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests.Searchers
         void SomeCustomSearchExample();
     }
 
-    public class CustomTestSearch : AzureSearch.Searchers.AzureSearch<FirstTestDocumentModel>, ICustomTestSearch
+    public class CustomTestSearch : BaseDomainSearch<FirstTestDocumentModel>, ICustomTestSearch
     {
-        public CustomTestSearch(IAzureDocumentSearch<FirstTestDocumentModel> azureSearchRepository) : base(azureSearchRepository)
+        public CustomTestSearch(ISearcher<FirstTestDocumentModel> search) : base(search)
         {
         }
 
@@ -20,7 +21,7 @@ namespace Cogworks.AzureSearch.AutofacIoc.UnitTests.Searchers
             // ...
             // End of custom filters
 
-            //  _ = base.Search("test", new AzureSearchParameters());
+            //  _ = base.Search("test", new SearchParameters());
         }
     }
 }
