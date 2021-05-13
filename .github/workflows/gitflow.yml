@@ -1,0 +1,54 @@
+name: Git Flow
+
+on:
+  workflow_run:
+    workflows: [ "Changelog generator" ]
+    types:
+      - completed
+jobs:
+  gitflow:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Git Flow
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Set local user
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: Get latest tag
+        run: |
+          tag_check=$(git describe --exact-match `git rev-parse HEAD` | head -1)
+          echo "tag=$tag_check" >> $GITHUB_ENV
+
+      - name: Clear release branch
+        run: |
+          branch_check=$(git branch -r | grep release/${{ env.tag }} | sed 's/remotes\/origin\///' | sed 's/origin\///' | sed 's/* //' | sed -r '/^\s*$/d' | head -1)
+          if [[ $branch_check ]]; then
+            git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --delete $branch_check
+          fi
+
+      - name: Checkout develop and pull latest develop
+        run: |
+          git checkout develop
+          git pull "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" develop
+
+      - name: Pull master into develop
+        run: |
+          Conflicts=$(git pull "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" master -q --ff || echo "fatal: Not possible to fast-forward, aborting")
+          AbortingMsg='aborting'
+
+          if [[ "$Conflicts" == *"$AbortingMsg"* ]]; then
+            exit 1
+          fi
+
+      - name: Pushing develop to origin if pulling successfully
+        if: success()
+        run: |
+          git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" develop:develop

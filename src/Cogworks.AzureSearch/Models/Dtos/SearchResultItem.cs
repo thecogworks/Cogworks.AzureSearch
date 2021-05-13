@@ -2,7 +2,7 @@
 
 namespace Cogworks.AzureSearch.Models.Dtos
 {
-    public class SearchResultItem<TModel> where TModel : class, IAzureModel, new()
+    public class SearchResultItem<TModel> where TModel : class, IModel, new()
     {
         public TModel Document { get; }
 

@@ -1,4 +1,4 @@
-﻿using Cogworks.AzureSearch.Builder;
+﻿using Cogworks.AzureSearch.Interfaces.Builder;
 using Cogworks.AzureSearch.LightInject.IocExtension.Extensions;
 using Cogworks.AzureSearch.Umbraco.IocExtension.Builders;
 using LightInject;
@@ -8,14 +8,15 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Extensions
 {
     public static class RegisterExtensions
     {
-        public static IAzureSearchBuilder RegisterAzureSearch(this IRegister composingRegister, bool useConcreteContainer = false)
+        public static IContainerBuilder RegisterAzureSearch(this IRegister composingRegister, bool useConcreteContainer = false)
             => useConcreteContainer
-                ? (composingRegister.Concrete as IServiceContainer).RegisterAzureSearch() as IAzureSearchBuilder
-                : new AzureSearchBuilder(composingRegister)
+                ? (composingRegister.Concrete as IServiceContainer).RegisterAzureSearch() as IContainerBuilder
+                : new ContainerBuilder(composingRegister)
                     .RegisterRepositories()
                     .RegisterIndexes()
                     .RegisterSearchers()
                     .RegisterInitializers()
-                    .RegisterWrappers();
+                    .RegisterWrappers()
+                    .RegisterOperations();
     }
 }

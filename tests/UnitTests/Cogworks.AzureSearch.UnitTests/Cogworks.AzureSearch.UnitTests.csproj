@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Filters\**" />
+    <Compile Remove="Initializers\**" />
+    <Compile Remove="Options\**" />
+    <EmbeddedResource Remove="Filters\**" />
+    <EmbeddedResource Remove="Initializers\**" />
+    <EmbeddedResource Remove="Options\**" />
+    <None Remove="Filters\**" />
+    <None Remove="Initializers\**" />
+    <None Remove="Options\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.13.0" />
     <PackageReference Include="AutoFixture.AutoNSubstitute" Version="4.13.0" />
     <PackageReference Include="AutoFixture.Xunit2" Version="4.13.0" />
@@ -35,11 +47,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Cogworks.AzureSearch\Cogworks.AzureSearch.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Initializers\" />
-    <Folder Include="Filters\" />
-    <Folder Include="Options\" />
   </ItemGroup>
 </Project>
