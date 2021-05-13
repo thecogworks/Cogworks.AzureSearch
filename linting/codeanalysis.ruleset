@@ -156,6 +156,7 @@
     <Rule Id="IDE0051" Action="Warning" />
     <Rule Id="IDE0058" Action="None" />
     <Rule Id="IDE0060" Action="Warning" />
+    <Rule Id="IDE0073" Action="None" />
     <Rule Id="IDE1005" Action="None" />
     <Rule Id="IDE1005WithoutSuggestion" Action="None" />
     <Rule Id="IDE1006" Action="None" />
