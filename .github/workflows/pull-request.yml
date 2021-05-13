@@ -3,7 +3,6 @@ on:
   pull_request:
 
 env:
-  Config: 'Release'
   ReportOutput: '${{github.workspace}}'
   TestReportFileName: 'TestReport.${{github.run_number}}.md'
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
@@ -90,7 +89,7 @@ jobs:
           echo "::set-env name=title::Test Run for PR #${{ steps.PRNUMBER.outputs.pr }} (${{ github.run_number }})"
 
       - name: Run Tests
-        run: dotnet test --no-restore --no-build --configuration ${{ env.Config }} --logger:"liquid.md;LogFileName=${{ env.ReportOutput}}\${{ env.TestReportFileName }};Title=${{ env.Title }};"
+        run: dotnet test --no-restore --no-build --configuration ${{ env.CONFIG }} --logger:"liquid.md;LogFileName=${{ env.ReportOutput}}\${{ env.TestReportFileName }};Title=${{ env.Title }};"
 
       - name: Upload test results
         uses: actions/upload-artifact@v2
