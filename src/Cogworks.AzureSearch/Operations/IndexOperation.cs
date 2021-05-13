@@ -72,7 +72,6 @@ namespace Cogworks.AzureSearch.Operations
                 }
 
                 await IndexCreateOrUpdateAsync();
-
             }
             catch (Exception exception)
             {

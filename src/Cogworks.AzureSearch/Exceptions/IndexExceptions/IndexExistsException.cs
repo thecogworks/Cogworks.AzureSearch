@@ -13,6 +13,5 @@ namespace Cogworks.AzureSearch.Exceptions.IndexExceptions
         public IndexExistsException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
     }
 }
