@@ -334,6 +334,15 @@ dotnet_diagnostic.CA2007.severity = suggestion
 # IDE0073: The file header is missing or not located at the top of the file
 dotnet_diagnostic.IDE0046.severity = none
 
+# SA1200: A C# using directive is placed outside of a namespace element.
+dotnet_diagnostic.SA1200.severity = none
+
+# SA1633: A C# code file is missing a standard file header.
+dotnet_diagnostic.SA1633.severity = none
+
+# CA1032: Implement standard exception constructors
+dotnet_diagnostic.CA1032.severity = none
+
 
 [*.generated.cs]
 
