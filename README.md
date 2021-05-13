@@ -54,7 +54,7 @@ public class SomeDocumentService
                 Content = "Some content"
             });
 
-    
+
     public async Task AddOrUpdateItems()
     {
         var items = new List<FirstDocumentModel>
@@ -81,7 +81,7 @@ public class SomeDocumentService
                 Id = "some-id"
             });
 
-    
+
     public async Task RemoveItems()
     {
         var items = new List<FirstDocumentModel>
@@ -107,9 +107,9 @@ public class SomeDocumentService
 ```csharp
 public class SomeService
 {
-    private readonly IAzureSearch<FirstDocumentModel> _documentSearch;
+    private readonly ISearcher<FirstDocumentModel> _documentSearch;
 
-    public SomeService(IAzureSearch<FirstDocumentModel> documentSearch)
+    public SomeService(ISearcher<FirstDocumentModel> documentSearch)
         => _documentSearch = documentSearch;
 
     public void Search()
@@ -207,7 +207,7 @@ public class SomeStartupService
 ```
 
 ## License
-  
+
 - Cogworks.AzureSearch is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0)
 
 ## Code of Conduct

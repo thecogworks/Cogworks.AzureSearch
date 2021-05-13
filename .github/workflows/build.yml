@@ -1,0 +1,121 @@
+name: Build
+
+on:
+  workflow_run:
+    workflows: [ "Changelog generator" ]
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    env:
+      # Dotnet Setup
+      DOTNET_VERSION: 3.1.401
+
+      # Stop wasting time caching packages
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+      # Disable sending usage data to Microsoft
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+      # Solution Setup
+      CONFIG: 'Release'
+      PROJECT_NAME: 'Cogworks.AzureSearch'
+      VERSION: '1.0.0'
+      SOURCE_PATH: './Source'
+
+      # Nuget Setup
+      NUGET_VERSION: 'latest'
+      NUGET_OUTPUT: '.output/'
+
+    steps:
+      - name: Checkout reference commit
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/checkout@v2
+
+      - name: Checkout master
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Get version
+        if: ${{ github.event_name != 'pull_request' }}
+        shell: bash
+        run: |
+          tag_check=$(git describe --exact-match `git rev-parse HEAD` | head -1)
+          echo "VERSION=$tag_check" >> $GITHUB_ENV
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Configure NuGet
+        uses: nuget/setup-nuget@v1
+        with:
+          nuget-version: ${{ env.NUGET_VERSION }}
+
+      - name: NuGet Restore
+        shell: powershell
+        working-directory: ${{ github.workspace }}
+        run: |
+          $solutions = Get-ChildItem -Path ${{ env.SOURCE_PATH}} -Recurse -Include *.sln
+
+          foreach ($solutionFile in $solutions){
+            nuget restore "$solutionFile"
+          }
+
+      - name: Install Dependencies
+        shell: powershell
+        working-directory: ${{ github.workspace }}
+        run: |
+          $solutions = Get-ChildItem -Path ${{ env.SOURCE_PATH}} -Recurse -Include *.sln
+
+          foreach ($solutionFile in $solutions){
+            dotnet restore "$solutionFile"
+          }
+
+      - name: Build
+        shell: powershell
+        working-directory: ${{ github.workspace }}
+        run: |
+          $solutions = Get-ChildItem -Path ${{ env.SOURCE_PATH}} -Recurse -Include *.sln
+
+          foreach ($solutionFile in $solutions){
+            msbuild.exe "$solutionFile" `
+            /p:Configuration=${{ env.CONFIG }} `
+            /p:DeployOnBuild=false `
+            /p:SkipInvalidConfigurations=true `
+            /p:TransformWebConfigEnabled=False `
+            /p:AutoParameterizationWebConfigConnectionStrings=False `
+            /p:MarkWebConfigAssistFilesAsExclude=False
+          }
+
+      - name: Pack all nuspec files
+        if: ${{ github.event_name != 'pull_request' }}
+        shell: powershell
+        working-directory: ${{ github.workspace }}
+        run: |
+          $nuspecFiles = Get-ChildItem -Path ${{ env.SOURCE_PATH}} -Recurse -Include *.nuspec
+
+          foreach ($nuspecFile in $nuspecFiles){
+            nuget pack "$nuspecFile" `
+             -Version ${{ env.VERSION }} `
+             -Properties Configuration=${{ env.CONFIG }} `
+             -OutputDirectory ${{ env.NUGET_OUTPUT }}
+          }
+
+      - name: Upload build artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: build_${{ env.PROJECT_NAME }}.${{ env.VERSION }}
+          path: ${{ github.workspace }}/${{ env.NUGET_OUTPUT }}

@@ -1,0 +1,49 @@
+name: (NuGet) GitHub Packages Release
+
+on:
+  workflow_run:
+    workflows: [ "Build" ]
+    types:
+      - completed
+jobs:
+  github_packages_release:
+    name: GitHub Packages Release
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event != 'pull_request' }}
+    runs-on: ubuntu-latest
+    env:
+      # GitHub Packages Feed settings
+      GITHUB_USER: thecogworks
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_FEED: https://nuget.pkg.github.com/thecogworks
+      GITHUB_PACKAGES_OUTPUT: ${{ github.workspace }}/github_packages
+
+      # Project Setup
+      PROJECT_NAME: 'Cogworks.AzureSearch'
+
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Get version
+        shell: bash
+        run: |
+          tag_check=$(git describe --exact-match `git rev-parse HEAD` | head -1)
+          echo "VERSION=$tag_check" >> $GITHUB_ENV
+
+      - name: Download a single artifact
+        uses: aochmann/actions-download-artifact@1.0.2
+        with:
+          name: build_${{ env.PROJECT_NAME }}.${{ env.VERSION }}
+          path: ${{ env.GITHUB_PACKAGES_OUTPUT }}
+
+      - name: Push to GitHub Feed
+        shell: bash
+        working-directory: ${{ env.GITHUB_PACKAGES_OUTPUT }}
+        run: |
+          for nugetFile in ./*.nupkg
+          do
+            curl -vX PUT -u "$GITHUB_USER:$GITHUB_TOKEN" -F package=@$nugetFile $GITHUB_FEED
+          done
