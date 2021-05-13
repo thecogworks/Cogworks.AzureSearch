@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>Cogworks.AzureSearch.Autofac.IocExtension</id>
+    <id>Cogworks.AzureSearch.IoC.Autofac</id>
     <version>$version$</version>
-    <title>Cogworks.AzureSearch.Autofac.IocExtension</title>
+    <title>Cogworks.AzureSearch.IoC.Autofac</title>
     <authors>Cogworks</authors>
     <owners>Cogworks</owners>
-    <projectUrl>https://github.com/thecogworks/Cogworks.AzureSearch</projectUrl>
-    <repository type="git" url="https://github.com/thecogworks/Cogworks.AzureSearch" />
+    <projectUrl>https://github.com/thecogworks/Cogworks.AzureSearch.IoC.Autofac</projectUrl>
+    <repository type="git" url="https://github.com/thecogworks/Cogworks.AzureSearch.IoC.Autofac" />
     <license type="expression">Apache-2.0</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A wrapper to Azure Search allowing to easily setup Azure Search indexes, searchers and using it with DI/IoC approach (currently with support for Umbraco, LightInject and Autofac).</description>
