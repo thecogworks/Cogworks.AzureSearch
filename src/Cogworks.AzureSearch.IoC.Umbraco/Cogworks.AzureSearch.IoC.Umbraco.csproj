@@ -7,8 +7,8 @@
     <ProjectGuid>{E1317854-28A7-491E-97B1-FBEEEF7B5982}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cogworks.AzureSearch.Umbraco.IocExtension</RootNamespace>
-    <AssemblyName>Cogworks.AzureSearch.Umbraco.IocExtension</AssemblyName>
+    <RootNamespace>Cogworks.AzureSearch.IoC.Umbraco</RootNamespace>
+    <AssemblyName>Cogworks.AzureSearch.IoC.Umbraco</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -182,9 +182,9 @@
     <Compile Include="**\*.cs" Exclude="bin\**\*.cs;obj\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cogworks.AzureSearch.LightInject.IocExtension\Cogworks.AzureSearch.LightInject.IocExtension.csproj">
+    <ProjectReference Include="..\Cogworks.AzureSearch.IoC.LightInject\Cogworks.AzureSearch.IoC.LightInject.csproj">
       <Project>{4c606328-9108-4584-8e4a-04450b9a1170}</Project>
-      <Name>Cogworks.AzureSearch.LightInject.IocExtension</Name>
+      <Name>Cogworks.AzureSearch.IoC.LightInject</Name>
     </ProjectReference>
     <ProjectReference Include="..\Cogworks.AzureSearch\Cogworks.AzureSearch.csproj">
       <Project>{94f77e26-4e02-4ed5-bd54-45e3aaa70090}</Project>
@@ -193,7 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Cogworks.AzureSearch.Umbraco.IocExtension.nuspec" />
+    <None Include="Cogworks.AzureSearch.IoC.Umbraco.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

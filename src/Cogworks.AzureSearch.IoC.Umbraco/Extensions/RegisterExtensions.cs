@@ -1,10 +1,10 @@
 ﻿using Cogworks.AzureSearch.Interfaces.Builder;
-using Cogworks.AzureSearch.LightInject.IocExtension.Extensions;
-using Cogworks.AzureSearch.Umbraco.IocExtension.Builders;
+using Cogworks.AzureSearch.IoC.LightInject.Extensions;
+using Cogworks.AzureSearch.IoC.Umbraco.Builders;
 using LightInject;
 using Umbraco.Core.Composing;
 
-namespace Cogworks.AzureSearch.Umbraco.IocExtension.Extensions
+namespace Cogworks.AzureSearch.IoC.Umbraco.Extensions
 {
     public static class RegisterExtensions
     {

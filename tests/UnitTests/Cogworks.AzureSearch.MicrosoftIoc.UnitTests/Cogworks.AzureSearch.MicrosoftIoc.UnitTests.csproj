@@ -36,6 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Cogworks.AzureSearch.Microsoft.IocExtension\Cogworks.AzureSearch.Microsoft.IocExtension.csproj" />
+    <ProjectReference Include="..\..\..\src\Cogworks.AzureSearch.IoC.Microsoft\Cogworks.AzureSearch.IoC.Microsoft.csproj" />
   </ItemGroup>
 </Project>

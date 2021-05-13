@@ -1,7 +1,7 @@
-﻿using Cogworks.AzureSearch.LightInject.IocExtension.Builders;
+﻿using Cogworks.AzureSearch.IoC.LightInject.Builders;
 using LightInject;
 
-namespace Cogworks.AzureSearch.LightInject.IocExtension.Extensions
+namespace Cogworks.AzureSearch.IoC.LightInject.Extensions
 {
     public static class RegisterExtensions
     {

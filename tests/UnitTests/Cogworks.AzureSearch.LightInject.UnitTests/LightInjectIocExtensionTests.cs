@@ -3,7 +3,7 @@ using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Interfaces.Repositories;
 using Cogworks.AzureSearch.Interfaces.Searches;
-using Cogworks.AzureSearch.LightInject.IocExtension.Extensions;
+using Cogworks.AzureSearch.IoC.LightInject.Extensions;
 using Cogworks.AzureSearch.LightInject.UnitTests.Models;
 using Cogworks.AzureSearch.LightInject.UnitTests.Searchers;
 using Cogworks.AzureSearch.Models;

@@ -3,7 +3,7 @@ using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Interfaces.Repositories;
 using Cogworks.AzureSearch.Interfaces.Searches;
-using Cogworks.AzureSearch.Microsoft.IocExtension.Extensions;
+using Cogworks.AzureSearch.IoC.Microsoft.Extensions;
 using Cogworks.AzureSearch.Models;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;

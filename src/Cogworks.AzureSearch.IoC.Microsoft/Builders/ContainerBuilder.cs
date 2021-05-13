@@ -1,6 +1,4 @@
-﻿using Autofac;
-using AutofacContainerBuilder = Autofac.ContainerBuilder;
-using Azure.Search.Documents.Indexes.Models;
+﻿using Azure.Search.Documents.Indexes.Models;
 using Cogworks.AzureSearch.Indexes;
 using Cogworks.AzureSearch.Initializers;
 using Cogworks.AzureSearch.Interfaces.Builder;
@@ -16,43 +14,38 @@ using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
 using Cogworks.AzureSearch.Wrappers;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Cogworks.AzureSearch.Autofac.Builders
+namespace Cogworks.AzureSearch.IoC.Microsoft.Builders
 {
-
     public class ContainerBuilder : IContainerBuilder
     {
-        private readonly AutofacContainerBuilder _builder;
+        private readonly IServiceCollection _serviceCollection;
 
-        public ContainerBuilder(AutofacContainerBuilder builder)
-            => _builder = builder;
+        public ContainerBuilder(IServiceCollection serviceCollection)
+            => _serviceCollection = serviceCollection;
 
         internal ContainerBuilder RegisterInitializers()
         {
-            _builder.RegisterGeneric(typeof(Initializer<>))
-                .As(typeof(IInitializer<>))
-                .InstancePerDependency();
+            _serviceCollection.TryAddScoped(typeof(IInitializer<>), typeof(Initializer<>));
 
             return this;
         }
 
         public IContainerBuilder RegisterIndexOptions(bool recreate, bool recreateOnUpdateFailure = false)
         {
-            _ = _builder.Register(_ => new IndexOption(recreate, recreateOnUpdateFailure))
-                .AsSelf()
-                .SingleInstance();
+            _serviceCollection.TryAddSingleton(_ => new IndexOption(recreate, recreateOnUpdateFailure));
 
             return this;
         }
 
         public IContainerBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl)
         {
-            _ = _builder.Register(_ => new ClientOption(
-                    serviceName,
-                    credentials,
-                    serviceEndpointUrl))
-                .AsSelf()
-                .SingleInstance();
+            _serviceCollection.TryAddSingleton(_ => new ClientOption(
+                serviceName,
+                credentials,
+                serviceEndpointUrl));
 
             return this;
         }
@@ -60,9 +53,7 @@ namespace Cogworks.AzureSearch.Autofac.Builders
         public IContainerBuilder RegisterIndexDefinitions<TDocument>(string indexName)
             where TDocument : class, IModel, new()
         {
-            _ = _builder.Register(_ => new IndexDefinition<TDocument>(indexName))
-                .AsSelf()
-                .SingleInstance();
+            _serviceCollection.TryAddSingleton(_ => new IndexDefinition<TDocument>(indexName));
 
             return this;
         }
@@ -70,62 +61,48 @@ namespace Cogworks.AzureSearch.Autofac.Builders
         public IContainerBuilder RegisterIndexDefinitions<TDocument>(SearchIndex customIndex)
             where TDocument : class, IModel, new()
         {
-            _ = _builder.Register(_ => new IndexDefinition<TDocument>(customIndex))
-                .AsSelf()
-                .SingleInstance();
+            _serviceCollection.TryAddSingleton(_ => new IndexDefinition<TDocument>(customIndex));
 
             return this;
         }
 
         internal ContainerBuilder RegisterIndexes()
         {
-            _ = _builder.RegisterGeneric(typeof(Index<>))
-                .As(typeof(IIndex<>))
-                .InstancePerDependency();
+            _serviceCollection.TryAddScoped(typeof(IIndex<>), typeof(Index<>));
 
             return this;
         }
 
         internal ContainerBuilder RegisterWrappers()
         {
-            _ = _builder.RegisterGeneric(typeof(DocumentOperationWrapper<>))
-                .As(typeof(IDocumentOperationWrapper<>))
-                .InstancePerDependency();
+            _serviceCollection.TryAddScoped(typeof(IDocumentOperationWrapper<>), typeof(DocumentOperationWrapper<>));
 
-            _ = _builder.RegisterType<IndexOperationWrapper>()
-                .AsImplementedInterfaces()
-                .InstancePerDependency();
+            _serviceCollection.TryAddScoped<IIndexOperationWrapper, IndexOperationWrapper>();
 
             return this;
         }
 
         internal ContainerBuilder RegisterRepositories()
         {
-            _ = _builder.RegisterGeneric(typeof(Repository<>))
-                .As(typeof(IRepository<>))
-                .InstancePerDependency();
+            _serviceCollection.TryAddScoped(
+                typeof(IRepository<>),
+                typeof(Repository<>));
 
             return this;
         }
 
         internal ContainerBuilder RegisterSearchers()
         {
-            _ = _builder.RegisterGeneric(typeof(Searcher<>))
-                .As(typeof(ISearcher<>))
-                .InstancePerDependency();
+            _serviceCollection.TryAddScoped(typeof(ISearcher<>), typeof(Searcher<>));
 
             return this;
         }
 
         internal ContainerBuilder RegisterOperations()
         {
-            _ = _builder.RegisterGeneric(typeof(DocumentOperation<>))
-                .As(typeof(IDocumentOperation<>))
-                .InstancePerDependency();
+            _serviceCollection.TryAddScoped(typeof(IDocumentOperation<>), typeof(DocumentOperation<>));
 
-            _ = _builder.RegisterGeneric(typeof(IndexOperation<>))
-                .As(typeof(IIndexOperation<>))
-                .InstancePerDependency();
+            _serviceCollection.TryAddScoped(typeof(IIndexOperation<>), typeof(IndexOperation<>));
 
             return this;
         }
@@ -135,10 +112,7 @@ namespace Cogworks.AzureSearch.Autofac.Builders
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {
-            _ = _builder.RegisterType<TSearcher>()
-                .As<TSearcherType>()
-                .AsSelf()
-                .SingleInstance();
+            _serviceCollection.TryAddSingleton<TSearcherType, TSearcher>();
 
             return this;
         }
@@ -148,7 +122,7 @@ namespace Cogworks.AzureSearch.Autofac.Builders
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {
-            _ = _builder.RegisterInstance(instance).As<TSearcherType>();
+            _serviceCollection.TryAddSingleton(instance);
 
             return this;
         }

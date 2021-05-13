@@ -259,13 +259,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Cogworks.AzureSearch.LightInject.IocExtension\Cogworks.AzureSearch.LightInject.IocExtension.csproj">
+    <ProjectReference Include="..\..\..\src\Cogworks.AzureSearch.IoC.LightInject\Cogworks.AzureSearch.IoC.LightInject.csproj">
       <Project>{4C606328-9108-4584-8E4A-04450B9A1170}</Project>
-      <Name>Cogworks.AzureSearch.LightInject.IocExtension</Name>
+      <Name>Cogworks.AzureSearch.IoC.LightInject</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\src\Cogworks.AzureSearch.Umbraco.IocExtension\Cogworks.AzureSearch.Umbraco.IocExtension.csproj">
-      <Project>{fc38db43-401f-4e88-baf5-a28325e4c461}</Project>
-      <Name>Cogworks.AzureSearch.Umbraco.IocExtension</Name>
+    <ProjectReference Include="..\..\..\src\Cogworks.AzureSearch.IoC.Umbraco\Cogworks.AzureSearch.IoC.Umbraco.csproj">
+      <Project>{E1317854-28A7-491E-97B1-FBEEEF7B5982}</Project>
+      <Name>Cogworks.AzureSearch.IoC.Umbraco</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\Cogworks.AzureSearch\Cogworks.AzureSearch.csproj">
       <Project>{94f77e26-4e02-4ed5-bd54-45e3aaa70090}</Project>

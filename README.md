@@ -6,9 +6,9 @@ A wrapper to Azure Search allowing to easily setup Azure Search indexes, searche
 
 | Package Name                   | Release (NuGet) |
 |--------------------------------|-----------------|
-| `Cogworks.AzureSearch.Autofac.IocExtension` | [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch.Autofac.IocExtension)](https://www.nuget.org/packages/Cogworks.AzureSearch.Autofac.IocExtension/) |
-| `Cogworks.AzureSearch.LightInject.IocExtension` | [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch.LightInject.IocExtension)](https://www.nuget.org/packages/Cogworks.AzureSearch.LightInject.IocExtension/) |
-| `Cogworks.AzureSearch.Umbraco.IocExtension` | [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch.Umbraco.IocExtension)](https://www.nuget.org/packages/Cogworks.AzureSearch.Umbraco.IocExtension/) |
+| `Cogworks.AzureSearch.IoC.Autofac` | [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch.IoC.Autofac)](https://www.nuget.org/packages/Cogworks.AzureSearch.IoC.Autofac/) |
+| `Cogworks.AzureSearch.IoC.LightInject` | [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch.IoC.LightInject)](https://www.nuget.org/packages/Cogworks.AzureSearch.IoC.LightInject/) |
+| `Cogworks.AzureSearch.IoC.Umbraco` | [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch.IoC.Umbraco)](https://www.nuget.org/packages/Cogworks.AzureSearch.IoC.Umbraco/) |
 
 ## Usage
 

@@ -14,21 +14,20 @@ using Cogworks.AzureSearch.Options;
 using Cogworks.AzureSearch.Repositories;
 using Cogworks.AzureSearch.Searchers;
 using Cogworks.AzureSearch.Wrappers;
-using Umbraco.Core;
-using Umbraco.Core.Composing;
+using LightInject;
 
-namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
+namespace Cogworks.AzureSearch.IoC.LightInject.Builders
 {
     public class ContainerBuilder : IContainerBuilder
     {
-        private readonly IRegister _composingRegister;
+        private readonly IServiceContainer _container;
 
-        public ContainerBuilder(IRegister composingRegister)
-            => _composingRegister = composingRegister;
+        public ContainerBuilder(IServiceContainer serviceContainer)
+            => _container = serviceContainer;
 
         internal ContainerBuilder RegisterInitializers()
         {
-            _composingRegister.Register(
+            _ = _container.Register(
                 typeof(IInitializer<>),
                 typeof(Initializer<>));
 
@@ -37,21 +36,21 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
 
         public IContainerBuilder RegisterIndexOptions(bool recreate, bool recreateOnUpdateFailure = false)
         {
-            _composingRegister.Register(
+            _ = _container.Register(
                 _ => new IndexOption(recreate, recreateOnUpdateFailure),
-                Lifetime.Singleton);
+                new PerContainerLifetime());
 
             return this;
         }
 
         public IContainerBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl)
         {
-            _composingRegister.Register(
+            _ = _container.Register(
                 _ => new ClientOption(
                     serviceName,
                     credentials,
                     serviceEndpointUrl),
-                Lifetime.Singleton);
+                new PerContainerLifetime());
 
             return this;
         }
@@ -59,9 +58,9 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
         public IContainerBuilder RegisterIndexDefinitions<TDocument>(string indexName)
             where TDocument : class, IModel, new()
         {
-            _composingRegister.Register(
+            _ = _container.Register(
                 _ => new IndexDefinition<TDocument>(indexName),
-                Lifetime.Singleton);
+                new PerContainerLifetime());
 
             return this;
         }
@@ -69,16 +68,16 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
         public IContainerBuilder RegisterIndexDefinitions<TDocument>(SearchIndex customIndex)
             where TDocument : class, IModel, new()
         {
-            _composingRegister.Register(
+            _ = _container.Register(
                 _ => new IndexDefinition<TDocument>(customIndex),
-                Lifetime.Singleton);
+                new PerContainerLifetime());
 
             return this;
         }
 
         internal ContainerBuilder RegisterIndexes()
         {
-            _composingRegister.Register(
+            _ = _container.Register(
                 typeof(IIndex<>),
                 typeof(Index<>));
 
@@ -87,18 +86,18 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
 
         internal ContainerBuilder RegisterWrappers()
         {
-            _composingRegister.Register(
+            _ = _container.Register(
                 typeof(IDocumentOperationWrapper<>),
                 typeof(DocumentOperationWrapper<>));
 
-            _composingRegister.Register<IIndexOperationWrapper, IndexOperationWrapper>();
+            _ = _container.Register<IIndexOperationWrapper, IndexOperationWrapper>();
 
             return this;
         }
 
         internal ContainerBuilder RegisterRepositories()
         {
-            _composingRegister.Register(
+            _ = _container.Register(
                 typeof(IRepository<>),
                 typeof(Repository<>));
 
@@ -107,22 +106,23 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
 
         internal ContainerBuilder RegisterSearchers()
         {
-            _composingRegister.Register(
+            _ = _container.Register(
                 typeof(ISearcher<>),
                 typeof(Searcher<>));
 
             return this;
         }
-
         internal ContainerBuilder RegisterOperations()
         {
-            _composingRegister.Register(
+            _ = _container.Register(
                 typeof(IDocumentOperation<>),
-                typeof(DocumentOperation<>));
+                typeof(DocumentOperation<>),
+                new PerContainerLifetime());
 
-            _composingRegister.Register(
+            _ = _container.Register(
                 typeof(IIndexOperation<>),
-                typeof(IndexOperation<>));
+                typeof(IndexOperation<>),
+                new PerContainerLifetime());
 
             return this;
         }
@@ -132,7 +132,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {
-            _composingRegister.Register<TSearcherType, TSearcher>(Lifetime.Singleton);
+            _ = _container.Register(typeof(TSearcherType), typeof(TSearcher), new PerContainerLifetime());
 
             return this;
         }
@@ -142,7 +142,7 @@ namespace Cogworks.AzureSearch.Umbraco.IocExtension.Builders
             where TSearcher : BaseDomainSearch<TDocument>, TSearcherType
             where TSearcherType : class
         {
-            _composingRegister.Register<TSearcherType>(instance);
+            _ = _container.RegisterInstance(instance); ;
 
             return this;
         }

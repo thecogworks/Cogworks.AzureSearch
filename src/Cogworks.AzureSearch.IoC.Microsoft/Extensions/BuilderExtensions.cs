@@ -1,7 +1,7 @@
-﻿using Cogworks.AzureSearch.Microsoft.IocExtension.Builders;
+﻿using Cogworks.AzureSearch.IoC.Microsoft.Builders;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cogworks.AzureSearch.Microsoft.IocExtension.Extensions
+namespace Cogworks.AzureSearch.IoC.Microsoft.Extensions
 {
     public static class BuilderExtensions
     {

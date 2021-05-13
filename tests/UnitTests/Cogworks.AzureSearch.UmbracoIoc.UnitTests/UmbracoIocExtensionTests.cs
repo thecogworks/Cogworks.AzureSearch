@@ -6,7 +6,7 @@ using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Interfaces.Repositories;
 using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.Models;
-using Cogworks.AzureSearch.Umbraco.IocExtension.Extensions;
+using Cogworks.AzureSearch.IoC.Umbraco.Extensions;
 using Cogworks.AzureSearch.UmbracoIoc.UnitTests.Models;
 using Cogworks.AzureSearch.UmbracoIoc.UnitTests.Searchers;
 using LightInject;

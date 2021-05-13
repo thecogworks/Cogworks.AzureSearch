@@ -1,5 +1,4 @@
 ﻿using AutofacContainerBuilder = Autofac.ContainerBuilder;
-using Cogworks.AzureSearch.Autofac.Extensions;
 using Cogworks.AzureSearch.Interfaces.Indexes;
 using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Operations;
@@ -14,6 +13,7 @@ using Cogworks.AzureSearch.AutofacIoc.UnitTests.Searchers;
 using Xunit;
 using Azure.Search.Documents.Indexes.Models;
 using Cogworks.AzureSearch.Interfaces.Builder;
+using Cogworks.AzureSearch.IoC.Autofac.Extensions;
 
 namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
 {

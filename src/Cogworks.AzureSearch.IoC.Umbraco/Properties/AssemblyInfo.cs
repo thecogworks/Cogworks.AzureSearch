@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Cogworks.AzureSearch.Umbraco.IocExtension")]
+[assembly: AssemblyTitle("Cogworks.AzureSearch.IoC.Umbraco")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Cogworks.AzureSearch.Umbraco.IocExtension")]
+[assembly: AssemblyProduct("Cogworks.AzureSearch.IoC.Umbraco")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

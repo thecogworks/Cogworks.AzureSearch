@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.Autofac.IocExtension", "src\Cogworks.AzureSearch.Autofac.IocExtension\Cogworks.AzureSearch.Autofac.IocExtension.csproj", "{060A2DE8-2E15-4EA5-ACCB-5061B50B350F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.IoC.Autofac", "src\Cogworks.AzureSearch.IoC.Autofac\Cogworks.AzureSearch.IoC.Autofac.csproj", "{060A2DE8-2E15-4EA5-ACCB-5061B50B350F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B85EEFD6-B048-478E-A032-3CCE3F0B3093}"
 EndProject
@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.UnitTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.UmbracoIoc.UnitTests", "tests\UnitTests\Cogworks.AzureSearch.UmbracoIoc.UnitTests\Cogworks.AzureSearch.UmbracoIoc.UnitTests.csproj", "{31032AAC-7779-4DEF-81D4-B6143A716C4F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.LightInject.IocExtension", "src\Cogworks.AzureSearch.LightInject.IocExtension\Cogworks.AzureSearch.LightInject.IocExtension.csproj", "{4C606328-9108-4584-8E4A-04450B9A1170}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.IoC.LightInject", "src\Cogworks.AzureSearch.IoC.LightInject\Cogworks.AzureSearch.IoC.LightInject.csproj", "{4C606328-9108-4584-8E4A-04450B9A1170}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.Microsoft.IocExtension", "src\Cogworks.AzureSearch.Microsoft.IocExtension\Cogworks.AzureSearch.Microsoft.IocExtension.csproj", "{E60BD2A0-C5ED-4EFE-8F8A-15FB26AD69B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.IoC.Microsoft", "src\Cogworks.AzureSearch.IoC.Microsoft\Cogworks.AzureSearch.IoC.Microsoft.csproj", "{E60BD2A0-C5ED-4EFE-8F8A-15FB26AD69B4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.MicrosoftIoc.UnitTests", "tests\UnitTests\Cogworks.AzureSearch.MicrosoftIoc.UnitTests\Cogworks.AzureSearch.MicrosoftIoc.UnitTests.csproj", "{1F9F4E09-E496-49F2-A1EB-D4EB3AC3E721}"
 EndProject
@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.LightI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch", "src\Cogworks.AzureSearch\Cogworks.AzureSearch.csproj", "{94F77E26-4E02-4ED5-BD54-45E3AAA70090}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.Umbraco.IocExtension", "src\Cogworks.AzureSearch.Umbraco.IocExtension\Cogworks.AzureSearch.Umbraco.IocExtension.csproj", "{E1317854-28A7-491E-97B1-FBEEEF7B5982}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.Umbraco", "src\Cogworks.AzureSearch.IoC.Umbraco\Cogworks.AzureSearch.IoC.Umbraco.csproj", "{E1317854-28A7-491E-97B1-FBEEEF7B5982}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9D0073AC-CE06-400A-B362-297CB9A332BE}"
 	ProjectSection(SolutionItems) = preProject
