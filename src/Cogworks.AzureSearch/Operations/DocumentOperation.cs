@@ -60,7 +60,11 @@ namespace Cogworks.AzureSearch.Operations
                 }
                 catch (Exception exception)
                 {
-                    throw new AddOrUpdateDocumentException(exception.Message, exception.InnerException);
+                    var domainException = new AddOrUpdateDocumentException(
+                        exception.Message,
+                        exception.InnerException);
+
+                    throw domainException;
                 }
             }
 
@@ -105,7 +109,8 @@ namespace Cogworks.AzureSearch.Operations
                 }
                 catch (Exception exception)
                 {
-                    throw new RemoveDocumentException(exception.Message, exception.InnerException);
+                    var domainException = new RemoveDocumentException(exception.Message, exception.InnerException);
+                    throw domainException;
                 }
             }
 

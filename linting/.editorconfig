@@ -325,10 +325,6 @@ dotnet_diagnostic.CA1310.severity = suggestion
 # SA1629: Documentation text should end with a period
 dotnet_diagnostic.SA1629.severity = suggestion
 
-
-# EX003: Always provide inner exception when throw from the catch clauses.
-dotnet_diagnostic.EX003.severity = none
-
 # SA1101: Prefix local calls with this
 dotnet_diagnostic.SA1101.severity = none
 
