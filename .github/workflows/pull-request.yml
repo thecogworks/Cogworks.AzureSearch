@@ -4,12 +4,25 @@ on:
 
 env:
   Config: 'Release'
-  Solution: 'Cogworks.AzureSearch.sln'
   ReportOutput: '${{github.workspace}}'
   TestReportFileName: 'TestReport.${{github.run_number}}.md'
-  DotNetVersion: 3.1.401
-  NugetVersion: 'latest'
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+  # Dotnet Setup
+  DOTNET_VERSION: 3.1.401
+
+  # Stop wasting time caching packages
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+  # Disable sending usage data to Microsoft
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+  # Solution Setup
+  CONFIG: 'Release'
+  SOURCE_PATH: './Source'
+
+  # Nuget Setup
+  NUGET_VERSION: 'latest'
 
 jobs:
   build-and-test:
@@ -18,24 +31,54 @@ jobs:
       - name: Checkout commit
         uses: actions/checkout@v2
 
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: ${{ env.DotNetVersion }}
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - uses: nuget/setup-nuget@v1
+      - name: Configure NuGet
+        uses: nuget/setup-nuget@v1
         with:
-          nuget-version: ${{ env.NugetVersion }}
+          nuget-version: ${{ env.NUGET_VERSION }}
 
       - name: NuGet Restore
-        run: nuget restore ${{ env.Solution }} -LockedMode
+        shell: powershell
+        working-directory: ${{ github.workspace }}
+        run: |
+          $solutions = Get-ChildItem -Path ${{ env.SOURCE_PATH}} -Recurse -Include *.sln
 
-      - name: Install dependencies
-        run: dotnet restore ${{env.Solution}}
+          foreach ($solutionFile in $solutions){
+            nuget restore "$solutionFile"
+          }
+
+      - name: Install Dependencies
+        shell: powershell
+        working-directory: ${{ github.workspace }}
+        run: |
+          $solutions = Get-ChildItem -Path ${{ env.SOURCE_PATH}} -Recurse -Include *.sln
+
+          foreach ($solutionFile in $solutions){
+            dotnet restore "$solutionFile"
+          }
 
       - name: Build
+        shell: powershell
         working-directory: ${{ github.workspace }}
-        run: dotnet build --configuration ${{ env.Config }} ${{ env.Solution }}
+        run: |
+          $solutions = Get-ChildItem -Path ${{ env.SOURCE_PATH}} -Recurse -Include *.sln
+
+          foreach ($solutionFile in $solutions){
+            msbuild.exe "$solutionFile" `
+            /p:Configuration=${{ env.CONFIG }} `
+            /p:DeployOnBuild=false `
+            /p:SkipInvalidConfigurations=true `
+            /p:TransformWebConfigEnabled=False `
+            /p:AutoParameterizationWebConfigConnectionStrings=False `
+            /p:MarkWebConfigAssistFilesAsExclude=False
+          }
 
       - name: Set PR build number
         id: PRNUMBER
