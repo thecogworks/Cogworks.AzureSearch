@@ -5,12 +5,13 @@ namespace Cogworks.AzureSearch.LightInject.IocExtension.Extensions
 {
     public static class RegisterExtensions
     {
-        public static AzureSearchBuilder RegisterAzureSearch(this IServiceContainer serviceContainer)
-            => new AzureSearchBuilder(serviceContainer)
+        public static ContainerBuilder RegisterAzureSearch(this IServiceContainer serviceContainer)
+            => new ContainerBuilder(serviceContainer)
                 .RegisterRepositories()
                 .RegisterIndexes()
                 .RegisterSearchers()
                 .RegisterInitializers()
-                .RegisterWrappers();
+                .RegisterWrappers()
+                .RegisterOperations();
     }
 }

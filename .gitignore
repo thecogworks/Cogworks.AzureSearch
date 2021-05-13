@@ -608,6 +608,7 @@ fabric.properties
 
 ### VisualStudioCode ###
 .vscode/*
+!.vscode/solution-explorer
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json

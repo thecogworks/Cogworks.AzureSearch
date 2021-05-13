@@ -1,30 +1,42 @@
-﻿using Cogworks.AzureSearch.Interfaces.Wrappers;
+﻿
+using System;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
+using Cogworks.AzureSearch.Interfaces.Wrappers;
 using Cogworks.AzureSearch.Models;
 using Cogworks.AzureSearch.Options;
-using Microsoft.Azure.Search;
-using Microsoft.Azure.Search.Models;
-using System.Threading.Tasks;
 
 namespace Cogworks.AzureSearch.Wrappers
 {
-    internal class DocumentOperationWrapper<TAzureModel> : IDocumentOperationWrapper<TAzureModel>
-        where TAzureModel : class, IAzureModel, new()
+    internal class DocumentOperationWrapper<TModel> : IDocumentOperationWrapper<TModel>
+        where TModel : class, IModel, new()
     {
-        private readonly IDocumentsOperations _documentOperation;
+        private readonly SearchClient _searchClient;
 
-        public DocumentOperationWrapper(AzureIndexDefinition<TAzureModel> azureIndexDefinition, AzureSearchClientOption azureSearchClientOption)
-            => _documentOperation = azureSearchClientOption.GetSearchServiceClient()
-                .Indexes
-                .GetClient(azureIndexDefinition.IndexName)
-                .Documents;
+        public DocumentOperationWrapper(
+            IndexDefinition<TModel> indexDefinition,
+            ClientOption clientOption)
+        {
+            var azureKeyCredential = new AzureKeyCredential(clientOption.Credentials);
 
-        public DocumentSearchResult<TAzureModel> Search(string searchText, SearchParameters parameters = null)
-            => _documentOperation.Search<TAzureModel>(searchText, parameters);
+            _searchClient = new SearchClient(
+                endpoint: new Uri(clientOption.ServiceUrlEndpoint),
+                indexName: indexDefinition.IndexName,
+                credential: azureKeyCredential,
+                options: clientOption.ClientOptions
 
-        public async Task<DocumentSearchResult<TAzureModel>> SearchAsync(string searchText, SearchParameters parameters = null)
-            => await _documentOperation.SearchAsync<TAzureModel>(searchText, parameters);
+            );
+        }
 
-        public async Task<DocumentIndexResult> IndexAsync(IndexBatch<TAzureModel> indexBatch)
-            => await _documentOperation.IndexAsync(indexBatch);
+        public SearchResults<TModel> Search(string searchText, SearchOptions parameters = null)
+            => _searchClient.Search<TModel>(searchText, parameters);
+
+        public async Task<SearchResults<TModel>> SearchAsync(string searchText, SearchOptions parameters = null)
+            => await _searchClient.SearchAsync<TModel>(searchText, parameters);
+
+        public async Task<Response<IndexDocumentsResult>> IndexAsync(IndexDocumentsBatch<TModel> indexBatch)
+            => await _searchClient.IndexDocumentsAsync(indexBatch);
     }
 }

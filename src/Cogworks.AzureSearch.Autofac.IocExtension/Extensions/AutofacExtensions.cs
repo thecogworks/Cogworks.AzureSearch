@@ -1,16 +1,17 @@
-﻿using Autofac;
+﻿using AutofacContainerBuilder = Autofac.ContainerBuilder;
 using Cogworks.AzureSearch.Autofac.Builders;
 
 namespace Cogworks.AzureSearch.Autofac.Extensions
 {
     public static class AutofacExtensions
     {
-        public static AzureSearchBuilder RegisterAzureSearch(this ContainerBuilder builder)
-            => new AzureSearchBuilder(builder)
+        public static ContainerBuilder RegisterAzureSearch(this AutofacContainerBuilder builder)
+            => new ContainerBuilder(builder)
                 .RegisterRepositories()
                 .RegisterIndexes()
                 .RegisterSearchers()
                 .RegisterInitializers()
-                .RegisterWrappers();
+                .RegisterWrappers()
+                .RegisterOperations();
     }
 }

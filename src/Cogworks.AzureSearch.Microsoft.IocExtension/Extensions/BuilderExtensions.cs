@@ -5,12 +5,13 @@ namespace Cogworks.AzureSearch.Microsoft.IocExtension.Extensions
 {
     public static class BuilderExtensions
     {
-        public static AzureSearchBuilder RegisterAzureSearch(this IServiceCollection serviceCollection)
-            => new AzureSearchBuilder(serviceCollection)
+        public static ContainerBuilder RegisterAzureSearch(this IServiceCollection serviceCollection)
+            => new ContainerBuilder(serviceCollection)
                 .RegisterRepositories()
                 .RegisterIndexes()
                 .RegisterSearchers()
                 .RegisterInitializers()
-                .RegisterWrappers();
+                .RegisterWrappers()
+                .RegisterOperations();
     }
 }
