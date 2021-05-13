@@ -13,7 +13,6 @@ using Cogworks.AzureSearch.AutofacIoc.UnitTests.Models;
 using Cogworks.AzureSearch.AutofacIoc.UnitTests.Searchers;
 using Xunit;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.Models;
 using Cogworks.AzureSearch.Interfaces.Builder;
 
 namespace Cogworks.AzureSearch.AutofacIoc.UnitTests
