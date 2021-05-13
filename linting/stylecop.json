@@ -1,0 +1,42 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "maintainabilityRules": {},
+    "indentation": {},
+    "documentationRules": {
+      "companyName": "The Cogworks Ltd",
+      "copyrightText": "Copyright (c) 2020 {companyName}\nSee LICENSE for more details.",
+      "headerDecoration": "-----------------------------------------------------------------",
+      "xmlHeader": true,
+      "documentInterfaces": false,
+      "documentInternalElements": false,
+      "documentExposedElements": false,
+      "documentPrivateElements": false,
+      "documentPrivateFields": false,
+      "documentationCulture": "en-GB",
+      "fileNamingConvention": "stylecop"
+    },
+    "layoutRules": {
+      "newlineAtEndOfFile": "omit",
+      "allowConsecutiveUsings": false
+    },
+    "spacingRules": {
+
+    },
+    "namingRules": {
+      "allowCommonHungarianPrefixes": false
+    },
+    "orderingRules": {
+      "elementOrder": [
+        "kind",
+        "constant",
+        "accessibility",
+        "static",
+        "readonly"
+      ],
+      "usingDirectivesPlacement": "outsideNamespace",
+      "blankLinesBetweenUsingGroups": "omit"
+    },
+    "readabilityRules": {}
+  }
+}

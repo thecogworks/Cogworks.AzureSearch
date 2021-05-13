@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <!-- Package references and additional files which are consumed by all projects -->
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" IsImplicitlyDefined="true"  />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" IsImplicitlyDefined="true" />
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" IsImplicitlyDefined="true" />
+    <PackageReference Include="Microsoft.NetCore.Analyzers" IsImplicitlyDefined="true" />
+    <PackageReference Include="Microsoft.NetFramework.Analyzers" IsImplicitlyDefined="true" />
+    <PackageReference Include="Microsoft.CodeAnalysis.VersionCheckAnalyzer" IsImplicitlyDefined="true" />
+    <PackageReference Include="SmartanAlyzers.ExceptionAnalyzer" IsImplicitlyDefined="true" />
+  </ItemGroup>
+
+</Project>
