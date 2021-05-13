@@ -18,7 +18,7 @@ env:
 
   # Solution Setup
   CONFIG: 'Release'
-  SOURCE_PATH: './Source'
+  SOURCE_PATH: './src'
 
   # Nuget Setup
   NUGET_VERSION: 'latest'
