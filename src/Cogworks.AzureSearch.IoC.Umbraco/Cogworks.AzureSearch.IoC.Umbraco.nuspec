@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0"?>
 <package>
   <metadata>
-    <id>Cogworks.AzureSearch.Umbraco.IocExtension</id>
+    <id>Cogworks.AzureSearch.IoC.Umbraco</id>
     <version>$version$</version>
-    <title>Cogworks.AzureSearch.Umbraco.IocExtension</title>
+    <title>Cogworks.AzureSearch.IoC.Umbraco</title>
     <authors>Cogworks</authors>
     <owners>Cogworks</owners>
-    <projectUrl>https://github.com/thecogworks/Cogworks.AzureSearch</projectUrl>
-    <repository type="git" url="https://github.com/thecogworks/Cogworks.AzureSearch" />
+    <projectUrl>https://github.com/thecogworks/Cogworks.AzureSearch.IoC.Umbraco</projectUrl>
+    <repository type="git" url="https://github.com/thecogworks/Cogworks.AzureSearch.IoC.Umbraco" />
     <license type="expression">Apache-2.0</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A wrapper to Azure Search allowing to easily setup Azure Search indexes, searchers and using it with DI/IoC approach (currently with support for Umbraco, LightInject and Autofac).</description>
@@ -16,7 +16,7 @@
     <dependencies>
       <group targetFramework="net472">
         <dependency id="Cogworks.AzureSearch" version="$version$" />
-        <dependency id="Cogworks.AzureSearch.LightInject.IocExtension" version="$version$" />
+        <dependency id="Cogworks.AzureSearch.IoC.LightInject" version="$version$" />
         <dependency id="UmbracoCms.Core" version="8.6.4" />
         <dependency id="Azure.Search.Documents" version="11.2.0" />
       </group>
@@ -24,7 +24,7 @@
   </metadata>
   <files>
     <file src="bin\Release\Cogworks.AzureSearch.dll" target="lib/net472" />
-    <file src="bin\Release\Cogworks.AzureSearch.LightInject.IocExtension.dll" target="lib/net472" />
-    <file src="bin\Release\Cogworks.AzureSearch.Umbraco.IocExtension.dll" target="lib/net472" />
+    <file src="bin\Release\Cogworks.AzureSearch.IoC.LightInject.dll" target="lib/net472" />
+    <file src="bin\Release\Cogworks.AzureSearch.IoC.Umbraco.dll" target="lib/net472" />
   </files>
 </package>
