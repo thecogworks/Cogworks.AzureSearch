@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Cogworks.AzureSearch.Microsoft.IocExtension</id>
+    <version>$version$</version>
+    <title>Cogworks.AzureSearch.Microsoft.IocExtension</title>
+    <authors>Cogworks</authors>
+    <owners>Cogworks</owners>
+    <projectUrl>https://github.com/thecogworks/Cogworks.AzureSearch</projectUrl>
+    <repository type="git" url="https://github.com/thecogworks/Cogworks.AzureSearch" />
+    <license type="expression">Apache-2.0</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A wrapper to Azure Search allowing to easily setup Azure Search indexes, searchers and using it with DI/IoC approach (currently with support for Umbraco, LightInject and Autofac).</description>
+    <copyright>The Cogworks Limited 2020</copyright>
+    <tags>Azure Search, Autofac</tags>
+    <dependencies>
+      <group targetFramework="netstandard2.0">
+        <dependency id="Cogworks.AzureSearch" version="$version$" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="3.1.8" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="3.1.8" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\**\*.dll" target="lib" />
+  </files>
+</package>
