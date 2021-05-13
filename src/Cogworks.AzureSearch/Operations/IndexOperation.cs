@@ -29,7 +29,8 @@ namespace Cogworks.AzureSearch.Operations
             }
             catch (Exception exception)
             {
-                throw new IndexExistsException(exception.Message, exception.InnerException);
+                var domainException = new IndexExistsException(exception.Message, exception.InnerException);
+                throw domainException;
             }
         }
 
@@ -41,7 +42,8 @@ namespace Cogworks.AzureSearch.Operations
             }
             catch (Exception exception)
             {
-                throw new IndexDeleteException(exception.Message, exception.InnerException);
+                var domainException = new IndexDeleteException(exception.Message, exception.InnerException);
+                throw domainException;
             }
         }
 
@@ -57,7 +59,8 @@ namespace Cogworks.AzureSearch.Operations
             }
             catch (Exception exception)
             {
-                throw new IndexCreateOrUpdateException(exception.Message, exception.InnerException);
+                var domainException = new IndexCreateOrUpdateException(exception.Message, exception.InnerException);
+                throw domainException;
 
             }
         }
@@ -76,7 +79,8 @@ namespace Cogworks.AzureSearch.Operations
             }
             catch (Exception exception)
             {
-                throw new IndexClearException(exception.Message, exception.InnerException);
+                var domainException = new IndexClearException(exception.Message, exception.InnerException);
+                throw domainException;
             }
         }
     }
