@@ -11,7 +11,7 @@
     <license type="expression">Apache-2.0</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>An Autofac extension to Cogworks.AzureSearch.</description>
-    <copyright>The Cogworks Limited $CopyRightYear$</copyright>
+    <copyright>The Cogworks Limited $CopyrightYear$</copyright>
     <tags>Azure Search, Autofac, container, IoC</tags>
     <dependencies>
       <group targetFramework="netstandard2.0">

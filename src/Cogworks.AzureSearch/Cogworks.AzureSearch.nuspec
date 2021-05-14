@@ -11,7 +11,7 @@
     <license type="expression">Apache-2.0</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A wrapper to Azure Search allowing to easily setup Azure Search indexes, searchers.</description>
-    <copyright>The Cogworks Limited $CopyRightYear$</copyright>
+    <copyright>The Cogworks Limited $CopyrightYear$</copyright>
     <tags>Azure Search</tags>
     <dependencies>
       <group targetFramework="netstandard2.0">
