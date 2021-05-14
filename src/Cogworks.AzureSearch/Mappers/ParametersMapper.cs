@@ -17,11 +17,11 @@ namespace Cogworks.AzureSearch.Mappers
                 HighlightPreTag = searchParameters.HighlightPreTag,
                 IncludeTotalCount = searchParameters.IncludeTotalResultCount,
                 MinimumCoverage = searchParameters.MinimumCoverage,
-                QueryType = searchParameters.QueryType == AzureQueryType.Full
+                QueryType = searchParameters.QueryType == QueryType.Full
                     ? SearchQueryType.Full
                     : SearchQueryType.Simple,
                 ScoringProfile = searchParameters.ScoringProfile,
-                SearchMode = searchParameters.SearchMode == AzureSearchModeType.Any
+                SearchMode = searchParameters.SearchMode == SearchModeType.Any
                     ? SearchMode.Any
                     : SearchMode.All,
                 Skip = searchParameters.Skip,

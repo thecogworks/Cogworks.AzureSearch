@@ -1,6 +1,6 @@
 ﻿namespace Cogworks.AzureSearch.Enums
 {
-    public enum AzureQueryType
+    public enum QueryType
     {
         Simple = 0,
         Full = 1

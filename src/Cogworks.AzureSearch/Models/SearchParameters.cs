@@ -21,13 +21,13 @@ namespace Cogworks.AzureSearch.Models
 
         public IEnumerable<string> OrderBy { get; set; }
 
-        public AzureQueryType QueryType { get; set; }
+        public QueryType QueryType { get; set; }
 
         public string ScoringProfile { get; set; }
 
         public IEnumerable<string> SearchFields { get; set; }
 
-        public AzureSearchModeType SearchMode { get; set; }
+        public SearchModeType SearchMode { get; set; }
 
         public IEnumerable<string> Select { get; set; }
 
