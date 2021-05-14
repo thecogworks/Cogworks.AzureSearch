@@ -1,4 +1,23 @@
-# [0.2.0](https://github.com/thecogworks/Cogworks.AzureSearch/compare/0.1.0...0.2.0) (2020-10-12)
+# [1.0.0](https://github.com/thecogworks/Cogworks.AzureSearch/compare/0.2.0...1.0.0) (2021-05-14)
+
+
+### Bug Fixes
+
+* added missing Microsoft IoC nuspec ([cc663c9](https://github.com/thecogworks/Cogworks.AzureSearch/commit/cc663c9c1428ed6f131e81d0385f4cdab6b043e5))
+
+
+### Features
+
+* added code style ([432c7a3](https://github.com/thecogworks/Cogworks.AzureSearch/commit/432c7a348aa508ac2738db2eb6477880439c18a2))
+* added NuGet release info for the extension libraries ([af07cb7](https://github.com/thecogworks/Cogworks.AzureSearch/commit/af07cb710f862cab3b8dc91bd77ebe66393eefea))
+* added some basic badges reflecting the code/build status ([38898bf](https://github.com/thecogworks/Cogworks.AzureSearch/commit/38898bfded47ea6af832fe893aec239fb7dde1a9))
+* adding ability to use custom index definition ([e840349](https://github.com/thecogworks/Cogworks.AzureSearch/commit/e840349f78d0c990f3c3045dc430116bf2eb7f41))
+* changed IoC namespaces ([a4dcdba](https://github.com/thecogworks/Cogworks.AzureSearch/commit/a4dcdba43907711ab84391c22c20615ed5fead21))
+* updated azure search ([#54](https://github.com/thecogworks/Cogworks.AzureSearch/issues/54)) ([97c2508](https://github.com/thecogworks/Cogworks.AzureSearch/commit/97c250898136937a3cbe93c316a33648970cf792))
+
+
+
+# [0.2.0](https://github.com/thecogworks/Cogworks.AzureSearch/compare/0.1.0...0.2.0) (2020-10-17)
 
 
 ### Bug Fixes
