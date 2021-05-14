@@ -11,7 +11,7 @@
     <license type="expression">Apache-2.0</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>An LightInject extension to Cogworks.AzureSearch.</description>
-    <copyright>The Cogworks Limited 2020</copyright>
+    <copyright>The Cogworks Limited $CopyRightYear$</copyright>
     <tags>Azure Search, LightInject, container, IoC</tags>
     <dependencies>
       <group targetFramework="netstandard2.0">
@@ -20,6 +20,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\**\*.dll" target="lib" />
+    <file src="bin\$Configuration$\**\*.dll" target="lib" />
   </files>
 </package>
