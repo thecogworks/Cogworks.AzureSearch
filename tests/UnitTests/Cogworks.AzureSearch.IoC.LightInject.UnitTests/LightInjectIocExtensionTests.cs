@@ -1,20 +1,20 @@
-﻿using Cogworks.AzureSearch.Interfaces.Indexes;
+﻿using System;
+using Azure.Search.Documents.Indexes.Models;
+using Cogworks.AzureSearch.Interfaces.Builder;
+using Cogworks.AzureSearch.Interfaces.Indexes;
 using Cogworks.AzureSearch.Interfaces.Initializers;
 using Cogworks.AzureSearch.Interfaces.Operations;
 using Cogworks.AzureSearch.Interfaces.Repositories;
 using Cogworks.AzureSearch.Interfaces.Searches;
 using Cogworks.AzureSearch.IoC.LightInject.Extensions;
-using Cogworks.AzureSearch.LightInject.UnitTests.Models;
-using Cogworks.AzureSearch.LightInject.UnitTests.Searchers;
+using Cogworks.AzureSearch.IoC.LightInject.UnitTests.Models;
+using Cogworks.AzureSearch.IoC.LightInject.UnitTests.Searchers;
 using Cogworks.AzureSearch.Models;
 using LightInject;
 using NSubstitute;
-using System;
-using Azure.Search.Documents.Indexes.Models;
-using Cogworks.AzureSearch.Interfaces.Builder;
 using Xunit;
 
-namespace Cogworks.AzureSearch.LightInject.UnitTests
+namespace Cogworks.AzureSearch.IoC.LightInject.UnitTests
 {
     public class LightInjectIocExtensionTests
     {

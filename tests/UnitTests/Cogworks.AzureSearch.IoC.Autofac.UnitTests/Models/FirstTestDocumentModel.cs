@@ -1,9 +1,9 @@
 ﻿using Azure.Search.Documents.Indexes;
 using Cogworks.AzureSearch.Models;
 
-namespace Cogworks.AzureSearch.AutofacIoc.UnitTests.Models
+namespace Cogworks.AzureSearch.IoC.Autofac.UnitTests.Models
 {
-    public class ThirdTestDocumentModel : IModel
+    public class FirstTestDocumentModel : IModel
     {
         [SimpleField(IsKey = true, IsFilterable = true)]
         [SearchableField()]

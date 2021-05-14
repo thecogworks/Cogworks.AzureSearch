@@ -1,7 +1,7 @@
 ﻿using Azure.Search.Documents.Indexes;
 using Cogworks.AzureSearch.Models;
 
-namespace Cogworks.AzureSearch.AutofacIoc.UnitTests.Models
+namespace Cogworks.AzureSearch.IoC.Autofac.UnitTests.Models
 {
     public class SecondTestDocumentModel : IModel
     {

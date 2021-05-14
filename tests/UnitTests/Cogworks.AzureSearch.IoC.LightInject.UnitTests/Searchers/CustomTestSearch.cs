@@ -1,8 +1,8 @@
 ﻿using Cogworks.AzureSearch.Interfaces.Searches;
-using Cogworks.AzureSearch.LightInject.UnitTests.Models;
+using Cogworks.AzureSearch.IoC.LightInject.UnitTests.Models;
 using Cogworks.AzureSearch.Searchers;
 
-namespace Cogworks.AzureSearch.LightInject.UnitTests.Searchers
+namespace Cogworks.AzureSearch.IoC.LightInject.UnitTests.Searchers
 {
     public interface ICustomTestSearch
     {
