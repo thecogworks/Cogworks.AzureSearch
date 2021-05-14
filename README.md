@@ -8,6 +8,7 @@ A wrapper to Azure Search allowing to easily setup Azure Search indexes, searche
 |--------------------------------|-----------------|
 | `Cogworks.AzureSearch.IoC.Autofac` | [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch.IoC.Autofac)](https://www.nuget.org/packages/Cogworks.AzureSearch.IoC.Autofac/) |
 | `Cogworks.AzureSearch.IoC.LightInject` | [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch.IoC.LightInject)](https://www.nuget.org/packages/Cogworks.AzureSearch.IoC.LightInject/) |
+| `Cogworks.AzureSearch.IoC.Microsoft` | [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch.IoC.Microsoft)](https://www.nuget.org/packages/Cogworks.AzureSearch.IoC.Umbraco/) |
 | `Cogworks.AzureSearch.IoC.Umbraco` | [![NuGet Version](https://img.shields.io/nuget/v/Cogworks.AzureSearch.IoC.Umbraco)](https://www.nuget.org/packages/Cogworks.AzureSearch.IoC.Umbraco/) |
 
 ## Usage
