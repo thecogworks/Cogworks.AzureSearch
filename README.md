@@ -12,31 +12,6 @@ A wrapper to Azure Search allowing to easily setup Azure Search indexes, searche
 
 ## Usage
 
-#### Registration
-
-```csharp
-
-_composing.RegisterAzureSearch()
-    .RegisterClientOptions("[AzureSearchServiceName]", "[AzureSearchCredentials]")
-    .RegisterIndexOptions(false, false) // for now required
-    .RegisterIndexDefinitions<FirstDocumentModel>("first-document-index-name")
-    .RegisterIndexDefinitions<SecondDocumentModel>("second-document-index-name")
-    .RegisterIndexDefinitions<ThirdDocumentModel>(new Index{
-        Name = "third-document-index-name",
-        ScoringProfiles = new List<ScoringProfile>()
-                {
-                    new ScoringProfile("global-sp", new TextWeights(new Dictionary<string, double>()
-                    {
-                        {"Name", 10}, {"Content", 0.1}, {"Tags/Name", 0.1}
-                    }),new List<ScoringFunction>()
-                    {
-                        new FreshnessScoringFunction("PublishDate", 20, TimeSpan.FromDays(180), ScoringFunctionInterpolation.Quadratic)
-                    })
-                } //and more custom properties to add
-    })
-    .RegisterDomainSearcher<SomeDomainSearch, ISomeDomainSearch, FirstDocumentModel>();
-```
-
 #### Document Operations
 
 ```csharp
@@ -138,9 +113,9 @@ public interface ISomeDomainSearch
     FirstDocumentModel GetLatestAuthorDocument(string author);
 }
 
-public class SomeDomainSearch : AzureSearch<FirstDocumentModel>, ISomeDomainSearch
+public class SomeDomainSearch : BaseDomainSearch<FirstDocumentModel>, ISomeDomainSearch
 {
-    public SomeDomainSearch(IAzureDocumentSearch<FirstDocumentModel> azureSearchRepository) : base(azureSearchRepository)
+    public SomeDomainSearch(ISearcher<FirstDocumentModel> searcher) : base(searcher)
     {
     }
 
