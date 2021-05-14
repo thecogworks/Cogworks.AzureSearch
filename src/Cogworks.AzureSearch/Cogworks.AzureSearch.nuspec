@@ -15,8 +15,7 @@
     <tags>Azure Search</tags>
     <dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="Microsoft.Azure.Search" version="10.1.0" />
-        <dependency id="System.ComponentModel.Annotations" version="4.7.0" />
+        <dependency id="Azure.Search.Documents" version="11.2.0" />
       </group>
     </dependencies>
   </metadata>
