@@ -109,7 +109,7 @@ jobs:
           foreach ($nuspecFile in $nuspecFiles){
             nuget pack "$nuspecFile" `
              -Version ${{ env.VERSION }} `
-             -Properties Configuration=${{ env.CONFIG }} `
+             -Properties "Configuration=${{ env.CONFIG }};CopyrightYear=$(Get-Date -Format yyyy)"`
              -OutputDirectory ${{ env.NUGET_OUTPUT }}
           }
 

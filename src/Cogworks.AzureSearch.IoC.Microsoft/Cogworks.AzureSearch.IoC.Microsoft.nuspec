@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Cogworks.AzureSearch.IoC.Microsoft</id>
+    <version>$version$</version>
+    <title>Cogworks.AzureSearch.IoC.Microsoft</title>
+    <authors>Cogworks</authors>
+    <owners>Cogworks</owners>
+    <projectUrl>https://github.com/thecogworks/Cogworks.AzureSearch.IoC.Microsoft</projectUrl>
+    <repository type="git" url="https://github.com/thecogworks/Cogworks.AzureSearch.IoC.Microsoft" />
+    <license type="expression">Apache-2.0</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An Microsoft DependencyInjection extension to Cogworks.AzureSearch.</description>
+    <copyright>The Cogworks Limited $CopyrightYear$</copyright>
+    <tags>Azure Search, Microsoft, Dependency Injection, container, IoC</tags>
+    <dependencies>
+      <group targetFramework="netstandard2.0">
+        <dependency id="Cogworks.AzureSearch" version="1.0.0" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="3.1.8" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="3.1.8" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\$Configuration$\**\*.dll" target="lib" />
+  </files>
+</package>

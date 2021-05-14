@@ -1,0 +1,30 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Cogworks.AzureSearch.IoC.Umbraco</id>
+    <version>$version$</version>
+    <title>Cogworks.AzureSearch.IoC.Umbraco</title>
+    <authors>Cogworks</authors>
+    <owners>Cogworks</owners>
+    <projectUrl>https://github.com/thecogworks/Cogworks.AzureSearch.IoC.Umbraco</projectUrl>
+    <repository type="git" url="https://github.com/thecogworks/Cogworks.AzureSearch.IoC.Umbraco" />
+    <license type="expression">Apache-2.0</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An Umbraco extension to Cogworks.AzureSearch.</description>
+    <copyright>The Cogworks Limited $CopyrightYear$</copyright>
+    <tags>Azure Search, Umbraco, container, IoC</tags>
+    <dependencies>
+      <group targetFramework="net472">
+        <dependency id="Azure.Search.Documents" version="11.2.0" />
+        <dependency id="Cogworks.AzureSearch" version="1.0.0" />
+        <dependency id="Cogworks.AzureSearch.IoC.LightInject" version="1.0.0" />
+        <dependency id="UmbracoCms.Core" version="8.6.4" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\$Configuration$\Cogworks.AzureSearch.dll" target="lib/net472" />
+    <file src="bin\$Configuration$\Cogworks.AzureSearch.IoC.LightInject.dll" target="lib/net472" />
+    <file src="bin\$Configuration$\Cogworks.AzureSearch.IoC.Umbraco.dll" target="lib/net472" />
+  </files>
+</package>
