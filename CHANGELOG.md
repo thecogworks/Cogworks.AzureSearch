@@ -1,3 +1,12 @@
+## [1.0.1](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.0.0...1.0.1) (2021-05-14)
+
+
+### Bug Fixes
+
+* removed azure prefix from enums ([8302aad](https://github.com/thecogworks/Cogworks.AzureSearch/commit/8302aadb408eb54ebcbb9f631d6e340ebce791a0))
+
+
+
 # [1.0.0](https://github.com/thecogworks/Cogworks.AzureSearch/compare/0.2.0...1.0.0) (2021-05-14)
 
 
