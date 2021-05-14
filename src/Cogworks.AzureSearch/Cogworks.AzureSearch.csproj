@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -23,10 +23,10 @@
   <!-- Tests Visibility -->
   <ItemGroup>
     <InternalsVisibleTo Include="Cogworks.AzureSearch.UnitTests" />
-    <InternalsVisibleTo Include="Cogworks.AzureSearch.UmbracoIoc.UnitTests" />
-    <InternalsVisibleTo Include="Cogworks.AzureSearch.MicrosoftIoc.UnitTests" />
-    <InternalsVisibleTo Include="Cogworks.AzureSearch.AutofacIoc.UnitTests" />
-    <InternalsVisibleTo Include="Cogworks.AzureSearch.LightInject.UnitTests" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.IoC.Autofac.UnitTests" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.IoC.Umbraco.UnitTests" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.IoC.LightInject.UnitTests" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.IoC.Microsoft.UnitTests" />
   </ItemGroup>
 
 </Project>
