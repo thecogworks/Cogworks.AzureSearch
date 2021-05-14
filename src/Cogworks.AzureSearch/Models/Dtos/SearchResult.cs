@@ -2,7 +2,8 @@
 
 namespace Cogworks.AzureSearch.Models.Dtos
 {
-    public class SearchResult<TModel> where TModel : class, IModel, new()
+    public class SearchResult<TModel>
+        where TModel : class, IModel, new()
     {
         public long TotalCount { get; set; }
 

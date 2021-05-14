@@ -5,7 +5,8 @@ using Cogworks.AzureSearch.Models.Dtos;
 
 namespace Cogworks.AzureSearch.Interfaces.Operations
 {
-    public interface IDocumentOperation<in TModel> where TModel : class, IModel, new()
+    public interface IDocumentOperation<in TModel>
+        where TModel : class, IModel, new()
     {
         Task<DocumentOperationResult> AddOrUpdateDocumentAsync(TModel model);
 
