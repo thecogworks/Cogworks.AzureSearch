@@ -14,21 +14,24 @@ namespace Cogworks.AzureSearch.Options
 
         public SearchClientOptions ClientOptions { get; }
 
-        public ClientOption(string serviceName, string credentials, string serviceUrlEndpoint)
+        public ClientOption(string serviceName, string credentials, string serviceUrlEndpoint, bool searchHeaders = false)
         {
             ServiceName = serviceName;
             Credentials = credentials;
             ServiceUrlEndpoint = serviceUrlEndpoint;
-            ClientOptions = GetOptions();
+            ClientOptions = GetOptions(searchHeaders);
         }
 
-        private static SearchClientOptions GetOptions()
+        private static SearchClientOptions GetOptions(bool searchHeaders)
         {
             var clientOptions = new SearchClientOptions();
 
-            clientOptions.AddPolicy(
-                new SearchIdPipelinePolicy(),
-                HttpPipelinePosition.PerCall);
+            if (searchHeaders)
+            {
+                clientOptions.AddPolicy(
+                    new SearchIdPipelinePolicy(),
+                    HttpPipelinePosition.PerCall);
+            }
 
             return clientOptions;
         }
