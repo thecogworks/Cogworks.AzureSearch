@@ -1,3 +1,12 @@
+## [1.0.2](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.0.1...1.0.2) (2021-06-21)
+
+
+### Bug Fixes
+
+* added optional search headers option ([e0f5e01](https://github.com/thecogworks/Cogworks.AzureSearch/commit/e0f5e018530a042d709a3597a9dc3bab7e1c9445))
+
+
+
 ## [1.0.1](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.0.0...1.0.1) (2021-05-14)
 
 
