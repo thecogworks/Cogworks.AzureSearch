@@ -46,6 +46,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Cogworks.AzureSearch\Cogworks.AzureSearch.csproj" />
+    <ProjectReference Include="..\..\..\src\Cogworks.AzureSearch.csproj" />
   </ItemGroup>
 </Project>
