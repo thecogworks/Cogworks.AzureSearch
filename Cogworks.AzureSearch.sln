@@ -25,6 +25,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		linting\stylecop.json = linting\stylecop.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{A82EFC5A-0A90-4701-8106-2C5044592572}"
+	ProjectSection(SolutionItems) = preProject
+		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{43C9CC92-BE1A-4D4F-B82D-F973185F214C}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\workflows\changelog.yml = .github\workflows\changelog.yml
+		.github\workflows\gitflow.yml = .github\workflows\gitflow.yml
+		.github\workflows\pull-request.yml = .github\workflows\pull-request.yml
+		.github\workflows\release-github.yml = .github\workflows\release-github.yml
+		.github\workflows\release-nuget.yml = .github\workflows\release-nuget.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +62,7 @@ Global
 		{180E9BD6-30B9-4D88-B88C-9F289D316967} = {B5DAEDD1-13AF-4A74-BD24-42EBCB1A18D0}
 		{37898883-18CD-47A7-BA59-E4FC1FD8B8E1} = {180E9BD6-30B9-4D88-B88C-9F289D316967}
 		{94F77E26-4E02-4ED5-BD54-45E3AAA70090} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
+		{43C9CC92-BE1A-4D4F-B82D-F973185F214C} = {A82EFC5A-0A90-4701-8106-2C5044592572}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC813CF7-BD65-4CD5-B0B7-7B1F828A9909}
