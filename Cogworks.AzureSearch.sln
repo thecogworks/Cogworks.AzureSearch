@@ -80,6 +80,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.Li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.LightInject.UnitTests", "src\IoC.Providers\Cogworks.AzureSearch.IoC.LightInject\tests\UnitTests\Cogworks.AzureSearch.IoC.LightInject.UnitTests\Cogworks.AzureSearch.IoC.LightInject.UnitTests.csproj", "{3DAFCE04-69C8-4BB1-B638-02606DC8480A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cogworks.AzureSearch.IoC.Umbraco", "Cogworks.AzureSearch.IoC.Umbraco", "{C8DAFC00-B22B-4CD6-A280-50C037DE0EFE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C13DFF15-6FB7-4BA8-A82B-13F92287D332}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3BC9DA9E-CB54-4799-A7DF-7F993BFA89E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{1F0E1693-8441-48D0-B4F6-37E816B5E898}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.Umbraco", "src\IoC.Providers\Cogworks.AzureSearch.IoC.Umbraco\src\Cogworks.AzureSearch.IoC.Umbraco.csproj", "{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.Umbraco.UnitTests", "src\IoC.Providers\Cogworks.AzureSearch.IoC.Umbraco\tests\UnitTests\Cogworks.AzureSearch.IoC.Umbraco.UnitTests\Cogworks.AzureSearch.IoC.Umbraco.UnitTests.csproj", "{723295D3-FD9C-47FC-AC58-2E075D7573A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,6 +130,14 @@ Global
 		{3DAFCE04-69C8-4BB1-B638-02606DC8480A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DAFCE04-69C8-4BB1-B638-02606DC8480A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DAFCE04-69C8-4BB1-B638-02606DC8480A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{723295D3-FD9C-47FC-AC58-2E075D7573A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{723295D3-FD9C-47FC-AC58-2E075D7573A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{723295D3-FD9C-47FC-AC58-2E075D7573A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{723295D3-FD9C-47FC-AC58-2E075D7573A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,6 +167,12 @@ Global
 		{CE0638CA-4C05-4DD7-AC83-3271F729B474} = {0DC139DC-86BE-4EBC-8110-E78B39D02A05}
 		{6A574A2F-277E-4A77-8DD8-C4722631226E} = {8CAFFC72-9B26-484D-98F4-0DF8D4D5FE6C}
 		{3DAFCE04-69C8-4BB1-B638-02606DC8480A} = {CE0638CA-4C05-4DD7-AC83-3271F729B474}
+		{C8DAFC00-B22B-4CD6-A280-50C037DE0EFE} = {0DD124A1-534B-4AFF-B252-D884CCCB9CC3}
+		{C13DFF15-6FB7-4BA8-A82B-13F92287D332} = {C8DAFC00-B22B-4CD6-A280-50C037DE0EFE}
+		{3BC9DA9E-CB54-4799-A7DF-7F993BFA89E9} = {C8DAFC00-B22B-4CD6-A280-50C037DE0EFE}
+		{1F0E1693-8441-48D0-B4F6-37E816B5E898} = {3BC9DA9E-CB54-4799-A7DF-7F993BFA89E9}
+		{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533} = {C13DFF15-6FB7-4BA8-A82B-13F92287D332}
+		{723295D3-FD9C-47FC-AC58-2E075D7573A9} = {1F0E1693-8441-48D0-B4F6-37E816B5E898}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC813CF7-BD65-4CD5-B0B7-7B1F828A9909}
