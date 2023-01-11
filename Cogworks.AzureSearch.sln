@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B5DAEDD1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{180E9BD6-30B9-4D88-B88C-9F289D316967}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9D0073AC-CE06-400A-B362-297CB9A332BE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution-items", ".solution-items", "{9D0073AC-CE06-400A-B362-297CB9A332BE}"
 	ProjectSection(SolutionItems) = preProject
 		linting\.editorconfig = linting\.editorconfig
 		CHANGELOG.md = CHANGELOG.md
