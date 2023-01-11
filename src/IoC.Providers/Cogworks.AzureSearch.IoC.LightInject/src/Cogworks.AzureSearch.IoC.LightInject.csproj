@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cogworks.AzureSearch" Version="1.0.2" />
+    <PackageReference Include="LightInject" Version="5.5.0" />
+    <PackageReference Include="Meziantou.MSBuild.InternalsVisibleTo" Version="1.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.IoC.Umbraco" />
+  </ItemGroup>
+
+
+</Project>
