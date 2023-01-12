@@ -807,3 +807,4 @@ $RECYCLE.BIN/
 
 .editorconfig
 !linting/.editorconfig
+*.hash
