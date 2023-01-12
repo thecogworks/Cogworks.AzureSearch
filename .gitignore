@@ -805,6 +805,5 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudio,visualstudiocode,rider,csharp,aspnetcore,dotnetcore
 
-.editorconfig
 !linting/.editorconfig
 *.hash
