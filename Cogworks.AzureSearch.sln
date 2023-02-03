@@ -9,11 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B5DAEDD1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{180E9BD6-30B9-4D88-B88C-9F289D316967}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch.UnitTests", "tests\UnitTests\Cogworks.AzureSearch.UnitTests\Cogworks.AzureSearch.UnitTests.csproj", "{37898883-18CD-47A7-BA59-E4FC1FD8B8E1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cogworks.AzureSearch", "src\Cogworks.AzureSearch\Cogworks.AzureSearch.csproj", "{94F77E26-4E02-4ED5-BD54-45E3AAA70090}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9D0073AC-CE06-400A-B362-297CB9A332BE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution-items", ".solution-items", "{9D0073AC-CE06-400A-B362-297CB9A332BE}"
 	ProjectSection(SolutionItems) = preProject
 		linting\.editorconfig = linting\.editorconfig
 		CHANGELOG.md = CHANGELOG.md
@@ -25,28 +21,158 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		linting\stylecop.json = linting\stylecop.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{A82EFC5A-0A90-4701-8106-2C5044592572}"
+	ProjectSection(SolutionItems) = preProject
+		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{43C9CC92-BE1A-4D4F-B82D-F973185F214C}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\workflows\changelog.yml = .github\workflows\changelog.yml
+		.github\workflows\gitflow.yml = .github\workflows\gitflow.yml
+		.github\workflows\pull-request.yml = .github\workflows\pull-request.yml
+		.github\workflows\release-github.yml = .github\workflows\release-github.yml
+		.github\workflows\release-nuget.yml = .github\workflows\release-nuget.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cogworks.AzureSearch", "Cogworks.AzureSearch", "{9C3D9268-B066-4E34-929C-F45E801BD4B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch", "src\Cogworks.AzureSearch\src\Cogworks.AzureSearch.csproj", "{350EEE42-DE3F-4C10-89BC-0422F6CC1069}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.UnitTests", "src\Cogworks.AzureSearch\tests\UnitTests\Cogworks.AzureSearch.UnitTests\Cogworks.AzureSearch.UnitTests.csproj", "{CBA4193C-1363-42CD-8426-01729C61D432}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IoC.Providers", "IoC.Providers", "{0DD124A1-534B-4AFF-B252-D884CCCB9CC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cogworks.AzureSearch.IoC.Microsoft", "Cogworks.AzureSearch.IoC.Microsoft", "{9F1676F4-2441-4FC8-AB8D-3C019EA61853}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{965C0D6C-B421-48EF-9E02-82FF044B9CEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{99E4E02C-94B6-43AC-AB9B-F04BE5D8BC92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{E0093B96-E28A-4471-8417-026A9B1101A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.Microsoft", "src\IoC.Providers\Cogworks.AzureSearch.IoC.Microsoft\src\Cogworks.AzureSearch.IoC.Microsoft.csproj", "{7666A8E8-4CD6-4BF1-AAED-277BE1E39BA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.Microsoft.UnitTests", "src\IoC.Providers\Cogworks.AzureSearch.IoC.Microsoft\tests\UnitTests\Cogworks.AzureSearch.IoC.Microsoft.UnitTests\Cogworks.AzureSearch.IoC.Microsoft.UnitTests.csproj", "{010ED38D-616E-467A-AC1B-3D409185171F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cogworks.AzureSearch.IoC.Autofac", "Cogworks.AzureSearch.IoC.Autofac", "{27EFEA7F-24A7-4D01-A888-712A3EBCD261}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A3AAC530-960E-4732-AB87-DBA9470B229D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CD92425E-77AC-451B-9595-0A91D6661B6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.Autofac", "src\IoC.Providers\Cogworks.AzureSearch.IoC.Autofac\src\Cogworks.AzureSearch.IoC.Autofac.csproj", "{F74DA3A4-F44F-4484-A48C-416DEBDC73A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{EEBF1D25-F8B2-4D41-806E-E401961EEE35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.Autofac.UnitTests", "src\IoC.Providers\Cogworks.AzureSearch.IoC.Autofac\tests\UnitTests\Cogworks.AzureSearch.IoC.Autofac.UnitTests\Cogworks.AzureSearch.IoC.Autofac.UnitTests.csproj", "{72F59324-3859-4FE8-97F0-B57844848950}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cogworks.AzureSearch.IoC.LightInject", "Cogworks.AzureSearch.IoC.LightInject", "{F647B586-5EFB-46C0-A303-EF7022A6EDD0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8CAFFC72-9B26-484D-98F4-0DF8D4D5FE6C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0DC139DC-86BE-4EBC-8110-E78B39D02A05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{CE0638CA-4C05-4DD7-AC83-3271F729B474}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.LightInject", "src\IoC.Providers\Cogworks.AzureSearch.IoC.LightInject\src\Cogworks.AzureSearch.IoC.LightInject.csproj", "{6A574A2F-277E-4A77-8DD8-C4722631226E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.LightInject.UnitTests", "src\IoC.Providers\Cogworks.AzureSearch.IoC.LightInject\tests\UnitTests\Cogworks.AzureSearch.IoC.LightInject.UnitTests\Cogworks.AzureSearch.IoC.LightInject.UnitTests.csproj", "{3DAFCE04-69C8-4BB1-B638-02606DC8480A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cogworks.AzureSearch.IoC.Umbraco", "Cogworks.AzureSearch.IoC.Umbraco", "{C8DAFC00-B22B-4CD6-A280-50C037DE0EFE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C13DFF15-6FB7-4BA8-A82B-13F92287D332}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3BC9DA9E-CB54-4799-A7DF-7F993BFA89E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{1F0E1693-8441-48D0-B4F6-37E816B5E898}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.Umbraco", "src\IoC.Providers\Cogworks.AzureSearch.IoC.Umbraco\src\Cogworks.AzureSearch.IoC.Umbraco.csproj", "{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.Umbraco.UnitTests", "src\IoC.Providers\Cogworks.AzureSearch.IoC.Umbraco\tests\UnitTests\Cogworks.AzureSearch.IoC.Umbraco.UnitTests\Cogworks.AzureSearch.IoC.Umbraco.UnitTests.csproj", "{723295D3-FD9C-47FC-AC58-2E075D7573A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{37898883-18CD-47A7-BA59-E4FC1FD8B8E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37898883-18CD-47A7-BA59-E4FC1FD8B8E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37898883-18CD-47A7-BA59-E4FC1FD8B8E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37898883-18CD-47A7-BA59-E4FC1FD8B8E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{94F77E26-4E02-4ED5-BD54-45E3AAA70090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94F77E26-4E02-4ED5-BD54-45E3AAA70090}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94F77E26-4E02-4ED5-BD54-45E3AAA70090}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94F77E26-4E02-4ED5-BD54-45E3AAA70090}.Release|Any CPU.Build.0 = Release|Any CPU
+		{350EEE42-DE3F-4C10-89BC-0422F6CC1069}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{350EEE42-DE3F-4C10-89BC-0422F6CC1069}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{350EEE42-DE3F-4C10-89BC-0422F6CC1069}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{350EEE42-DE3F-4C10-89BC-0422F6CC1069}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBA4193C-1363-42CD-8426-01729C61D432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBA4193C-1363-42CD-8426-01729C61D432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBA4193C-1363-42CD-8426-01729C61D432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBA4193C-1363-42CD-8426-01729C61D432}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7666A8E8-4CD6-4BF1-AAED-277BE1E39BA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7666A8E8-4CD6-4BF1-AAED-277BE1E39BA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7666A8E8-4CD6-4BF1-AAED-277BE1E39BA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7666A8E8-4CD6-4BF1-AAED-277BE1E39BA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{010ED38D-616E-467A-AC1B-3D409185171F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{010ED38D-616E-467A-AC1B-3D409185171F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{010ED38D-616E-467A-AC1B-3D409185171F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{010ED38D-616E-467A-AC1B-3D409185171F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F74DA3A4-F44F-4484-A48C-416DEBDC73A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F74DA3A4-F44F-4484-A48C-416DEBDC73A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F74DA3A4-F44F-4484-A48C-416DEBDC73A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F74DA3A4-F44F-4484-A48C-416DEBDC73A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72F59324-3859-4FE8-97F0-B57844848950}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72F59324-3859-4FE8-97F0-B57844848950}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72F59324-3859-4FE8-97F0-B57844848950}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72F59324-3859-4FE8-97F0-B57844848950}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A574A2F-277E-4A77-8DD8-C4722631226E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A574A2F-277E-4A77-8DD8-C4722631226E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A574A2F-277E-4A77-8DD8-C4722631226E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A574A2F-277E-4A77-8DD8-C4722631226E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DAFCE04-69C8-4BB1-B638-02606DC8480A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DAFCE04-69C8-4BB1-B638-02606DC8480A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DAFCE04-69C8-4BB1-B638-02606DC8480A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DAFCE04-69C8-4BB1-B638-02606DC8480A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{723295D3-FD9C-47FC-AC58-2E075D7573A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{723295D3-FD9C-47FC-AC58-2E075D7573A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{723295D3-FD9C-47FC-AC58-2E075D7573A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{723295D3-FD9C-47FC-AC58-2E075D7573A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{180E9BD6-30B9-4D88-B88C-9F289D316967} = {B5DAEDD1-13AF-4A74-BD24-42EBCB1A18D0}
-		{37898883-18CD-47A7-BA59-E4FC1FD8B8E1} = {180E9BD6-30B9-4D88-B88C-9F289D316967}
-		{94F77E26-4E02-4ED5-BD54-45E3AAA70090} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
+		{43C9CC92-BE1A-4D4F-B82D-F973185F214C} = {A82EFC5A-0A90-4701-8106-2C5044592572}
+		{B85EEFD6-B048-478E-A032-3CCE3F0B3093} = {9C3D9268-B066-4E34-929C-F45E801BD4B0}
+		{B5DAEDD1-13AF-4A74-BD24-42EBCB1A18D0} = {9C3D9268-B066-4E34-929C-F45E801BD4B0}
+		{350EEE42-DE3F-4C10-89BC-0422F6CC1069} = {B85EEFD6-B048-478E-A032-3CCE3F0B3093}
+		{CBA4193C-1363-42CD-8426-01729C61D432} = {180E9BD6-30B9-4D88-B88C-9F289D316967}
+		{9F1676F4-2441-4FC8-AB8D-3C019EA61853} = {0DD124A1-534B-4AFF-B252-D884CCCB9CC3}
+		{965C0D6C-B421-48EF-9E02-82FF044B9CEA} = {9F1676F4-2441-4FC8-AB8D-3C019EA61853}
+		{99E4E02C-94B6-43AC-AB9B-F04BE5D8BC92} = {9F1676F4-2441-4FC8-AB8D-3C019EA61853}
+		{E0093B96-E28A-4471-8417-026A9B1101A8} = {99E4E02C-94B6-43AC-AB9B-F04BE5D8BC92}
+		{7666A8E8-4CD6-4BF1-AAED-277BE1E39BA2} = {965C0D6C-B421-48EF-9E02-82FF044B9CEA}
+		{010ED38D-616E-467A-AC1B-3D409185171F} = {E0093B96-E28A-4471-8417-026A9B1101A8}
+		{27EFEA7F-24A7-4D01-A888-712A3EBCD261} = {0DD124A1-534B-4AFF-B252-D884CCCB9CC3}
+		{A3AAC530-960E-4732-AB87-DBA9470B229D} = {27EFEA7F-24A7-4D01-A888-712A3EBCD261}
+		{CD92425E-77AC-451B-9595-0A91D6661B6F} = {27EFEA7F-24A7-4D01-A888-712A3EBCD261}
+		{F74DA3A4-F44F-4484-A48C-416DEBDC73A7} = {A3AAC530-960E-4732-AB87-DBA9470B229D}
+		{EEBF1D25-F8B2-4D41-806E-E401961EEE35} = {CD92425E-77AC-451B-9595-0A91D6661B6F}
+		{72F59324-3859-4FE8-97F0-B57844848950} = {EEBF1D25-F8B2-4D41-806E-E401961EEE35}
+		{F647B586-5EFB-46C0-A303-EF7022A6EDD0} = {0DD124A1-534B-4AFF-B252-D884CCCB9CC3}
+		{8CAFFC72-9B26-484D-98F4-0DF8D4D5FE6C} = {F647B586-5EFB-46C0-A303-EF7022A6EDD0}
+		{0DC139DC-86BE-4EBC-8110-E78B39D02A05} = {F647B586-5EFB-46C0-A303-EF7022A6EDD0}
+		{CE0638CA-4C05-4DD7-AC83-3271F729B474} = {0DC139DC-86BE-4EBC-8110-E78B39D02A05}
+		{6A574A2F-277E-4A77-8DD8-C4722631226E} = {8CAFFC72-9B26-484D-98F4-0DF8D4D5FE6C}
+		{3DAFCE04-69C8-4BB1-B638-02606DC8480A} = {CE0638CA-4C05-4DD7-AC83-3271F729B474}
+		{C8DAFC00-B22B-4CD6-A280-50C037DE0EFE} = {0DD124A1-534B-4AFF-B252-D884CCCB9CC3}
+		{C13DFF15-6FB7-4BA8-A82B-13F92287D332} = {C8DAFC00-B22B-4CD6-A280-50C037DE0EFE}
+		{3BC9DA9E-CB54-4799-A7DF-7F993BFA89E9} = {C8DAFC00-B22B-4CD6-A280-50C037DE0EFE}
+		{1F0E1693-8441-48D0-B4F6-37E816B5E898} = {3BC9DA9E-CB54-4799-A7DF-7F993BFA89E9}
+		{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533} = {C13DFF15-6FB7-4BA8-A82B-13F92287D332}
+		{723295D3-FD9C-47FC-AC58-2E075D7573A9} = {1F0E1693-8441-48D0-B4F6-37E816B5E898}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC813CF7-BD65-4CD5-B0B7-7B1F828A9909}
