@@ -42,7 +42,7 @@ namespace Cogworks.AzureSearch.IoC.Umbraco.UnitTests
             var dirName = Path.GetDirectoryName(
                 Assembly.GetExecutingAssembly()
                     .Location
-                    .Replace("bin\\Debug", string.Empty));
+                    .Replace("bin\\Debug", string.Empty)) ?? string.Empty;
 
             var typeLoader = new TypeLoader(
                 Substitute.For<ITypeFinder>(),
@@ -59,7 +59,7 @@ namespace Cogworks.AzureSearch.IoC.Umbraco.UnitTests
 
             _containerBuilder = _umbracoBuilder.RegisterAzureSearch()
                 .RegisterClientOptions("test", "test", "https://localhost")
-                .RegisterIndexOptions(false, false)
+                .RegisterIndexOptions(false)
                 .RegisterIndexDefinitions<FirstTestDocumentModel>(FirstDocumentIndexName)
                 .RegisterIndexDefinitions<SecondTestDocumentModel>(SecondDocumentIndexName)
                 .RegisterIndexDefinitions<ThirdTestDocumentModel>(customIndex: new SearchIndex(ThirdDocumentIndexName));
@@ -90,17 +90,16 @@ namespace Cogworks.AzureSearch.IoC.Umbraco.UnitTests
             _umbracoBuilder.Build();
             var serviceProvider = _serviceCollection.BuildServiceProvider();
 
-            using (var scope = serviceProvider.CreateScope())
-            {
-                // Act
-                var instance = scope.ServiceProvider.GetService(desiredObjectType);
+            using var scope = serviceProvider.CreateScope();
 
-                // Assert
-                Assert.NotNull(instance);
-                Assert.True(desiredObjectType.IsInstanceOfType(instance));
-                Assert.NotEmpty(instance.GetType().GenericTypeArguments);
-                Assert.Equal(desiredObjectType.GenericTypeArguments[0], instance.GetType().GenericTypeArguments[0]);
-            }
+            // Act
+            var instance = scope.ServiceProvider.GetService(desiredObjectType);
+
+            // Assert
+            Assert.NotNull(instance);
+            Assert.True(desiredObjectType.IsInstanceOfType(instance));
+            Assert.NotEmpty(instance.GetType().GenericTypeArguments);
+            Assert.Equal(desiredObjectType.GenericTypeArguments[0], instance.GetType().GenericTypeArguments[0]);
         }
 
         [Theory]
@@ -148,11 +147,10 @@ namespace Cogworks.AzureSearch.IoC.Umbraco.UnitTests
                 _umbracoBuilder.Build();
                 var serviceProvider = _serviceCollection.BuildServiceProvider();
 
-                using (var scope = serviceProvider.CreateScope())
-                {
-                    // Act
-                    _ = scope.ServiceProvider.GetService(desiredObjectType);
-                }
+                using var scope = serviceProvider.CreateScope();
+
+                // Act
+                _ = scope.ServiceProvider.GetService(desiredObjectType);
             });
 
             // Assert
@@ -179,13 +177,12 @@ namespace Cogworks.AzureSearch.IoC.Umbraco.UnitTests
             _umbracoBuilder.Build();
             var serviceProvider = _serviceCollection.BuildServiceProvider();
 
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var customTestSearch = scope.ServiceProvider.GetService<CustomTestSearch>();
+            using var scope = serviceProvider.CreateScope();
 
-                // Assert
-                Assert.NotNull(customTestSearch);
-            }
+            var customTestSearch = scope.ServiceProvider.GetService<CustomTestSearch>();
+
+            // Assert
+            Assert.NotNull(customTestSearch);
         }
 
         [Fact]
@@ -200,22 +197,21 @@ namespace Cogworks.AzureSearch.IoC.Umbraco.UnitTests
             _umbracoBuilder.Build();
             var serviceProvider = _serviceCollection.BuildServiceProvider();
 
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var customTestSearch = scope.ServiceProvider.GetService<ICustomTestSearch>();
+            using var scope = serviceProvider.CreateScope();
 
-                // Act
-                customTestSearch.SomeCustomSearchExample();
+            var customTestSearch = scope.ServiceProvider.GetService<ICustomTestSearch>();
 
-                // Assert
-                Assert.NotNull(customTestSearch);
+            // Act
+            customTestSearch.SomeCustomSearchExample();
 
-                mockedCustomTestSearch.Received(1).SomeCustomSearchExample();
+            // Assert
+            Assert.NotNull(customTestSearch);
 
-                customTestSearch.SomeCustomSearchExample();
+            mockedCustomTestSearch.Received(1).SomeCustomSearchExample();
 
-                mockedCustomTestSearch.Received(2).SomeCustomSearchExample();
-            }
+            customTestSearch.SomeCustomSearchExample();
+
+            mockedCustomTestSearch.Received(2).SomeCustomSearchExample();
         }
 
         [Fact]
@@ -237,24 +233,23 @@ namespace Cogworks.AzureSearch.IoC.Umbraco.UnitTests
             var serviceProvider = _serviceCollection.BuildServiceProvider();
 
             // Act
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var provider = scope.ServiceProvider;
-                var firstTestDocumentIndexDefinition =
-                    provider.GetService<IndexDefinition<FirstTestDocumentModel>>();
-                var secondTestDocumentIndexDefinition =
-                    provider.GetService<IndexDefinition<SecondTestDocumentModel>>();
-                var thirdTestDocumentIndexDefinition =
-                    provider.GetService<IndexDefinition<ThirdTestDocumentModel>>();
+            using var scope = serviceProvider.CreateScope();
 
-                // Assert
-                Assert.NotNull(firstTestDocumentIndexDefinition);
-                Assert.NotNull(secondTestDocumentIndexDefinition);
-                Assert.NotNull(thirdTestDocumentIndexDefinition);
-                Assert.Equal(FirstDocumentIndexName, firstTestDocumentIndexDefinition.IndexName);
-                Assert.Equal(SecondDocumentIndexName, secondTestDocumentIndexDefinition.IndexName);
-                Assert.Equal(ThirdDocumentIndexName, thirdTestDocumentIndexDefinition.IndexName);
-            }
+            var provider = scope.ServiceProvider;
+            var firstTestDocumentIndexDefinition =
+                provider.GetService<IndexDefinition<FirstTestDocumentModel>>();
+            var secondTestDocumentIndexDefinition =
+                provider.GetService<IndexDefinition<SecondTestDocumentModel>>();
+            var thirdTestDocumentIndexDefinition =
+                provider.GetService<IndexDefinition<ThirdTestDocumentModel>>();
+
+            // Assert
+            Assert.NotNull(firstTestDocumentIndexDefinition);
+            Assert.NotNull(secondTestDocumentIndexDefinition);
+            Assert.NotNull(thirdTestDocumentIndexDefinition);
+            Assert.Equal(FirstDocumentIndexName, firstTestDocumentIndexDefinition.IndexName);
+            Assert.Equal(SecondDocumentIndexName, secondTestDocumentIndexDefinition.IndexName);
+            Assert.Equal(ThirdDocumentIndexName, thirdTestDocumentIndexDefinition.IndexName);
         }
     }
 }

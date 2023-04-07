@@ -11,14 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution-items", ".solution-items", "{9D0073AC-CE06-400A-B362-297CB9A332BE}"
 	ProjectSection(SolutionItems) = preProject
-		linting\.editorconfig = linting\.editorconfig
 		CHANGELOG.md = CHANGELOG.md
-		linting\codeanalysis.ruleset = linting\codeanalysis.ruleset
 		LICENSE = LICENSE
 		README.md = README.md
-		linting\stylecop.json = linting\stylecop.json
-		src\Directory.Build.props = src\Directory.Build.props
-		src\Directory.Build.targets = src\Directory.Build.targets
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{A82EFC5A-0A90-4701-8106-2C5044592572}"
@@ -49,6 +44,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{965C0D6C-B421-48EF-9E02-82FF044B9CEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{99E4E02C-94B6-43AC-AB9B-F04BE5D8BC92}"
+	ProjectSection(SolutionItems) = preProject
+		src\IoC.Providers\Cogworks.AzureSearch.IoC.Microsoft\tests\.editorconfig = src\IoC.Providers\Cogworks.AzureSearch.IoC.Microsoft\tests\.editorconfig
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{E0093B96-E28A-4471-8417-026A9B1101A8}"
 EndProject
@@ -61,6 +59,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A3AAC530-960E-4732-AB87-DBA9470B229D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CD92425E-77AC-451B-9595-0A91D6661B6F}"
+	ProjectSection(SolutionItems) = preProject
+		src\IoC.Providers\Cogworks.AzureSearch.IoC.Autofac\tests\.editorconfig = src\IoC.Providers\Cogworks.AzureSearch.IoC.Autofac\tests\.editorconfig
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.Autofac", "src\IoC.Providers\Cogworks.AzureSearch.IoC.Autofac\src\Cogworks.AzureSearch.IoC.Autofac.csproj", "{F74DA3A4-F44F-4484-A48C-416DEBDC73A7}"
 EndProject
@@ -73,6 +74,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8CAFFC72-9B26-484D-98F4-0DF8D4D5FE6C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0DC139DC-86BE-4EBC-8110-E78B39D02A05}"
+	ProjectSection(SolutionItems) = preProject
+		src\IoC.Providers\Cogworks.AzureSearch.IoC.LightInject\tests\.editorconfig = src\IoC.Providers\Cogworks.AzureSearch.IoC.LightInject\tests\.editorconfig
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{CE0638CA-4C05-4DD7-AC83-3271F729B474}"
 EndProject
@@ -85,12 +89,26 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C13DFF15-6FB7-4BA8-A82B-13F92287D332}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3BC9DA9E-CB54-4799-A7DF-7F993BFA89E9}"
+	ProjectSection(SolutionItems) = preProject
+		src\IoC.Providers\Cogworks.AzureSearch.IoC.Umbraco\tests\.editorconfig = src\IoC.Providers\Cogworks.AzureSearch.IoC.Umbraco\tests\.editorconfig
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{1F0E1693-8441-48D0-B4F6-37E816B5E898}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.Umbraco", "src\IoC.Providers\Cogworks.AzureSearch.IoC.Umbraco\src\Cogworks.AzureSearch.IoC.Umbraco.csproj", "{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.AzureSearch.IoC.Umbraco.UnitTests", "src\IoC.Providers\Cogworks.AzureSearch.IoC.Umbraco\tests\UnitTests\Cogworks.AzureSearch.IoC.Umbraco.UnitTests\Cogworks.AzureSearch.IoC.Umbraco.UnitTests.csproj", "{723295D3-FD9C-47FC-AC58-2E075D7573A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".lintings", ".lintings", "{70875320-89C3-421E-9C1D-8C9761579456}"
+	ProjectSection(SolutionItems) = preProject
+		src\.editorconfig = src\.editorconfig
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".project-configuration", ".project-configuration", "{F58D91B1-B2EB-4D83-BEC9-F57F9FB897FC}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+		src\Directory.Build.targets = src\Directory.Build.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -173,6 +191,7 @@ Global
 		{1F0E1693-8441-48D0-B4F6-37E816B5E898} = {3BC9DA9E-CB54-4799-A7DF-7F993BFA89E9}
 		{C24EEC89-FDED-4AA1-AB44-26FD6D3D8533} = {C13DFF15-6FB7-4BA8-A82B-13F92287D332}
 		{723295D3-FD9C-47FC-AC58-2E075D7573A9} = {1F0E1693-8441-48D0-B4F6-37E816B5E898}
+		{70875320-89C3-421E-9C1D-8C9761579456} = {F58D91B1-B2EB-4D83-BEC9-F57F9FB897FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC813CF7-BD65-4CD5-B0B7-7B1F828A9909}

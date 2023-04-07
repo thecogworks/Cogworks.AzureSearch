@@ -61,17 +61,16 @@ namespace Cogworks.AzureSearch.IoC.Microsoft.UnitTests
             // Arrange
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var serviceProvider = _serviceContainer.BuildServiceProvider())
-            {
-                // Act
-                var instance = serviceProvider.GetService(desiredObjectType);
+            using var serviceProvider = _serviceContainer.BuildServiceProvider();
 
-                // Assert
-                Assert.NotNull(instance);
-                Assert.True(desiredObjectType.IsInstanceOfType(instance));
-                Assert.NotEmpty(instance.GetType().GenericTypeArguments);
-                Assert.Equal(desiredObjectType.GenericTypeArguments[0], instance.GetType().GenericTypeArguments[0]);
-            }
+            // Act
+            var instance = serviceProvider.GetService(desiredObjectType);
+
+            // Assert
+            Assert.NotNull(instance);
+            Assert.True(desiredObjectType.IsInstanceOfType(instance));
+            Assert.NotEmpty(instance.GetType().GenericTypeArguments);
+            Assert.Equal(desiredObjectType.GenericTypeArguments[0], instance.GetType().GenericTypeArguments[0]);
         }
 
         [Theory]
@@ -119,11 +118,10 @@ namespace Cogworks.AzureSearch.IoC.Microsoft.UnitTests
             var exceptionRecord = Record.Exception(() =>
             {
                 // ReSharper disable once PossibleNullReferenceException
-                using (var serviceProvider = _serviceContainer.BuildServiceProvider())
-                {
-                    // Act
-                    _ = serviceProvider.GetService(desiredObjectType);
-                }
+                using var serviceProvider = _serviceContainer.BuildServiceProvider();
+
+                // Act
+                _ = serviceProvider.GetService(desiredObjectType);
             });
 
             // Assert
@@ -148,13 +146,12 @@ namespace Cogworks.AzureSearch.IoC.Microsoft.UnitTests
             _containerBuilder.RegisterDomainSearcher<CustomTestSearch, CustomTestSearch, FirstTestDocumentModel>();
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var serviceProvider = _serviceContainer.BuildServiceProvider())
-            {
-                var customTestSearch = serviceProvider.GetService<CustomTestSearch>();
+            using var serviceProvider = _serviceContainer.BuildServiceProvider();
 
-                // Assert
-                Assert.NotNull(customTestSearch);
-            }
+            var customTestSearch = serviceProvider.GetService<CustomTestSearch>();
+
+            // Assert
+            Assert.NotNull(customTestSearch);
         }
 
         [Fact]
@@ -166,21 +163,20 @@ namespace Cogworks.AzureSearch.IoC.Microsoft.UnitTests
             _containerBuilder.RegisterDomainSearcher<CustomTestSearch, ICustomTestSearch, FirstTestDocumentModel>(mockedCustomTestSearch);
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var serviceProvider = _serviceContainer.BuildServiceProvider())
-            {
-                var customTestSearch = serviceProvider.GetService<ICustomTestSearch>();
+            using var serviceProvider = _serviceContainer.BuildServiceProvider();
 
-                customTestSearch.SomeCustomSearchExample();
+            var customTestSearch = serviceProvider.GetService<ICustomTestSearch>();
 
-                // Assert
-                Assert.NotNull(customTestSearch);
+            customTestSearch.SomeCustomSearchExample();
 
-                mockedCustomTestSearch.Received(1).SomeCustomSearchExample();
+            // Assert
+            Assert.NotNull(customTestSearch);
 
-                customTestSearch.SomeCustomSearchExample();
+            mockedCustomTestSearch.Received(1).SomeCustomSearchExample();
 
-                mockedCustomTestSearch.Received(2).SomeCustomSearchExample();
-            }
+            customTestSearch.SomeCustomSearchExample();
+
+            mockedCustomTestSearch.Received(2).SomeCustomSearchExample();
         }
 
         [Fact]
@@ -201,20 +197,19 @@ namespace Cogworks.AzureSearch.IoC.Microsoft.UnitTests
             // Act
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var serviceProvider = _serviceContainer.BuildServiceProvider())
-            {
-                var firstTestDocumentIndexDefinition = serviceProvider.GetService<IndexDefinition<FirstTestDocumentModel>>();
-                var secondTestDocumentIndexDefinition = serviceProvider.GetService<IndexDefinition<SecondTestDocumentModel>>();
-                var thirdTestDocumentIndexDefinition = serviceProvider.GetService<IndexDefinition<ThirdTestDocumentModel>>();
+            using var serviceProvider = _serviceContainer.BuildServiceProvider();
 
-                // Assert
-                Assert.NotNull(firstTestDocumentIndexDefinition);
-                Assert.NotNull(secondTestDocumentIndexDefinition);
-                Assert.NotNull(thirdTestDocumentIndexDefinition);
-                Assert.Equal(FirstDocumentIndexName, firstTestDocumentIndexDefinition.IndexName);
-                Assert.Equal(SecondDocumentIndexName, secondTestDocumentIndexDefinition.IndexName);
-                Assert.Equal(ThirdDocumentIndexName, thirdTestDocumentIndexDefinition.IndexName);
-            }
+            var firstTestDocumentIndexDefinition = serviceProvider.GetService<IndexDefinition<FirstTestDocumentModel>>();
+            var secondTestDocumentIndexDefinition = serviceProvider.GetService<IndexDefinition<SecondTestDocumentModel>>();
+            var thirdTestDocumentIndexDefinition = serviceProvider.GetService<IndexDefinition<ThirdTestDocumentModel>>();
+
+            // Assert
+            Assert.NotNull(firstTestDocumentIndexDefinition);
+            Assert.NotNull(secondTestDocumentIndexDefinition);
+            Assert.NotNull(thirdTestDocumentIndexDefinition);
+            Assert.Equal(FirstDocumentIndexName, firstTestDocumentIndexDefinition.IndexName);
+            Assert.Equal(SecondDocumentIndexName, secondTestDocumentIndexDefinition.IndexName);
+            Assert.Equal(ThirdDocumentIndexName, thirdTestDocumentIndexDefinition.IndexName);
         }
     }
 }
