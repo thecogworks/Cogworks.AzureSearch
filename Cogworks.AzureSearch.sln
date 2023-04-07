@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B85EEFD6-B048-478E-A032-3CCE3F0B3093}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B5DAEDD1-13AF-4A74-BD24-42EBCB1A18D0}"
+	ProjectSection(SolutionItems) = preProject
+		src\Cogworks.AzureSearch\tests\.editorconfig = src\Cogworks.AzureSearch\tests\.editorconfig
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{180E9BD6-30B9-4D88-B88C-9F289D316967}"
 EndProject
