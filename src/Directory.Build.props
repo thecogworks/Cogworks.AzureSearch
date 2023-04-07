@@ -1,0 +1,49 @@
+<Project>
+  <!-- Project Details -->
+  <PropertyGroup>
+    <Company>The Cogworks Limited</Company>
+    <Authors>$(Company)</Authors>
+    <Copyright>Copyright (c) $(Company) $([System.DateTime]::Now.Year)</Copyright>
+    <PackageProjectUrl>https://github.com/thecogworks/Cogworks.AzureSearch</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/thecogworks/Cogworks.AzureSearch</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <!-- Project Setup -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <NoWarn>1591;1701;1702;8032;NU5104;NU1701;NU5128;AD0001;CA1041;CS0311;CS5001</NoWarn>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Deterministic>true</Deterministic>
+    <BuildInParallel>false</BuildInParallel>
+    <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net7.0'">
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)src\.editorconfig" Visible="false"/>
+  </ItemGroup>
+</Project>

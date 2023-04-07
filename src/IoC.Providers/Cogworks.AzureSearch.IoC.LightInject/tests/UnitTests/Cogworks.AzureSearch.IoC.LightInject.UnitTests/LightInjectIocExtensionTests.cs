@@ -61,17 +61,16 @@ namespace Cogworks.AzureSearch.IoC.LightInject.UnitTests
             // Arrange
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var scope = _container.BeginScope())
-            {
-                // Act
-                var instance = scope.GetInstance(desiredObjectType);
+            using var scope = _container.BeginScope();
 
-                // Assert
-                Assert.NotNull(instance);
-                Assert.True(desiredObjectType.IsInstanceOfType(instance));
-                Assert.NotEmpty(instance.GetType().GenericTypeArguments);
-                Assert.Equal(desiredObjectType.GenericTypeArguments[0], instance.GetType().GenericTypeArguments[0]);
-            }
+            // Act
+            var instance = scope.GetInstance(desiredObjectType);
+
+            // Assert
+            Assert.NotNull(instance);
+            Assert.True(desiredObjectType.IsInstanceOfType(instance));
+            Assert.NotEmpty(instance.GetType().GenericTypeArguments);
+            Assert.Equal(desiredObjectType.GenericTypeArguments[0], instance.GetType().GenericTypeArguments[0]);
         }
 
         [Theory]
@@ -117,11 +116,10 @@ namespace Cogworks.AzureSearch.IoC.LightInject.UnitTests
             var exceptionRecord = Record.Exception(() =>
             {
                 // ReSharper disable once PossibleNullReferenceException
-                using (var scope = _container.BeginScope())
-                {
-                    // Act
-                    _ = scope.GetInstance(desiredObjectType);
-                }
+                using var scope = _container.BeginScope();
+
+                // Act
+                _ = scope.GetInstance(desiredObjectType);
             });
 
             // Assert
@@ -146,13 +144,12 @@ namespace Cogworks.AzureSearch.IoC.LightInject.UnitTests
             _containerBuilder.RegisterDomainSearcher<CustomTestSearch, CustomTestSearch, FirstTestDocumentModel>();
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var scope = _container.BeginScope())
-            {
-                var customTestSearch = scope.GetInstance<CustomTestSearch>();
+            using var scope = _container.BeginScope();
 
-                // Assert
-                Assert.NotNull(customTestSearch);
-            }
+            var customTestSearch = scope.GetInstance<CustomTestSearch>();
+
+            // Assert
+            Assert.NotNull(customTestSearch);
         }
 
         [Fact]
@@ -164,21 +161,20 @@ namespace Cogworks.AzureSearch.IoC.LightInject.UnitTests
             _containerBuilder.RegisterDomainSearcher<CustomTestSearch, ICustomTestSearch, FirstTestDocumentModel>(mockedCustomTestSearch);
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var scope = _container.BeginScope())
-            {
-                var customTestSearch = scope.GetInstance<ICustomTestSearch>();
+            using var scope = _container.BeginScope();
 
-                customTestSearch.SomeCustomSearchExample();
+            var customTestSearch = scope.GetInstance<ICustomTestSearch>();
 
-                // Assert
-                Assert.NotNull(customTestSearch);
+            customTestSearch.SomeCustomSearchExample();
 
-                mockedCustomTestSearch.Received(1).SomeCustomSearchExample();
+            // Assert
+            Assert.NotNull(customTestSearch);
 
-                customTestSearch.SomeCustomSearchExample();
+            mockedCustomTestSearch.Received(1).SomeCustomSearchExample();
 
-                mockedCustomTestSearch.Received(2).SomeCustomSearchExample();
-            }
+            customTestSearch.SomeCustomSearchExample();
+
+            mockedCustomTestSearch.Received(2).SomeCustomSearchExample();
         }
 
         [Fact]
@@ -199,20 +195,19 @@ namespace Cogworks.AzureSearch.IoC.LightInject.UnitTests
             // Act
 
             // ReSharper disable once PossibleNullReferenceException
-            using (var scope = _container.BeginScope())
-            {
-                var firstTestDocumentIndexDefinition = scope.GetInstance<IndexDefinition<FirstTestDocumentModel>>();
-                var secondTestDocumentIndexDefinition = scope.GetInstance<IndexDefinition<SecondTestDocumentModel>>();
-                var thirdTestDocumentIndexDefinition = scope.GetInstance<IndexDefinition<ThirdTestDocumentModel>>();
+            using var scope = _container.BeginScope();
 
-                // Assert
-                Assert.NotNull(firstTestDocumentIndexDefinition);
-                Assert.NotNull(secondTestDocumentIndexDefinition);
-                Assert.NotNull(thirdTestDocumentIndexDefinition);
-                Assert.Equal(FirstDocumentIndexName, firstTestDocumentIndexDefinition.IndexName);
-                Assert.Equal(SecondDocumentIndexName, secondTestDocumentIndexDefinition.IndexName);
-                Assert.Equal(ThirdDocumentIndexName, thirdTestDocumentIndexDefinition.IndexName);
-            }
+            var firstTestDocumentIndexDefinition = scope.GetInstance<IndexDefinition<FirstTestDocumentModel>>();
+            var secondTestDocumentIndexDefinition = scope.GetInstance<IndexDefinition<SecondTestDocumentModel>>();
+            var thirdTestDocumentIndexDefinition = scope.GetInstance<IndexDefinition<ThirdTestDocumentModel>>();
+
+            // Assert
+            Assert.NotNull(firstTestDocumentIndexDefinition);
+            Assert.NotNull(secondTestDocumentIndexDefinition);
+            Assert.NotNull(thirdTestDocumentIndexDefinition);
+            Assert.Equal(FirstDocumentIndexName, firstTestDocumentIndexDefinition.IndexName);
+            Assert.Equal(SecondDocumentIndexName, secondTestDocumentIndexDefinition.IndexName);
+            Assert.Equal(ThirdDocumentIndexName, thirdTestDocumentIndexDefinition.IndexName);
         }
     }
 }
