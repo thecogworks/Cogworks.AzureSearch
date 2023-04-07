@@ -12,11 +12,21 @@
   <!-- Project Setup -->
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <NoWarn>1591;1701;1702;8032;NU1701;AD0001</NoWarn>
+    <NoWarn>1591;1701;1702;8032;NU5104;NU1701;NU5128;AD0001;CA1041;CS0311;CS5001</NoWarn>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Deterministic>true</Deterministic>
     <BuildInParallel>false</BuildInParallel>
     <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net7.0'">
