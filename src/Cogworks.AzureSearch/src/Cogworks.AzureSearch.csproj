@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <IsPackable>true</IsPackable>
+    <PackageId>Cogworks.AzureSearch</PackageId>
+    <Title>Cogworks.AzureSearch</Title>
+    <Description>A wrapper to Azure Search allowing to easily setup Azure Search indexes, searchers.</Description>
+    <Product>A wrapper to Azure Search allowing to easily setup Azure Search indexes, searchers.</Product>
+    <PackageTags>Azure Cognitive Search Wrapper</PackageTags>
+    <Version></Version>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <ContentTargetFolders>.</ContentTargetFolders>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Meziantou.MSBuild.InternalsVisibleTo" Version="1.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Azure.Search.Documents" Version="11.2.0" />
+  </ItemGroup>
+
+  <!-- Project Visibility -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.IoC.Autofac" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.IoC.Umbraco" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.IoC.LightInject" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.IoC.Microsoft" />
+  </ItemGroup>
+
+  <!-- Tests Visibility -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.UnitTests" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.IoC.Autofac.UnitTests" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.IoC.Umbraco.UnitTests" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.IoC.LightInject.UnitTests" />
+    <InternalsVisibleTo Include="Cogworks.AzureSearch.IoC.Microsoft.UnitTests" />
+  </ItemGroup>
+
+</Project>

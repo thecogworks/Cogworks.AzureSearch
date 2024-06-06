@@ -1,0 +1,2 @@
+﻿[*.cs]
+dotnet_naming_rule.non_field_members_should_be_pascal_case.severity = none

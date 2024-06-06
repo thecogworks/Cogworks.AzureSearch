@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <IsPackable>true</IsPackable>
+    <PackageId>Cogworks.AzureSearch.IoC.Autofac</PackageId>
+    <Title>Cogworks.AzureSearch.IoC.Autofac</Title>
+    <Description>An Autofac extension to Cogworks.AzureSearch.</Description>
+    <Product>An Autofac extension to Cogworks.AzureSearch.</Product>
+    <PackageTags>Azure Cognitive Search Wrapper, Autofac, container, IoC</PackageTags>
+    <Version></Version>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <ContentTargetFolders>.</ContentTargetFolders>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Cogworks.AzureSearch" Version="1.0.2" />
+  </ItemGroup>
+
+</Project>
