@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-      <TargetFrameworks>net6.0;net5.0</TargetFrameworks>
+      <TargetFramework>net8.0</TargetFramework>
       <ContentTargetFolders>.</ContentTargetFolders>
       <PackageId>Cogworks.AzureSearch.IoC.Umbraco</PackageId>
       <Title>Cogworks.AzureSearch.IoC.Umbraco</Title>
       <Description>An Umbraco extension to Cogworks.AzureSearch.</Description>
-      <Product>An Umbraco 9 extension to Cogworks.AzureSearch</Product>
+      <Product>An Umbraco 13 extension to Cogworks.AzureSearch</Product>
       <PackageTags>Azure Search Umbraco container IoC</PackageTags>
       <Version></Version>
       <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
@@ -14,12 +14,12 @@
   </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+        <None Include="..\..\..\..\README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Azure.Search.Documents" Version="11.2.0" />
+      <PackageReference Include="Azure.Search.Documents" Version="11.5.1" />
       <PackageReference Include="Cogworks.AzureSearch" Version="1.0.2" />
-      <PackageReference Include="Umbraco.Cms.Core" Version="[9.0.0,)" />
+      <PackageReference Include="Umbraco.Cms.Core" Version="13.3.2" />
     </ItemGroup>
 </Project>

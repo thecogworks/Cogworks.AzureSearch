@@ -1,8 +1,5 @@
 ﻿// ReSharper disable PossibleNullReferenceException
-
 using System;
-using System.IO;
-using System.Reflection;
 using Azure.Search.Documents.Indexes.Models;
 using Cogworks.AzureSearch.Interfaces.Builder;
 using Cogworks.AzureSearch.Interfaces.Indexes;
@@ -18,10 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using Umbraco.Cms.Core.Cache;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
-using Umbraco.Cms.Core.Logging;
 using Xunit;
 
 namespace Cogworks.AzureSearch.IoC.Umbraco.UnitTests
@@ -38,19 +33,11 @@ namespace Cogworks.AzureSearch.IoC.Umbraco.UnitTests
 
         public UmbracoIocExtensionTests()
         {
-            _serviceCollection = new ServiceCollection();
-            var dirName = Path.GetDirectoryName(
-                Assembly.GetExecutingAssembly()
-                    .Location
-                    .Replace("bin\\Debug", string.Empty)) ?? string.Empty;
+            _serviceCollection = [];
 
             var typeLoader = new TypeLoader(
                 Substitute.For<ITypeFinder>(),
-                new VaryingRuntimeHash(),
-                Substitute.For<IAppPolicyCache>(),
-                new DirectoryInfo(dirName),
-                Substitute.For<ILogger<TypeLoader>>(),
-                Substitute.For<IProfiler>());
+                Substitute.For<ILogger<TypeLoader>>());
 
             _umbracoBuilder = new UmbracoBuilder(
                 _serviceCollection,
