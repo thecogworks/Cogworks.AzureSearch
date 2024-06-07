@@ -14,7 +14,7 @@ jobs:
       CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
@@ -36,7 +36,7 @@ jobs:
 
         echo "branch=$branch_check" >> $GITHUB_ENV
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       name: Checkout tag branch
       with:
         fetch-depth: 0

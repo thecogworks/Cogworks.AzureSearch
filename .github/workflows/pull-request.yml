@@ -8,7 +8,7 @@ env:
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
   # Dotnet Setup
-  DOTNET_VERSION: 3.1.401
+  DOTNET_VERSION: '8.x'
 
   # Stop wasting time caching packages
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
@@ -27,13 +27,13 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout commit
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -101,7 +101,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout commit
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - uses: actions/download-artifact@v1
         with:
