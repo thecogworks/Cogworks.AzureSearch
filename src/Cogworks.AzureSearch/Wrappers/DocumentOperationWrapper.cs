@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Identity;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 using Cogworks.AzureSearch.Interfaces.Wrappers;
@@ -18,15 +19,28 @@ namespace Cogworks.AzureSearch.Wrappers
             IndexDefinition<TModel> indexDefinition,
             ClientOption clientOption)
         {
-            var azureKeyCredential = new AzureKeyCredential(clientOption.Credentials);
+            if (clientOption.UseTokenCredentials)
+            {
+                var azureCredential = new DefaultAzureCredential();
 
-            _searchClient = new SearchClient(
-                endpoint: new Uri(clientOption.ServiceUrlEndpoint),
-                indexName: indexDefinition.IndexName,
-                credential: azureKeyCredential,
-                options: clientOption.ClientOptions
+                _searchClient = new SearchClient(
+                    new Uri(clientOption.ServiceUrlEndpoint),
+                    indexDefinition.IndexName,
+                    azureCredential,
+                    clientOption.ClientOptions
+                );
+            }
+            else
+            {
+                var azureKeyCredential = new AzureKeyCredential(clientOption.Credentials);
 
-            );
+                _searchClient = new SearchClient(
+                    endpoint: new Uri(clientOption.ServiceUrlEndpoint),
+                    indexName: indexDefinition.IndexName,
+                    credential: azureKeyCredential,
+                    options: clientOption.ClientOptions
+                );
+            }
         }
 
         public SearchResults<TModel> Search(string searchText, SearchOptions parameters = null)

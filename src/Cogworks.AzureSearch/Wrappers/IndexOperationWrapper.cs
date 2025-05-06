@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Identity;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Cogworks.AzureSearch.Interfaces.Wrappers;
@@ -15,11 +16,22 @@ namespace Cogworks.AzureSearch.Wrappers
 
         public IndexOperationWrapper(ClientOption clientOption)
         {
-            var azureKeyCredential = new AzureKeyCredential(clientOption.Credentials);
+            if (clientOption.UseTokenCredentials)
+            {
+                var azureTokenCredential = new DefaultAzureCredential();
 
-            _searchIndexClient = new SearchIndexClient(
-                endpoint: new Uri(clientOption.ServiceUrlEndpoint),
-                credential: azureKeyCredential);
+                _searchIndexClient = new SearchIndexClient(
+                    new Uri(clientOption.ServiceUrlEndpoint),
+                    azureTokenCredential);
+            }
+            else
+            {
+                var azureKeyCredential = new AzureKeyCredential(clientOption.Credentials);
+
+                _searchIndexClient = new SearchIndexClient(
+                    endpoint: new Uri(clientOption.ServiceUrlEndpoint),
+                    credential: azureKeyCredential);
+            }
         }
 
         public async Task<bool> ExistsAsync(string indexName)
