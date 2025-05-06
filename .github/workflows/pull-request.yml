@@ -91,7 +91,7 @@ jobs:
         run: dotnet test --no-restore --no-build --configuration ${{ env.CONFIG }} --logger:"liquid.md;LogFileName=${{ env.ReportOutput}}\${{ env.TestReportFileName }};Title=${{ env.Title }};"
 
       - name: Upload test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: results
           path: ${{ env.ReportOutput}}\${{ env.TestReportFileName }}

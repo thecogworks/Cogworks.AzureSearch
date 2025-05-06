@@ -34,11 +34,11 @@ jobs:
     steps:
       - name: Checkout reference commit
         if: ${{ github.event_name == 'pull_request' }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Checkout master
         if: ${{ github.event_name != 'pull_request' }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: master
           fetch-depth: 0
@@ -51,15 +51,15 @@ jobs:
           echo "VERSION=$tag_check" >> $GITHUB_ENV
 
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1
+        uses: microsoft/setup-msbuild@v2
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Configure NuGet
-        uses: nuget/setup-nuget@v1
+        uses: nuget/setup-nuget@v2
         with:
           nuget-version: ${{ env.NUGET_VERSION }}
 
@@ -115,7 +115,7 @@ jobs:
 
       - name: Upload build artifact
         if: ${{ github.event_name != 'pull_request' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: build_${{ env.PROJECT_NAME }}.${{ env.VERSION }}
           path: ${{ github.workspace }}/${{ env.NUGET_OUTPUT }}
