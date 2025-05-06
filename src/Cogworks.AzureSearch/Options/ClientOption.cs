@@ -12,6 +12,8 @@ namespace Cogworks.AzureSearch.Options
 
         public string ServiceUrlEndpoint { get; }
 
+        public bool UseTokenCredentials { get; }
+
         public SearchClientOptions ClientOptions { get; }
 
         public ClientOption(string serviceName, string credentials, string serviceUrlEndpoint, bool searchHeaders = false)

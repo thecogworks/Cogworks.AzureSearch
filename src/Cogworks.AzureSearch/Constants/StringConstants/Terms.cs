@@ -1,6 +1,6 @@
 ﻿namespace Cogworks.AzureSearch.Constants.StringConstants
 {
-    internal class Terms
+    public class Terms
     {
         public const string Null = "null";
     }
