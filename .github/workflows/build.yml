@@ -29,7 +29,9 @@ jobs:
 
       # Nuget Setup
       NUGET_VERSION: 'latest'
-      NUGET_OUTPUT: '.output/'
+      NUGET_OUTPUT: 'output'
+      NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+      NUGET_FEED: https://api.nuget.org/v3/index.json
 
     steps:
       - name: Checkout reference commit
@@ -110,12 +112,32 @@ jobs:
             nuget pack "$nuspecFile" `
              -Version ${{ env.VERSION }} `
              -Properties "Configuration=${{ env.CONFIG }};CopyrightYear=$(Get-Date -Format yyyy)"`
-             -OutputDirectory ${{ env.NUGET_OUTPUT }}
+             -OutputDirectory ${{ github.workspace }}/${{ env.NUGET_OUTPUT }}
           }
 
       - name: Upload build artifact
         if: ${{ github.event_name != 'pull_request' }}
         uses: actions/upload-artifact@v4
         with:
-          name: build_${{ env.PROJECT_NAME }}.${{ env.VERSION }}
+          name: ${{ env.PROJECT_NAME }}.${{ env.VERSION }}
           path: ${{ github.workspace }}/${{ env.NUGET_OUTPUT }}
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.PROJECT_NAME }}.${{ env.VERSION }}
+          path: ${{ github.workspace }}/${{ env.NUGET_OUTPUT }}
+
+      - name: Configure NuGet
+        uses: nuget/setup-nuget@v2
+        with:
+          nuget-version: ${{ env.NUGET_VERSION }}
+
+      - name: Push to NuGet Feed
+        shell: bash
+        working-directory: ${{ env.NUGET_OUTPUT }}
+        run: |
+          for nugetFile in ./*.nupkg
+          do
+            nuget push $nugetFile ${{ env.NUGET_TOKEN }} -Source ${{ env.NUGET_FEED }}
+          done

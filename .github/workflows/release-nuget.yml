@@ -13,7 +13,7 @@ jobs:
     env:
       # Nuget Setup
       NUGET_VERSION: 'latest'
-      NUGET_OUTPUT: ${{ github.workspace }}/nuget/
+      NUGET_OUTPUT: 'output'
       NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
       NUGET_FEED: https://api.nuget.org/v3/index.json
 
@@ -34,13 +34,13 @@ jobs:
           echo "VERSION=$tag_check" >> $GITHUB_ENV
 
       - name: Download a single artifact
-        uses: aochmann/actions-download-artifact@1.0.2
+        uses: actions/download-artifact@v4
         with:
-          name: build_${{ env.PROJECT_NAME }}.${{ env.VERSION }}
-          path: ${{ env.NUGET_OUTPUT }}
+          name: ${{ env.PROJECT_NAME }}.${{ env.VERSION }}
+          path: ${{ github.workspace }}/${{ env.NUGET_OUTPUT }}
 
       - name: Configure NuGet
-        uses: nuget/setup-nuget@v1
+        uses: nuget/setup-nuget@v2
         with:
           nuget-version: ${{ env.NUGET_VERSION }}
 
