@@ -8,7 +8,7 @@ namespace Cogworks.AzureSearch.Interfaces.Builder
     {
         IContainerBuilder RegisterIndexOptions(bool recreate, bool recreateOnUpdateFailure = false);
 
-        IContainerBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl, bool searchHeaders = false);
+        IContainerBuilder RegisterClientOptions(string serviceName, string credentials, string serviceEndpointUrl, bool searchHeaders = false, bool useTokenCredentials = false);
 
         IContainerBuilder RegisterIndexDefinitions<TDocument>(string indexName)
             where TDocument : class, IModel, new();
