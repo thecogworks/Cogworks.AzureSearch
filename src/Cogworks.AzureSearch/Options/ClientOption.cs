@@ -1,5 +1,7 @@
-﻿using Azure.Core;
+﻿using System.Text.Json;
+using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.Search.Documents;
 
 namespace Cogworks.AzureSearch.Options
@@ -27,7 +29,15 @@ namespace Cogworks.AzureSearch.Options
 
         private static SearchClientOptions GetOptions(bool searchHeaders)
         {
-            var clientOptions = new SearchClientOptions();
+            var serializerOptions = new JsonSerializerOptions
+            {
+                Converters = { new MicrosoftSpatialGeoJsonConverter() },
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            var clientOptions = new SearchClientOptions
+            {
+                Serializer = new JsonObjectSerializer(serializerOptions),
+            };
 
             if (searchHeaders)
             {
