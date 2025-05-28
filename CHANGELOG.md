@@ -1,3 +1,40 @@
+# [1.2.0](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.2.0...v1.2.0) (2025-05-28)
+
+
+
+# [1.2.0](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.1.2...1.2.0) (2025-05-28)
+
+
+### Features
+
+* added microsoft geo spatial converter ([7c17a3c](https://github.com/thecogworks/Cogworks.AzureSearch/commit/7c17a3ccb2bf2eb01e162ad423b36836baccbf03))
+
+
+
+## [1.1.2](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.1.1...1.1.2) (2025-05-08)
+
+
+### Bug Fixes
+
+* updated container builder interface ([bf1904c](https://github.com/thecogworks/Cogworks.AzureSearch/commit/bf1904ccc9d9e2f740154ace1f581c7a64f9289b))
+
+
+
+## [1.1.1](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.0.2...1.1.1) (2025-05-08)
+
+
+### Bug Fixes
+
+* fixed packages ([f36ed49](https://github.com/thecogworks/Cogworks.AzureSearch/commit/f36ed4921fa5bb89a8a943144ab3f7e79ae6411a))
+* fixed public ([deec0ee](https://github.com/thecogworks/Cogworks.AzureSearch/commit/deec0eec10fd81a3582da91cdd3484768581e486))
+
+
+### Features
+
+* added token credentials option ([2fb8dd0](https://github.com/thecogworks/Cogworks.AzureSearch/commit/2fb8dd08f246d39423eba840702c00098da3aa1d))
+
+
+
 ## [1.0.2](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.0.1...1.0.2) (2021-06-21)
 
 
