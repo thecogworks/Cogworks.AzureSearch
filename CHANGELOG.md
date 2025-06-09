@@ -1,8 +1,21 @@
-# [1.2.0](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.2.0...v1.2.0) (2025-05-28)
+## [1.2.1](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.2.1...v1.2.1) (2025-06-09)
 
 
 
-# [1.2.0](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.1.2...1.2.0) (2025-05-28)
+## [1.2.1](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.2.0...1.2.1) (2025-06-09)
+
+
+### Reverts
+
+* Revert "feat: added microsoft geo spatial converter" ([d11add3](https://github.com/thecogworks/Cogworks.AzureSearch/commit/d11add3afb893af52c7a17181cb326d7990667fc))
+
+
+
+# [1.2.0](https://github.com/thecogworks/Cogworks.AzureSearch/compare/v1.2.0...1.2.0) (2025-05-28)
+
+
+
+# [1.2.0](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.1.2...v1.2.0) (2025-05-28)
 
 
 ### Features
