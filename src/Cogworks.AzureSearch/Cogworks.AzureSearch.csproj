@@ -11,7 +11,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Azure.Search.Documents" Version="11.6.0" />
-    <PackageReference Include="Microsoft.Azure.Core.Spatial" Version="1.1.0" />
   </ItemGroup>
 
   <!-- Project Visibility -->
