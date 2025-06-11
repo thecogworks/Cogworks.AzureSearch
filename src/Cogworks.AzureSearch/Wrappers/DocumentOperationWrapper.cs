@@ -21,7 +21,7 @@ namespace Cogworks.AzureSearch.Wrappers
         {
             if (clientOption.UseTokenCredentials)
             {
-                var azureCredential = new DefaultAzureCredential();
+                var azureCredential = new ManagedIdentityCredential();
 
                 _searchClient = new SearchClient(
                     new Uri(clientOption.ServiceUrlEndpoint),
