@@ -1,8 +1,21 @@
-## [1.2.1](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.2.1...v1.2.1) (2025-06-09)
+## [1.2.2](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.2.2...v1.2.2) (2025-06-11)
 
 
 
-## [1.2.1](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.2.0...1.2.1) (2025-06-09)
+## [1.2.2](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.2.1...1.2.2) (2025-06-11)
+
+
+### Features
+
+* changed default credentials to managed identity credentials ([05bd726](https://github.com/thecogworks/Cogworks.AzureSearch/commit/05bd726fdb9d1824fa19bd8e98f6d814bf545771))
+
+
+
+## [1.2.1](https://github.com/thecogworks/Cogworks.AzureSearch/compare/v1.2.1...1.2.1) (2025-06-09)
+
+
+
+## [1.2.1](https://github.com/thecogworks/Cogworks.AzureSearch/compare/1.2.0...v1.2.1) (2025-06-09)
 
 
 ### Reverts
