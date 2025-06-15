@@ -19,6 +19,6 @@
     "lodash": "^4.17.21"
   },
   "dependencies": {
-    "conventional-changelog-cli": "^2.0.25"
+    "conventional-changelog-cli": "^3.0.0"
   }
 }
